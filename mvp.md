@@ -12,6 +12,7 @@
     - Results start with tag list with number of results per tag, ordered by tag prevalence
       Search for: "migraine treatment during pregnancy" result start with:
       ☑️ Pregnancy(122), ☑️ Migraine(94), ☑️ 1st-trimester(40), ☑️ Chinese-Medicine(37), ☑️ Prevention(24), ☑️ Research(12)
+      
       Unchecking a box would hide results tagged with the box's matching tag, thus filtering the results.
     - The search is done using auto-detected tags.
     - The user can remove or add tags to the search.
