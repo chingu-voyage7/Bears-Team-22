@@ -1,0 +1,49 @@
+{
+    "name": "knowledge",
+    "version": "0.0.0",
+    "private": true,
+	"engines": {
+		"node": ">=8"
+	},
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "lint": "xo",
+        "test": "lint && react-scripts test",
+        "eject": "react-scripts eject"
+    },
+	"dependencies": {
+		"react": "^16.6.3",
+		"react-dom": "^16.6.3",
+		"react-scripts": "2.1.1"
+	},
+    "devDependencies": {
+        "eslint": "5.6.0",
+        "eslint-config-xo-react": "^0.17.0",
+        "eslint-plugin-react": "^7.11.1",
+        "xo": "^0.23.0"
+    },
+    "xo": {
+        "extends": "xo-react",
+        "ignores": [
+            "src/serviceWorker.js"
+        ],
+        "envs": [
+            "node",
+            "browser"
+        ],
+        "rules": {
+            "quotes": [
+                "error",
+                "double"
+            ],
+            "unicorn/filename-case": "warning"
+        }
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ]
+}

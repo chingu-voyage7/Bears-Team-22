@@ -1,4 +1,23 @@
-# Bears-Team-22
-Q&A-style web app | Voyage-7 | https://chingu.io/
+# Knowledge
 
-For more details see [the MVP specification](mvp.md).
+> Knowledge is a Q&A-style app
+
+Developed in the Chingu Voyage-7 cohort. See more information on Chingu and joining future cohorts [here](https://chingu.io).
+
+
+## MVP
+
+See [the MVP spec](mvp.md).
+
+
+## Creators
+
+- [Itai Steinherz](https://github.com/itaisteinherz)
+- [Stas](https://github.com/mastas3)
+- [George Keloglou](https://geokeloglou.me)
+- [Stanislav Ivanov](https://github.com/stan-ivanov)
+
+
+## License
+
+MIT
