@@ -2,7 +2,7 @@
 
 > Knowledge is a Q&A-style app
 
-Developed in the Chingu Voyage-7 cohort. See more information on Chingu and joining future cohorts [here](https://chingu.io).
+Developed in the Chingu Voyage-7 cohort by Bears Team 22. See more information on Chingu and joining future cohorts [here](https://chingu.io).
 
 
 ## MVP
