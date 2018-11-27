@@ -13,7 +13,7 @@ See [the MVP spec](mvp.md).
 ## Creators
 
 - [Itai Steinherz](https://github.com/itaisteinherz)
-- [Stas](https://github.com/mastas3)
+- [Stas Maksin](https://github.com/mastas3)
 - [George Keloglou](https://geokeloglou.me)
 - [Stanislav Ivanov](https://github.com/stan-ivanov)
 
