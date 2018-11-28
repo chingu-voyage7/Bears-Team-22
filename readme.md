@@ -14,7 +14,7 @@ See [the MVP spec](mvp.md).
 
 - [Itai Steinherz](https://github.com/itaisteinherz)
 - [Stas Maksin](https://github.com/mastas3)
-- [George Keloglou](https://geokeloglou.me)
+- [George Keloglou](https://github.com/geokeloglou)
 - [Stanislav Ivanov](https://github.com/stan-ivanov)
 
 
