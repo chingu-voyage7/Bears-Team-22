@@ -32,6 +32,16 @@
             "node",
             "browser"
         ],
+		"overrides": [
+			{
+				"files": "src/*.test.js",
+				"envs": [
+					"node",
+		            "browser",
+					"jest"
+				]
+			}
+		],
         "rules": {
             "quotes": [
                 "error",

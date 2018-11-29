@@ -1,5 +1,3 @@
-/* global it */ // TODO: Replace this with a proper `mocha` env comment.
-
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
