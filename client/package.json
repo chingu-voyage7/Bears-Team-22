@@ -2,21 +2,22 @@
     "name": "knowledge",
     "version": "0.0.0",
     "private": true,
-	"engines": {
-		"node": ">=8"
-	},
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "lint": "xo",
-        "test": "lint && react-scripts test",
-        "eject": "react-scripts eject"
+    "engines": {
+        "node": ">=8"
     },
-	"dependencies": {
-		"react": "^16.6.3",
-		"react-dom": "^16.6.3",
-		"react-scripts": "2.1.1"
-	},
+    "scripts": {
+        "dev": "next",
+        "start": "next start",
+        "build": "next build",
+        "lint": "xo",
+        "test": "npm run lint"
+    },
+    "dependencies": {
+        "@zeit/next-css": "^1.0.1",
+        "next": "^7.0.2",
+        "react": "^16.6.3",
+        "react-dom": "^16.6.3"
+    },
     "devDependencies": {
         "eslint": "5.6.0",
         "eslint-config-xo-react": "^0.17.0",
@@ -25,23 +26,20 @@
     },
     "xo": {
         "extends": "xo-react",
-        "ignores": [
-            "src/serviceWorker.js"
-        ],
         "envs": [
             "node",
             "browser"
         ],
-		"overrides": [
-			{
-				"files": "src/*.test.js",
-				"envs": [
-					"node",
-		            "browser",
-					"jest"
-				]
-			}
-		],
+        "overrides": [
+            {
+                "files": "pages/*.test.js",
+                "envs": [
+                    "node",
+                    "browser",
+                    "jest"
+                ]
+            }
+        ],
         "rules": {
             "quotes": [
                 "error",
