@@ -1,0 +1,16 @@
+.login__form {
+    display: grid;
+    text-align: center;
+    padding: 1rem;
+}
+
+.login__form--title {
+    text-align: center;
+}
+
+@media(min-width: 30rem) {
+    .login__form {
+        justify-content: center;
+        align-content: center;
+    }
+}

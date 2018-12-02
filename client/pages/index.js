@@ -1,5 +1,5 @@
 import React from "react";
-import "./index.css"; // eslint-disable-line import/no-unassigned-import
-import App from "./App";
+import Login from "./login";
+import "../styles/index.css"; // eslint-disable-line import/no-unassigned-import
 
-export default () => <App/>;
+export default () => <Login/>;
