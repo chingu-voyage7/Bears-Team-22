@@ -20,7 +20,7 @@
 
 ## Backend
 
-Node.js - express.js + mongoose + passport.js (auth)
+Node.js + `express` + `mongoose` + Passport.js (auth)
 
 ### DB
 
@@ -39,4 +39,4 @@ Now / Heroku
 
 ## Framework
 
-React.js + CRAP (Create React app + Parcel) + probably Semantic UI / Ant design
+Next.js (React) + Ant design
