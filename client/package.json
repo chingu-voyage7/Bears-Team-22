@@ -14,17 +14,20 @@
 	},
 	"dependencies": {
 		"@zeit/next-css": "^1.0.1",
+		"antd": "^3.11.0",
 		"next": "^7.0.2",
 		"react": "^16.6.3",
 		"react-dom": "^16.6.3"
 	},
 	"devDependencies": {
+		"babel-eslint": "^10.0.1",
 		"eslint": "5.6.0",
 		"eslint-config-xo-react": "^0.17.0",
 		"eslint-plugin-react": "^7.11.1",
 		"xo": "^0.23.0"
 	},
 	"xo": {
+		"parser": "babel-eslint",
 		"extends": "xo-react",
 		"envs": [
 			"node",
@@ -45,7 +48,14 @@
 				"error",
 				"double"
 			],
-			"unicorn/filename-case": "warning"
+			"react/prop-types": [
+				"error",
+				{
+					"ignore": ["children", "form"]
+				}
+			],
+			"unicorn/filename-case": "warning",
+			"import/no-unassigned-import": "off"
 		}
 	},
 	"browserslist": [
