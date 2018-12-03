@@ -1,8 +1,20 @@
 .register__form {
     display: grid;
+    grid-gap: 10px;
     text-align: center;
     padding: 1rem;
+    margin: 0;
+    padding: 0;
 }
+
+.register__form > * {
+    margin: 0;
+}
+
+.register__form button {
+    margin-top: 0.75rem;
+}
+
 
 .register__form--title {
     text-align: center;

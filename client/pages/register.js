@@ -1,14 +1,14 @@
-import Layout from '../components/Layout';
-import LoginForm from '../components/LoginForm';
+import Layout from "../components/Layout";
+import RegisterForm from "../components/RegisterForm";
 
-class Login extends React.Component {
-    render() {
-        return (
-            <Layout>
-                <LoginForm />
-            </Layout>
-        );
-    }
+class Register extends React.Component {
+	render() {
+		return (
+			<Layout>
+				<RegisterForm/>
+			</Layout>
+		);
+	}
 }
 
-export default Login;
+export default Register;

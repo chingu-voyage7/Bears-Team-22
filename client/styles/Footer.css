@@ -3,4 +3,6 @@
     height: 2rem; 
     background: #333 !important; 
     color: #ddd !important;
+    display: grid;
+    align-content: center;
 }

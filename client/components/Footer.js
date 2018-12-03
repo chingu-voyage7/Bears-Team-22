@@ -1,10 +1,11 @@
-import { Layout } from "antd";
-const { Footer } = Layout;
+import {Layout} from "antd";
 
 import "../styles/Footer.css";
 
+const {Footer} = Layout;
+
 export default () => (
-    <Footer className="footer">
-        Bears 22 - Chingu Voyage 7
-    </Footer>    
-)
+	<Footer className="footer">
+        Bears Team 22 | Chingu Voyage-7
+	</Footer>
+);
