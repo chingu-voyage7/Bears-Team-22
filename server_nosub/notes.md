@@ -1,3 +1,0 @@
-- test route settled at `localhost:5000/user-get-all`
-- running `docker-compose up` should be enough to build the image and run the container
-- Used dummy user-model and dummy-db ( easily replaceable with the correct ones )

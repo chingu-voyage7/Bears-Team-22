@@ -1,4 +1,4 @@
-## Use base image of latest node lts
+# Use the base image of the latest Node.js LTS version - v10.
 FROM node:dubnium-alpine
 
 RUN mkdir /server
