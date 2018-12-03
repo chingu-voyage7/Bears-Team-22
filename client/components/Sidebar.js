@@ -1,14 +1,13 @@
+import React from "react";
 import {Layout, Menu, Icon} from "antd";
+
 import "../styles/Sidebar.css";
 
 const {Sider} = Layout;
 const MenuItem = Menu.Item;
 
 const Sidebar = () => (
-	<Sider
-		breakpoint="xxl"
-		collapsedWidth="0"
-	>
+	<Sider breakpoint="xxl" collapsedWidth="0">
 		<div className="logo"/>
 		<Menu theme="dark" mode="inline">
 			<MenuItem key="1">

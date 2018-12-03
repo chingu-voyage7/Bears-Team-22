@@ -48,7 +48,14 @@
 				"error",
 				"double"
 			],
-			"unicorn/filename-case": "warning"
+			"react/prop-types": [
+				"error",
+				{
+					"ignore": ["children", "form"]
+				}
+			],
+			"unicorn/filename-case": "warning",
+			"import/no-unassigned-import": "off"
 		}
 	},
 	"browserslist": [
