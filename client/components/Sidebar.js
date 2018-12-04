@@ -7,7 +7,7 @@ const {Sider} = Layout;
 const MenuItem = Menu.Item;
 
 const Sidebar = () => (
-	<Sider 
+	<Sider
 		collapsible
 		defaultCollapsed
 		breakpoint="xxl"

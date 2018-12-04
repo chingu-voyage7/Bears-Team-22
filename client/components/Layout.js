@@ -10,25 +10,25 @@ const {Content} = Layout;
 
 export default class extends React.Component {
 	state = {
-		loading: true,
+		loading: true
 	}
 
 	componentDidMount() {
-		this.setState(prevState => ({
-			loading: false,
+		this.setState(() => ({
+			loading: false
 		}));
 	}
 
 	render() {
-		const { children } = this.props;
-		const { loading } = this.state;
+		const {children} = this.props;
+		const {loading} = this.state;
 
-		if(loading) {
-			return <Loading size="large" />;
+		if (loading) {
+			return <Loading size="large"/>;
 		}
 
 		return (
-			<Layout style={{ minHeight: '100vh' }}>
+			<Layout style={{minHeight: "100vh"}}>
 				<Head/>
 				<Sidebar/>
 				<Layout>

@@ -1,14 +1,14 @@
 import React, {Fragment} from "react";
 import {Spin} from "antd";
 
-export default (props) => (
-    <Fragment>
-        <div className="loading">
-            <Spin 
-                {...props}
-            />
-        </div>
-        <style jsx>{`
+export default props => (
+	<Fragment>
+		<div className="loading">
+			<Spin
+				{...props}
+			/>
+		</div>
+		<style jsx>{`
             .loading {
                 display: grid;
                 justify-content: center;
@@ -16,6 +16,7 @@ export default (props) => (
                 justify-items: center;
                 height: 100vh;
             }    
-        `}</style>
-    </Fragment>
+        `}
+		</style>
+	</Fragment>
 );
