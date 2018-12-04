@@ -1,0 +1,19 @@
+.header {
+    background: #fff !important;
+    padding: 0;
+}
+
+.header__nav {
+    display: flex;
+    padding: 0 0.5rem;
+}
+
+.header__nav--item {
+    margin-left: 1rem;
+}
+
+.header__nav--brand {
+    margin-right: auto;
+    font-weight: bold;
+    font-size: 1.2rem;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import {Layout} from "antd";
-import "../styles/Header.css";
+import "../static/styles/Header.css";
 
 const {Header} = Layout;
 

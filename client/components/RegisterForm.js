@@ -3,7 +3,7 @@ import Link from "next/link";
 import {Form, Input, Button} from "antd";
 import "antd/dist/antd.css";
 
-import "../styles/RegisterForm.css";
+import "../static/styles/RegisterForm.css";
 
 const FormItem = Form.Item;
 
