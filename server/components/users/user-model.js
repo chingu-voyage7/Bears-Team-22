@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-
-// Setting few options to remove warning on feature deprecations
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useCreateIndex", true);
-mongoose.set("useFindAndModify", false);
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
+	name: {
+		type: String,
+		required: true
+	},
 	email: {
 		type: String,
 		required: true
@@ -15,5 +15,20 @@ const userSchema = new mongoose.Schema({
 		required: true
 	}
 });
+
+userSchema.pre('save', function(next) {	
+	bcrypt.hash(this.passwordHash, 10)
+			.then(hash => { 
+				this.passwordHash = hash;	
+				next();
+			})
+			.catch(err => next(err))
+});
+
+userSchema.methods.isPasswordValid = function(insertedPassword) {
+			return bcrypt.compareSync(insertedPassword,this.passwordHash);
+
+}
+
 
 module.exports = mongoose.model("User", userSchema);
