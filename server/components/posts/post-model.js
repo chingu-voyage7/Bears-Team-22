@@ -14,10 +14,9 @@ const postSchema = new mongoose.Schema(
 			type: Boolean,
 			default: false
 		},
-		tags: 
-			[{type:mongoose.Schema.Types.ObjectId,
-			ref: "Tag"}]
-		,
+		tags:
+			[{type: mongoose.Schema.Types.ObjectId,
+				ref: "Tag"}],
 		authorId: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User"
@@ -26,8 +25,9 @@ const postSchema = new mongoose.Schema(
 	{timestamps: true}
 );
 
-postSchema.post('save', function(newPost, next) {
-	newPost.populate('tags').execPopulate().then(() => next());
-})
+postSchema.post("save", async (newPost, next) => {
+	await newPost.populate("tags").execPopulate();
+	next();
+});
 
 module.exports = mongoose.model("Post", postSchema);
