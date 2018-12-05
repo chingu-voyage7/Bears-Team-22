@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 
 const userRoutes = require("./components/users/user-routes");
+const postRoutes = require("./components/posts/post-routes");
 
 // Setting a few options to remove warnings on feature deprecations.
 mongoose.set("useNewUrlParser", true);
@@ -23,6 +24,7 @@ const port = 5000;
 const app = express();
 app.use(express.json());
 app.use(userRoutes);
+app.use(postRoutes);
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`);
 });
