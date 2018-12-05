@@ -1,5 +1,6 @@
 import React from "react";
 import {Layout} from "antd";
+
 import Head from "./Head";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
@@ -8,7 +9,7 @@ import Loading from "./Loading";
 
 const {Content} = Layout;
 
-export default class extends React.Component {
+export default class MainLayout extends React.Component {
 	state = {
 		loading: true
 	}

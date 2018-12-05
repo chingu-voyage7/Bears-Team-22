@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import {Form, Input, Button} from "antd";
+
 import "antd/dist/antd.css";
 
 import "../static/styles/RegisterForm.css";
