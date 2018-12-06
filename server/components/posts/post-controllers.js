@@ -1,4 +1,4 @@
-const Tag = require("../tags/tag-model");
+const {replaceTagNameWithTagId} = require("../utils");
 const Post = require("./post-model");
 
 exports.postGetAll = async (req, res) => {
@@ -16,30 +16,8 @@ exports.postGetAll = async (req, res) => {
 };
 
 exports.postCreate = async (req, res) => {
-	/* The tagIds array will be populate of	promises and then
-	promiseAll will wait for them to be fullfilled. */
-
-	/* 	This code replace the name of the tag with
-	its id ( if exists otherwise it creates one); apparently
-	is not possible to save an array of tags ref first assigning
-	the name and then substituting directly into the model since even in the pre-hook the array of name is being filtered out. */
-
-	const tagIds = req.body.tags.map(async tag => {
-		try {
-			const tagDoc = await Tag.findOne({name: tag}).exec();
-			if (tagDoc) {
-				return tagDoc._id;
-			}
-
-			const newTag = await new Tag({name: tag, children: []})
-				.save();
-			return newTag._id;
-		} catch (error) {
-			return error;
-		}
-	});
 	try {
-		const tags = await Promise.all(tagIds);
+		const tags = await replaceTagNameWithTagId(req.body.tags);
 		const newPost = await new Post({
 			title: req.body.title,
 			body: req.body.body,
