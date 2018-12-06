@@ -7,16 +7,19 @@ import "../static/styles/SearchForm.css";
 const InputSearch = Input.Search;
 
 class SearchForm extends React.Component {
-
 	onSearch = value => {
-        console.log(value)
+		console.log(value);
 	}
 
 	render() {
 		return (
 			<div>
 				<h1 className="search__input--title">Search</h1>
-                <InputSearch className="search__input" enterButton placeholder="Search..." onSearch={this.onSearch}/>
+				<InputSearch
+					enterButton
+					className="search__input"
+					placeholder="Search..."
+					onSearch={this.onSearch}/>
 			</div>
 		);
 	}
