@@ -38,8 +38,8 @@ exports.postCreate = async (req, res) => {
 			return error;
 		}
 	});
-	const tags = await Promise.all(tagIds);
 	try {
+		const tags = await Promise.all(tagIds);
 		const newPost = await new Post({
 			title: req.body.title,
 			body: req.body.body,
@@ -47,6 +47,11 @@ exports.postCreate = async (req, res) => {
 			tags,
 			authorId: "5c07a5a54a9d0c0012cd8b35" // Fake mongo id, the real one must come from auth
 		}).save();
+
+		// Update the field replyId of the previous post with the id of the newly generated one
+		if (req.body.repliedToId) {
+			await Post.findByIdAndUpdate(req.body.repliedToId, {$set: {replyId: newPost._id}});
+		}
 		res.status(200).json(newPost);
 	} catch (error) {
 		res.status(500).json(error);

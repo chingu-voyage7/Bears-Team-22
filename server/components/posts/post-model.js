@@ -19,7 +19,12 @@ const postSchema = new mongoose.Schema(
 				ref: "Tag"}],
 		authorId: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "User"
+			ref: "User",
+			required: true
+		},
+		replyId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Post"
 		}
 	},
 	{timestamps: true}
