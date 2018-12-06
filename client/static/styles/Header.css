@@ -36,11 +36,24 @@
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
+    text-align: center;
 }
 
 .mobile__menu a {
     color: inherit;
     border: 0;    
+}
+
+.logo {
+    background: url(/static/logo.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 6rem;
+    height: 6rem;
+    margin: auto;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
 @media(min-width: 40rem) {
@@ -51,4 +64,8 @@
     .header__drawer--toggle {
         display: none;
     }    
+
+    .logo {
+        display: none;
+    }
 }
