@@ -10,6 +10,7 @@ const MenuItem = Menu.Item;
 
 const MainMenu = ({mode = "horizontal", className = "header__menu", theme = "light"}) => (
 	<Menu theme={theme} mode={mode} className={className}>
+		<div className="logo"/>
 		<MenuItem key="1">
 			<span className="nav-text">
 				<Link href="/">
