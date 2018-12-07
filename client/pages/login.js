@@ -1,14 +1,14 @@
 import React from "react";
 
-import Layout from "../components/Layout";
+import MainLayout from "../components/MainLayout";
 import LoginForm from "../components/LoginForm";
 
 class Login extends React.Component {
 	render() {
 		return (
-			<Layout>
+			<MainLayout>
 				<LoginForm/>
-			</Layout>
+			</MainLayout>
 		);
 	}
 }
