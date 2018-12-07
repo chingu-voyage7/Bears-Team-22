@@ -2,10 +2,12 @@
 FROM node:dubnium-alpine
 
 RUN mkdir /server
-COPY . /server
-
 WORKDIR /server
+
+COPY package.json /server
 RUN npm install
+
+COPY . /server
 
 EXPOSE 5000
 
