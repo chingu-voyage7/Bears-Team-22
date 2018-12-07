@@ -15,4 +15,5 @@ router.get('/get-all', sessionVerificationMw, (req, res) => {
 router.get('/current-user', sessionVerificationMw, getUser);
 router.post('/update-user', sessionVerificationMw, updateUser);
 router.delete('/delete-user', sessionVerificationMw, deleteUser);
+
 module.exports = router;
