@@ -9,14 +9,14 @@ export default props => (
 			/>
 		</div>
 		<style jsx>{`
-            .loading {
-                display: grid;
-                justify-content: center;
-                align-items: center;
-                justify-items: center;
-                height: 100vh;
-            }    
-        `}
+			.loading {
+				display: grid;
+				justify-content: center;
+				align-items: center;
+				justify-items: center;
+				height: 100vh;
+			}    
+		`}
 		</style>
 	</Fragment>
 );
