@@ -1,0 +1,27 @@
+.login__form {
+    display: grid;
+    grid-gap: 10px;
+    text-align: center;
+    padding: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+.login__form--title {
+    text-align: center;
+}
+
+.login__form > * {
+    margin: 0;
+}
+
+.login__form button {
+    margin-top: 0.75rem;
+}
+
+@media(min-width: 30rem) {
+    .login__form {
+        justify-content: center;
+        align-content: center;
+    }
+}
