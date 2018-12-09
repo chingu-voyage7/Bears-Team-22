@@ -2,8 +2,9 @@ const {replaceTagNameWithTagId} = require("../utils");
 const Post = require("./post-model");
 
 exports.postGetAll = async (req, res) => {
+	const limit = parseInt(req.query.num, 10) || 50;
 	try {
-		const posts = await Post.find({});
+		const posts = await Post.find({}).limit(limit < 50 ? limit : 50);
 
 		if (posts.length > 0) {
 			res.status(200).json(posts);
