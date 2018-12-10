@@ -20,6 +20,12 @@
     border: 0;
 }
 
+.header a:active,
+.header a:hover,
+.header a:focus {
+    text-decoration: none !important;
+}
+
 .header__nav--brand {
     margin-right: auto;
     font-weight: bold;
