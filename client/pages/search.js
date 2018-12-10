@@ -3,7 +3,7 @@ import React from "react";
 import MainLayout from "../components/MainLayout";
 import SearchForm from "../components/SearchForm";
 
-class Login extends React.Component {
+class Search extends React.Component {
 	render() {
 		return (
 			<MainLayout>
@@ -13,4 +13,4 @@ class Login extends React.Component {
 	}
 }
 
-export default Login;
+export default Search;

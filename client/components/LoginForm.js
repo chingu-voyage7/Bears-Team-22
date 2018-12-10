@@ -4,6 +4,7 @@ import Link from "next/link";
 import {Form, Input, Button, Icon} from "antd";
 
 import "antd/dist/antd.css";
+
 import "../static/styles/LoginForm.css";
 
 const FormItem = Form.Item;
