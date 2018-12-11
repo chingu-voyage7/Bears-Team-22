@@ -18,13 +18,6 @@ const MainMenu = ({mode = "horizontal", className = "header__menu", theme = "lig
 				</Link>
 			</span>
 		</MenuItem>
-		<MenuItem key="2">
-			<span className="nav-text">
-				<Link href="/search">
-					<a>Search</a>
-				</Link>
-			</span>
-		</MenuItem>
 		<MenuItem key="3">
 			<span className="nav-text">
 				<Link href="/login">
