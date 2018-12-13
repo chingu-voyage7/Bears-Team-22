@@ -1,0 +1,19 @@
+version: "3"
+services:
+  server-test:
+    build: 
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./:/server
+    ports:
+      - "5000:5000"
+    environment:
+      WAIT_HOSTS: mongo-test:27017
+    links:
+      - mongo-test
+  mongo-test:
+    image: mongo
+    ports:
+      - "27017:27017"
+    command: "mongod"

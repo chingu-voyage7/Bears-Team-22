@@ -1,4 +1,4 @@
-# Use the base image of the latest Node.js LTS version - v10.
+
 FROM node:dubnium-alpine
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
 RUN chmod +x /wait
@@ -6,10 +6,8 @@ RUN mkdir /server
 WORKDIR /server
 
 COPY package.json /server
-RUN npm install --only=production
+RUN npm install 
 
 COPY . /server
 
-EXPOSE 5000
-
-CMD /wait && npm start
+CMD /wait && npm run test
