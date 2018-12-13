@@ -1,59 +1,22 @@
-const {promisify} = require("util");
-
 const mongoose = require("mongoose");
-const express = require("express");
-const session = require("express-session");
-const MongoSessionStore = require("connect-mongodb-session")(session);
-
-const passport = require("passport");
-const userRoutes = require("./components/users/user-routes");
-const postRoutes = require("./components/posts/post-routes");
-const lookupRoutes = require("./components/lookups/lookup-routes");
-const authRoutes = require("./components/auth/auth-routes");
 // Setting a few options to remove warnings on feature deprecations.
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
 
-promisify(mongoose.connect)("mongodb://mongo:27017/test_db")
+const MONGO_URI = "mongodb://mongo:27017/knowledge_data";
+const PORT = 5000;
+
+mongoose.connect(MONGO_URI)
 	.then(() => {
-		console.log("Successfully connected to Mongo!");
+		console.log("Successfully connected to database!");
 	})
 	.catch(error => {
-		console.log(`Error connecting to Mongo: ${error}`);
+		console.log(`Error connecting to database: ${error}`);
 	});
 
-const port = 5000;
-const store = new MongoSessionStore({
-	uri: "mongodb://mongo:27017/test_db",
-	collection: "knowledge_sessions"
-});
+const app = require("./app");
 
-store.on("error", error => {
-	console.log("err up", error);		// Handle it properly
-});
-
-const sessionOptions = {
-	secret: "WannaBeASecret!",
-	resave: false,
-	saveUninitialized: false,
-	cookie: {maxAge: 60 * 60 * 1000},
-	store
-	// Secure: true - As per doc, is recommended but it needs a https connection^^
-};
-
-const app = express();
-
-app.use(session(sessionOptions));
-app.use(express.json());
-app.use(passport.initialize());
-app.use(passport.session());
-require("./components/auth/passport")(passport);
-
-app.use(userRoutes);
-app.use(postRoutes);
-app.use(lookupRoutes);
-app.use(authRoutes);
-app.listen(port, () => {
-	console.log(`Listening on port ${port}`);
+app.listen(PORT, () => {
+	console.log(`Listening on port ${PORT}`);
 });

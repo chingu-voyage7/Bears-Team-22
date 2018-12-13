@@ -10,18 +10,18 @@
 		"start": "node index.js",
 		"dev": "nodemon index.js",
 		"lint": "xo",
-		"test": "npm run lint"
+		"test": "mocha \"./{,!(node_modules)/**/}*.test.js\" --exit",
+		"docker:test": "docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit"
 	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
-		"connect-mongodb-session": "^2.0.6",
 		"express": "^4.16.4",
-		"express-session": "^1.15.6",
-		"mongoose": "^5.3.14",
-		"passport": "^0.4.0",
-		"passport-local": "^1.0.0"
+		"mongoose": "^5.3.14"
 	},
 	"devDependencies": {
+		"chai": "^4.2.0",
+		"chai-http": "^4.2.0",
+		"mocha": "^5.2.0",
 		"nodemon": "^1.18.7",
 		"xo": "^0.23.0"
 	},
