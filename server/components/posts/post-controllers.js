@@ -5,11 +5,7 @@ exports.postGetAll = async (req, res) => {
 	try {
 		const posts = await Post.find({});
 
-		if (posts.length > 0) {
-			res.status(200).json(posts);
-		} else {
-			res.status(200).json({message: "No posts yet!"});
-		}
+		res.status(200).json(posts);
 	} catch (error) {
 		res.status(500).json(error);
 	}
@@ -30,7 +26,7 @@ exports.postCreate = async (req, res) => {
 		if (req.body.repliedToId) {
 			await Post.findByIdAndUpdate(req.body.repliedToId, {$set: {replyId: newPost._id}});
 		}
-		res.status(200).json(newPost);
+		res.status(201).json(newPost);
 	} catch (error) {
 		res.status(500).json(error);
 	}
