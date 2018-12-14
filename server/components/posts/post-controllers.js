@@ -1,5 +1,5 @@
-const {replaceTagNameWithTagId} = require("../utils");
 const Post = require("./post-model");
+const {replaceTagNameWithTagId} = require("../utils");
 
 exports.getAllPosts = async (req, res) => {
 	const MAX_LIMIT = 50;
