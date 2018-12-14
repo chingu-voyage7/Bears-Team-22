@@ -12,11 +12,13 @@ const postSchema = new mongoose.Schema(
 		},
 		isQuestion: {
 			type: Boolean,
-			default: false
+			default: true,
+			required: true
 		},
-		tags:
-			[{type: mongoose.Schema.Types.ObjectId,
-				ref: "Tag"}],
+		tags: [{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Tag"
+		}],
 		authorId: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
