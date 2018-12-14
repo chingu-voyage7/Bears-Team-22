@@ -7,7 +7,7 @@ class Search extends React.Component {
 	render() {
 		return (
 			<MainLayout>
-				<SearchForm/>
+				<SearchForm />
 			</MainLayout>
 		);
 	}
