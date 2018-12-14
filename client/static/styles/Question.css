@@ -1,0 +1,28 @@
+.q-wrapper {
+	display: flex;
+	border: 1px solid red;
+}
+/* https://css-tricks.com/snippets/css/css-triangle/*/
+.q-vote {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.arrow-up {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+
+	border-bottom: 5px solid black;
+}
+.arrow-down {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+
+	border-top: 5px solid black;
+}
