@@ -4,10 +4,11 @@ import Question from "../components/Answer";
 import Answer from "../components/Question";
 class Thread extends React.Component {
 	render() {
+		// TODO - fix items loading in reverse order from MainLayout
 		return (
 			<MainLayout>
-				<Question />
 				<Answer />
+				<Question />
 			</MainLayout>
 		);
 	}
