@@ -35,7 +35,7 @@ exports.createPost = async (req, res) => {
 			await Post.findByIdAndUpdate(req.body.superPostId, {$set: {replyId: newPost._id}});
 		}
 
-		res.status(200).json({newPost});
+		res.status(201).json({newPost});
 	} catch (error) {
 		res.status(500).json({error});
 	}
