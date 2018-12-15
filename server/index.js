@@ -1,0 +1,30 @@
+const {promisify} = require("util");
+
+const mongoose = require("mongoose");
+const express = require("express");
+
+const postRoutes = require("./components/posts/post-routes");
+
+// Setting a few options to remove warnings on feature deprecations.
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
+
+promisify(mongoose.connect)("mongodb://mongo:27017/test_db")
+	.then(() => {
+		console.log("Successfully connected to Mongo!");
+	})
+	.catch(error => {
+		console.log(`Error connecting to Mongo: ${error}`);
+	});
+
+const port = 5000;
+
+const app = express();
+
+app.use(express.json());
+app.use("/post", postRoutes);
+
+app.listen(port, () => {
+	console.log(`Listening on port ${port}`);
+});
