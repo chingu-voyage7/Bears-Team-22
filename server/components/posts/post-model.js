@@ -2,17 +2,17 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
 	{
+		isQuestion: {
+			type: Boolean,
+			default: false
+		},
 		title: {
 			type: String,
-			required: true
+			required: function(){return this.isQuestion}
 		},
 		body: {
 			type: String,
 			required: true
-		},
-		isQuestion: {
-			type: Boolean,
-			default: false
 		},
 		tags:
 			[{type: mongoose.Schema.Types.ObjectId,
@@ -24,7 +24,8 @@ const postSchema = new mongoose.Schema(
 		},
 		replyId: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Post"
+			ref: "Post",
+			default: null
 		}
 	},
 	{timestamps: true}

@@ -20,10 +20,10 @@ describe(" -- POST ROUTES -- ", () => {
 		}
 	});
 
-	describe("GET /post-get-all", () => {
-		it("should hit GET /post-get-all", done => {
+	describe("GET /post/get-all", () => {
+		it("should hit GET /post/get-all", done => {
 			chai.request(app)
-				.get("/post-get-all")
+				.get("/post/get-all")
 				.end((err, res) => {
 					// eslint-disable-next-line no-unused-expressions
 					expect(err).to.be.null;
@@ -34,7 +34,7 @@ describe(" -- POST ROUTES -- ", () => {
 
 		it("should return all the registered posts", done => {
 			chai.request(app)
-				.get("/post-get-all")
+				.get("/post/get-all")
 				.end((err, res) => {
 					// eslint-disable-next-line no-unused-expressions
 					expect(err).to.be.null;
@@ -45,10 +45,10 @@ describe(" -- POST ROUTES -- ", () => {
 		});
 	});
 
-	describe("POST /post-create", () => {
-		it("should hit POST /post-create", done => {
+	describe("POST /post/create", () => {
+		it("should hit POST /post/create", done => {
 			chai.request(app)
-				.post("/post-create")
+				.post("/post/create")
 				.end((err, res) => {
 					// eslint-disable-next-line no-unused-expressions
 					expect(err).to.be.null;
@@ -61,7 +61,7 @@ describe(" -- POST ROUTES -- ", () => {
 
 		it("should create a post", done => {
 			chai.request(app)
-				.post("/post-create")
+				.post("/post/create")
 				.send({
 					title: "myFirstPost",
 					body: "Hey, this is my first post! :D",

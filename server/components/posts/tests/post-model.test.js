@@ -20,8 +20,9 @@ describe(" -- POST MODEL -- ", () => {
 		expect(mockIdArray).to.have.lengthOf(2);
 	});
 
-	it("should be rejected if no title is provided", async () => {
+	it("should be rejected if no title is provided in a question", async () => {
 		delete mockPost.title;
+		mockPost.isQuestion = true;
 		const tagIds = await replaceTagNameWithTagId(mockPost.tags);
 		mockPost.tags = tagIds;
 		const newPost = new Post(mockPost);

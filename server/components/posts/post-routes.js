@@ -4,7 +4,7 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 const {postGetAll, postCreate} = require("./post-controllers");
 
-router.get("/post-get-all", postGetAll);
-router.post("/post-create", postCreate);
+router.get("/get-all", postGetAll);
+router.post("/create", postCreate);
 
 module.exports = router;

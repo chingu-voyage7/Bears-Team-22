@@ -17,14 +17,14 @@ exports.postCreate = async (req, res) => {
 		const newPost = await new Post({
 			title: req.body.title,
 			body: req.body.body,
-			isQuestion: true,
+			isQuestion: req.body.isQuestion,
 			tags,
 			authorId: "5c07a5a54a9d0c0012cd8b35" // Fake mongo id, the real one must come from auth
 		}).save();
 
 		// Update the field replyId of the previous post with the id of the newly generated one
-		if (req.body.repliedToId) {
-			await Post.findByIdAndUpdate(req.body.repliedToId, {$set: {replyId: newPost._id}});
+		if (req.body.superPostId) {
+			await Post.findByIdAndUpdate(req.body.superPostId, {$set: {replyId: newPost._id}});
 		}
 		res.status(201).json(newPost);
 	} catch (error) {
