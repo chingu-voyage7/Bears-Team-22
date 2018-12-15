@@ -4,8 +4,8 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 const {getAllUsers, registerUser, loginUser} = require("./user-controllers");
 
-router.get("/user/get-all", getAllUsers);
-router.post("/user/register", registerUser);
-router.post("/user/login", loginUser);
+router.get("/get-all", getAllUsers);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
 
 module.exports = router;
