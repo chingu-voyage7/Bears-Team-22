@@ -15,10 +15,10 @@ chai.use(chaiHttp);
 describe(" -- USER ROUTES -- ", () => {
 	afterEach(() => mongoose.connection.db.dropCollection("users").catch(() => {}));// Silently fail if user collection doesn't exist
 
-	describe("GET /user-get-all", () => {
-		it("should hit GET /user-get-all", done => {
+	describe("GET /user/get-all", () => {
+		it("should hit GET /user/get-all", done => {
 			chai.request.agent(app)
-				.get("/user-get-all")
+				.get("/user/get-all")
 				.end((err, res) => {
 					// eslint-disable-next-line no-unused-expressions
 					expect(err).to.be.null;
@@ -29,7 +29,7 @@ describe(" -- USER ROUTES -- ", () => {
 
 		it("should get all the registered users", done => {
 			chai.request.agent(app)
-				.get("/user-get-all")
+				.get("/user/get-all")
 				.end((err, res) => {
 					// eslint-disable-next-line no-unused-expressions
 					expect(err).to.be.null;
@@ -40,10 +40,10 @@ describe(" -- USER ROUTES -- ", () => {
 		});
 	});
 
-	describe("POST /register", () => {
-		it("should hit POST /register", done => {
+	describe("POST /user/register", () => {
+		it("should hit POST /user/register", done => {
 			chai.request(app)
-				.post("/register")
+				.post("/user/register")
 				.end((err, res) => {
 					// eslint-disable-next-line no-unused-expressions
 					expect(err).to.be.null;
@@ -56,7 +56,7 @@ describe(" -- USER ROUTES -- ", () => {
 
 		it("should register a user", done => {
 			chai.request(app)
-				.post("/register")
+				.post("/user/register")
 				.send({
 					name: "mrMock",
 					email: "mock@mock.com",
@@ -74,14 +74,14 @@ describe(" -- USER ROUTES -- ", () => {
 
 		it("reject a user if email already exists", async () => {
 			await chai.request(app)
-				.post("/register")
+				.post("/user/register")
 				.send({
 					name: "mrMock",
 					email: "mock@mock.com",
 					password: "iamamo**cker"
 				});
 			const createPostResponse = await chai.request(app)
-				.post("/register")
+				.post("/user/register")
 				.send({
 					name: "mrMock",
 					email: "mock@mock.com",

@@ -8,8 +8,8 @@ const app = express();
 
 app.use(express.json());
 
-app.use(userRoutes);
-app.use(postRoutes);
-app.use(lookupRoutes);
+app.use('/user', userRoutes);
+app.use('/post', postRoutes);
+app.use('/lookup', lookupRoutes);
 
 module.exports = app;
