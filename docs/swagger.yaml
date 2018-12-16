@@ -1,7 +1,5 @@
 swagger: "2.0"
 
-## INFO PROJECT ##
-
 info:
   description: "Swagger documentation for [Knowledge](https://github.com/chingu-voyage7/Bears-Team-22)."
   version: "1.0.0"
@@ -10,25 +8,19 @@ info:
     name: "MIT"
     url: "https://github.com/chingu-voyage7/Bears-Team-22/blob/master/license"
 
-## TAG FOR EACH ROUTE ##
 tags:
   - name: "post"
-    description: "Do CRUD operations on posts"
-    externalDocs:
-      description: "Find out more"
-      url: "http://swagger.io"
+    description: "Create and get the latest posts"
   - name: "tag"
-    description: "Do CRUD operations on tags"
+    description: "Create, verify and query tags tags"
   - name: "user"
     description: "Create, modify, read, remove and authenticate users"
   - name: "lookup"
-    description: "Custom searches"
+    description: "Various lookups for posts, users and tags"
 
-## ALL THE ROUTES ARE LISTED IN THIS SECTION - THEY  ARE SORTED BASED ON THE TAG PROPERTY
 paths:
-  #################################################################
-  ##################            POST             ##################
-  #################################################################
+
+  # Post routes
   /post/create:
     post:
       tags:
@@ -62,8 +54,6 @@ paths:
               title: "myTitle"
               body: "this is the body of my post"
               tags: ["tag1", "tag2"]
-            #   body: "this is the body of my post"
-            #   tags: ['tag1', 'tag2']
             #   superPostId: 'a8df73324ndsa9f8'
       produces:
         - application/json
@@ -84,8 +74,8 @@ paths:
                   __v: 0
               replyId: null
               _id: 5c168750e1d5bf0014e5a926
-              title: myTitle
-              body: this is the body of my post
+              title: Post Title
+              body: This is the body of the post
               authorId: 5c07a5a54a9d0c0012cd8b35
               createdAt: "2018-12-16T17:11:44.595Z"
               updatedAt: "2018-12-16T17:11:44.595Z"
@@ -111,15 +101,15 @@ paths:
     get:
       tags:
         - "post"
-      summary: Get latest posts
+      summary: Get latest questions
       parameters:
         - in: query
           name: num
           type: integer
-          default: 0
+          default: 10
           minimum: 0
           maximum: 50
-          description: The number of post to be collected
+          description: The desired amount of questions
       produces:
         - application/json
       responses:
@@ -128,22 +118,44 @@ paths:
           examples:
             application/json:
               - isQuestion: true
-                # ...
-              - isQuestion: false
-                # ...
+                tags:
+                  - children: []
+                    _id: 5c1672b171616a001af4f800
+                    name: tag1
+                    __v: 0
+                  - children: []
+                    _id: 5c1672b171616a001af4f801
+                    name: tag2
+                    __v: 0
+                replyId: null
+                _id: 5c168750e1d5bf0014e5a926
+                title: Post 1 Title
+                body: "This is the body of post no. 1"
+                authorId: 5c07a5a54a9d0c0012cd8b35
+                createdAt: "2018-12-16T17:11:44.595Z"
+                updatedAt: "2018-12-16T17:11:44.595Z"
               - isQuestion: true
-                # ...
-              - isQuestion: false
-                # ...
-              - isQuestion: true
-                # ...
+                tags:
+                  - children: []
+                    _id: 5c1672b171616a001af4f802
+                    name: tag3
+                    __v: 0
+                  - children: []
+                    _id: 5c1672b171616a001af4f803
+                    name: tag4
+                    __v: 0
+                replyId: null
+                _id: 5c168750e1d5bf0014e5a927
+                title: Post 2 Title
+                body: "This is the body of post no. 2"
+                authorId: 5c07a5a54a9d0c0012cd8b35
+                createdAt: "2018-12-16T17:11:44.595Z"
+                updatedAt: "2018-12-16T17:11:44.595Z"
 
         500:
           description: Server error
-          #################################################################
-          ##################            USER             ##################
-          #################################################################
 
+  # User routes
   /user/register:
     post:
       tags:
@@ -231,10 +243,8 @@ paths:
 
         500:
           description: Server error
-          #################################################################
-          ##################            LOOKUPS          ##################
-          #################################################################
 
+  # Lookup routes
   /lookup/questions:
     post:
       tags:
@@ -287,13 +297,13 @@ paths:
     get:
       tags:
         - "lookup"
-      summary: Get the list of the posts belonging to a thread
+      summary: Get a list of posts in a thread
       parameters:
         - in: path
           required: true
           name: id
           type: string
-          description: The id of the question ( the first postof the thread)
+          description: The ObjectId of the root post (the question) in a thread
       produces:
         - application/json
       responses:
@@ -302,36 +312,28 @@ paths:
           examples:
             application/json:
               - isQuestion: true
-                # ...
-              - isQuestion: false
-                # ...
+                title: "Question"
+                body: "This is the body of the question"
+                tags:
+                - "tag1"
+                - "tag2"
               - isQuestion: true
-                # ...
-              - isQuestion: false
-                # ...
-              - isQuestion: true
-                # ...
+                title: "Comment #1"
+                body: "This is the body of of the first reply in the thread"
+                tags:
+                - "tag3"
+                - "tag4"
         500:
           description: Server error
 
-securityDefinitions:
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:pets: "modify pets in your account"
-      read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
+# Models
 definitions:
-  Post:
+  DatabasePost:
     type: object
     properties:
       id:
         type: string
+        format: "ObjectId"
       isQuestion:
         type: boolean
         default: false
@@ -346,39 +348,63 @@ definitions:
         type: array
         items:
           type: string
-    xml:
-      name: "Order"
-  User:
+  Post:
+    type: "object"
+    required: 
+      - body
+      - tags
+    properties:
+      isQuestion:
+        type: boolean
+        default: false
+      title:
+        type: string
+      body:
+        type: string
+      replyId:
+        type: string
+        default: null
+      tags:
+        type: array
+        items:
+          type: string
+  DatabaseUser:
     type: "object"
     properties:
       id:
-        type: "integer"
-        format: "int64"
-      username:
         type: "string"
-      firstName:
-        type: "string"
-      lastName:
+        format: "ObjectId"
+      name:
         type: "string"
       email:
         type: "string"
-      password:
+        format: "email"
+      passwordHash:
         type: "string"
-      phone:
-        type: "string"
-      userStatus:
-        type: "integer"
-        format: "int32"
-        description: "User Status"
-    xml:
-      name: "User"
-  Tag:
+        format: "sha512"
+  User:
     type: "object"
+    required:
+      - name
+      - email
+      - passwordHash
     properties:
-      id:
-        type: "integer"
-        format: "int64"
       name:
         type: "string"
-    xml:
-      name: "Tag"
+      email:
+        type: "string"
+        format: "email"
+      passwordHash:
+        type: "string"
+        format: "sha512"
+  Tag:
+    type: "object"
+    required:
+      - name
+    properties:
+      name:
+        type: "string"
+      children:
+        type: array
+        items:
+          type: "string"
