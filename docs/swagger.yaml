@@ -350,9 +350,6 @@ definitions:
           type: string
   Post:
     type: "object"
-    required: 
-      - body
-      - tags
     properties:
       isQuestion:
         type: boolean
@@ -361,11 +358,13 @@ definitions:
         type: string
       body:
         type: string
+        required: true
       replyId:
         type: string
         default: null
       tags:
         type: array
+        required: true
         items:
           type: string
   DatabaseUser:
@@ -384,26 +383,24 @@ definitions:
         format: "sha512"
   User:
     type: "object"
-    required:
-      - name
-      - email
-      - passwordHash
     properties:
       name:
         type: "string"
+        required: true
       email:
         type: "string"
         format: "email"
+        required: true
       passwordHash:
         type: "string"
         format: "sha512"
+        required: true
   Tag:
     type: "object"
-    required:
-      - name
     properties:
       name:
         type: "string"
+        required: true
       children:
         type: array
         items:
