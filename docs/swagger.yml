@@ -12,11 +12,11 @@ tags:
   - name: "post"
     description: "Create and get the latest posts"
   - name: "tag"
-    description: "Create, verify and query tags tags"
+    description: "Create, verify and query tags"
   - name: "user"
     description: "Create, modify, read, remove and authenticate users"
-  - name: "lookup"
-    description: "Various lookups for posts, users and tags"
+  - name: "thread"
+    description: "Do operations on threads"
 
 paths:
 
@@ -25,7 +25,7 @@ paths:
     post:
       tags:
         - "post"
-      summary: Creates a new post
+      summary: Create a new post
       consumes:
         - application/json
       parameters:
@@ -59,7 +59,9 @@ paths:
         - application/json
       responses:
         201:
-          description: Post created
+          description: Post
+          schema:
+            $ref: '#/definitions/Post'
           examples:
             application/json:
               isQuestion: true
@@ -83,25 +85,12 @@ paths:
           description: Invalid input / Server error
           examples:
             application/json:
-              error:
-                errors:
-                  body:
-                    message: Path `body` is required.
-                    name: ValidatorError
-                    properties:
-                      message: Path `body` is required.
-                      type: required
-                      path: body
-                    kind: required
-                    path: body
-                _message: Post validation failed
-                message: "Post validation failed: body: Path `body` is required."
-                name: ValidationError
-  /post/get-all:
+              error: "Post validation failed: body: Path `body` is required."
+  /post/latest:
     get:
       tags:
         - "post"
-      summary: Get latest questions
+      summary: Get the latest questions
       parameters:
         - in: query
           name: num
@@ -160,7 +149,7 @@ paths:
     post:
       tags:
         - "user"
-      summary: Creates a new user
+      summary: Register a new user
       consumes:
         - application/json
       parameters:
@@ -172,18 +161,20 @@ paths:
             required:
               - name
               - email
-              - password
+              - passwordHash
             properties:
               name:
                 type: string
               email:
                 type: string
+                format: email
               password:
                 type: string
+                format: sha512
             example:
               name: "test test"
               email: "test@test.com"
-              password: "p4$$w0rd"
+              password: "cbf0936369e8776d3647988d65f638d9c05169adbfe358b7b5f65b1915b1c7ff8581026928da92f1e7c02931c551e54a5715d876eb51af7f412b2669f9860e2c"
       produces:
         - application/json
       responses:
@@ -210,65 +201,21 @@ paths:
               _message: User validation failed
               message: "User validation failed: email: Path `email` is required."
               name: ValidationError
-  /user/get-all:
+
+  # Tag routes
+  /tag/{tagId}:
     get:
       tags:
-        - "user"
-      summary: Get registered user
-      parameters:
-        - in: query
-          name: num
-          type: integer
-          default: 0
-          minimum: 0
-          maximum: 50
-          description: The number of users to be fetched
-      produces:
-        - application/json
-      responses:
-        200:
-          description: Array of users
-          examples:
-            application/json:
-              - name: test test
-                # ...
-              - name: test toast
-                # ...
-              - name: toast test
-                # ...
-              - name: toast toast
-                # ...
-              - name: tost tist
-                # ...
-
-        500:
-          description: Server error
-
-  # Lookup routes
-  /lookup/questions:
-    post:
-      tags:
-        - "lookup"
-      summary: Return questions which contains the provided tags
+        - "tag"
+      summary: Get questions tagged with the given tag
       consumes:
         - application/json
       parameters:
-        - in: body
-          name: body
-          description: Array of tags to filter search
-          schema:
-            type: array
-            items:
-              type: string
-            required:
-              - tags
-            properties:
-              tags:
-                type: array
-                items:
-                  type: string
-            example:
-              name: ["tag1", "tag2"]
+        - in: path
+          required: true
+          name: tagId
+          type: string
+          description: Tag to query questions for
       produces:
         - application/json
       responses:
@@ -293,15 +240,16 @@ paths:
               - isQuestion: true
                 # ...
 
-  /lookup/thread/{id}:
+  # Thread routes
+  /thread/{questionId}:
     get:
       tags:
-        - "lookup"
+        - "thread"
       summary: Get a list of posts in a thread
       parameters:
         - in: path
           required: true
-          name: id
+          name: questionId
           type: string
           description: The ObjectId of the root post (the question) in a thread
       produces:
@@ -328,15 +276,17 @@ paths:
 
 # Models
 definitions:
-  DatabasePost:
+  Post:
     type: object
     properties:
       id:
         type: string
         format: "ObjectId"
-      isQuestion:
-        type: boolean
-        default: false
+      type:
+        type: string
+        enum:
+          - question
+          - reply
       title:
         type: string
       body:
@@ -348,60 +298,54 @@ definitions:
         type: array
         items:
           type: string
-  Post:
-    type: "object"
-    properties:
-      isQuestion:
-        type: boolean
-        default: false
-      title:
+          format: ObjectId
+      createdAt:
         type: string
-      body:
+        format: date-time
+      updatedAt:
         type: string
-        required: true
-      replyId:
-        type: string
-        default: null
-      tags:
-        type: array
-        required: true
-        items:
-          type: string
-  DatabaseUser:
-    type: "object"
+        format: date-time
+  User:
+    type: object
     properties:
       id:
-        type: "string"
-        format: "ObjectId"
+        type: string
+        format: ObjectId
       name:
-        type: "string"
+        type: string
       email:
-        type: "string"
-        format: "email"
+        type: string
+        format: email
       passwordHash:
-        type: "string"
-        format: "sha512"
-  User:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-        required: true
-      email:
-        type: "string"
-        format: "email"
-        required: true
-      passwordHash:
-        type: "string"
-        format: "sha512"
-        required: true
+        type: string
+        format: sha512
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
   Tag:
-    type: "object"
+    type: object
     properties:
+      id:
+        type: string
+        format: ObjectId
       name:
-        type: "string"
-        required: true
+        type: string
+      status:
+        type: string
+        enum:
+          - pending
+          - approved
       children:
         type: array
         items:
-          type: "string"
+          type: string
+          format: ObjectId
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
