@@ -1,161 +1,37 @@
 swagger: "2.0"
 
 info:
-  description: "Swagger documentation for [Knowledge](https://github.com/chingu-voyage7/Bears-Team-22)."
-  version: "1.0.0"
-  title: "Knowledge API"
+  description: Swagger documentation for [Knowledge](https://github.com/chingu-voyage7/Bears-Team-22).
+  version: 1.0.0
+  title: Knowledge API
   license:
-    name: "MIT"
-    url: "https://github.com/chingu-voyage7/Bears-Team-22/blob/master/license"
+    name: MIT
+    url: https://github.com/chingu-voyage7/Bears-Team-22/blob/master/license
 
 tags:
-  - name: "post"
-    description: "Create and get the latest posts"
-  - name: "tag"
-    description: "Create, verify and query tags"
-  - name: "user"
-    description: "Create, modify, read, remove and authenticate users"
-  - name: "thread"
-    description: "Do operations on threads"
+  - name: user
+    description: Create, modify, read, remove and authenticate users
+  - name: content
+    description: Create and get various types of content
+  - name: thread
+    description: Do operations on threads
+  - name: tag
+    description: Create, verify and query tags
 
 paths:
-
-  # Post routes
-  /post/create:
-    post:
-      tags:
-        - "post"
-      summary: Create a new post
-      consumes:
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: Post to create
-          schema:
-            type: object
-            required:
-              - body
-            properties:
-              title:
-                type: string
-              body:
-                type: string
-              isQuestion:
-                type: boolean
-              superPostId:
-                type: string
-              tags:
-                type: array
-                items:
-                  type: string
-            example:
-              isQuestion: true
-              title: "myTitle"
-              body: "this is the body of my post"
-              tags: ["tag1", "tag2"]
-            #   superPostId: 'a8df73324ndsa9f8'
-      produces:
-        - application/json
-      responses:
-        201:
-          description: Post
-          schema:
-            $ref: '#/definitions/Post'
-          examples:
-            application/json:
-              isQuestion: true
-              tags:
-                - children: []
-                  _id: 5c1672b171616a001af4f800
-                  name: tag1
-                  __v: 0
-                - children: []
-                  _id: 5c1672b171616a001af4f801
-                  name: tag2
-                  __v: 0
-              replyId: null
-              _id: 5c168750e1d5bf0014e5a926
-              title: Post Title
-              body: This is the body of the post
-              authorId: 5c07a5a54a9d0c0012cd8b35
-              createdAt: "2018-12-16T17:11:44.595Z"
-              updatedAt: "2018-12-16T17:11:44.595Z"
-        500:
-          description: Invalid input / Server error
-          examples:
-            application/json:
-              error: "Post validation failed: body: Path `body` is required."
-  /post/latest:
-    get:
-      tags:
-        - "post"
-      summary: Get the latest questions
-      parameters:
-        - in: query
-          name: num
-          type: integer
-          default: 10
-          minimum: 0
-          maximum: 50
-          description: The desired amount of questions
-      produces:
-        - application/json
-      responses:
-        200:
-          description: Array of posts
-          examples:
-            application/json:
-              - isQuestion: true
-                tags:
-                  - children: []
-                    _id: 5c1672b171616a001af4f800
-                    name: tag1
-                    __v: 0
-                  - children: []
-                    _id: 5c1672b171616a001af4f801
-                    name: tag2
-                    __v: 0
-                replyId: null
-                _id: 5c168750e1d5bf0014e5a926
-                title: Post 1 Title
-                body: "This is the body of post no. 1"
-                authorId: 5c07a5a54a9d0c0012cd8b35
-                createdAt: "2018-12-16T17:11:44.595Z"
-                updatedAt: "2018-12-16T17:11:44.595Z"
-              - isQuestion: true
-                tags:
-                  - children: []
-                    _id: 5c1672b171616a001af4f802
-                    name: tag3
-                    __v: 0
-                  - children: []
-                    _id: 5c1672b171616a001af4f803
-                    name: tag4
-                    __v: 0
-                replyId: null
-                _id: 5c168750e1d5bf0014e5a927
-                title: Post 2 Title
-                body: "This is the body of post no. 2"
-                authorId: 5c07a5a54a9d0c0012cd8b35
-                createdAt: "2018-12-16T17:11:44.595Z"
-                updatedAt: "2018-12-16T17:11:44.595Z"
-
-        500:
-          description: Server error
 
   # User routes
   /user/register:
     post:
       tags:
-        - "user"
+        - user
       summary: Register a new user
       consumes:
         - application/json
       parameters:
         - in: body
           name: body
-          description: User to create
+          description: The properties of the user to create.
           schema:
             type: object
             required:
@@ -172,38 +48,278 @@ paths:
                 type: string
                 format: sha512
             example:
-              name: "test test"
-              email: "test@test.com"
-              password: "cbf0936369e8776d3647988d65f638d9c05169adbfe358b7b5f65b1915b1c7ff8581026928da92f1e7c02931c551e54a5715d876eb51af7f412b2669f9860e2c"
+              name: Testy Tess
+              email: tester@test.com
+              password: cbf0936369e8776d3647988d65f638d9c05169adbfe358b7b5f65b1915b1c7ff8581026928da92f1e7c02931c551e54a5715d876eb51af7f412b2669f9860e2c
       produces:
         - application/json
       responses:
         201:
-          description: User created
+          description: The user has beeen created successfully
+          schema:
+              $ref: "#/definitions/User"
           examples:
             application/json:
-              name: test test
-              email: test@test.com
+              id: 622b3c5312fbbfa612e8a448
+              createdAt: "2018-12-16T17:11:44.595Z"
+              updatedAt: "2018-12-16T17:11:44.595Z"
+              name: Testy Tess
+              email: tester@test.com
+              passwordHash: cbf0936369e8776d3647988d65f638d9c05169adbfe358b7b5f65b1915b1c7ff8581026928da92f1e7c02931c551e54a5715d876eb51af7f412b2669f9860e2c
         500:
-          description: Invalid input / Server error
+          description: Invalid input / internal server error
           examples:
             application/json:
-              errors:
-                email:
-                  message: Path `email` is required.
-                  name: ValidatorError
-                  properties:
-                    message: Path `email` is required.
-                    type: required
-                    path: email
-                  kind: required
-                  path: email
-              _message: User validation failed
-              message: "User validation failed: email: Path `email` is required."
-              name: ValidationError
+              error: "User validation failed: email: Path `email` is required."
+
+  # Content routes
+  /content/createQuestion:
+    post:
+      tags:
+        - content
+      summary: Create a new question
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: The properties of the question to create.
+          schema:
+            type: object
+            required:
+              - title
+              - body
+              - authorId
+            properties:
+              title:
+                type: string
+              body:
+                type: string
+              authorId:
+                type: string
+                format: ObjectId
+              tags:
+                type: array
+                items:
+                  type: string
+                  format: ObjectId
+            example:
+              title: Question Title
+              body: This is the body of the question
+              authorId: 5c07a5a54a9d0c0012cd8b35
+              tags: ["tag1", "tag2"]
+      produces:
+        - application/json
+      responses:
+        201:
+          description: The question created in the database
+          schema:
+            $ref: "#/definitions/Question"
+          examples:
+            application/json:
+              id: 5c168750e1d5bf0014e5a926
+              createdAt: "2018-12-16T17:11:44.595Z"
+              updatedAt: "2018-12-16T17:11:44.595Z"
+              body: This is the body of the question
+              authorId: 5c07a5a54a9d0c0012cd8b35
+              replyId: null
+              title: Question Title
+              tags:
+                - children: []
+                  id: 5c1672b171616a001af4f800
+                  name: tag1
+                - children: []
+                  id: 5c1672b171616a001af4f801
+                  name: tag2
+        400:
+          description: Invalid input
+          examples:
+            application/json:
+              error: "Question validation failed: body: Path `body` is required."
+        500:
+          description: Internal server error
+          examples:
+            application/json:
+              error: "Internal server error: couldn't fulfill the request at the current time."
+
+  /content/createReply:
+    post:
+      tags:
+        - content
+      summary: Create a reply to an existing question
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: The properties of the reply to create.
+          schema:
+            type: object
+            required:
+              - questionId
+              - body
+              - authorId
+            properties:
+              questionId:
+                type: string
+                format: ObjectId
+              body:
+                type: string
+              authorId:
+                type: string
+                format: ObjectId
+            example:
+              questionId: 5c168750e1d5bf0014e5a926
+              body: This is the body of the reply
+              authorId: f0a31ff9bf120a8859dddf7c
+      produces:
+        - application/json
+      responses:
+        201:
+          description: The reply created in the database
+          schema:
+            $ref: "#/definitions/Reply"
+          examples:
+            application/json:
+              id: b9ab2d38c3a55ad4a89267b7
+              createdAt: "2018-12-18T17:45:39.245Z"
+              updatedAt: "2018-12-18T17:45:39.245Z"
+              body: This is the body of the reply
+              authorId: f0a31ff9bf120a8859dddf7c
+              replyId: null
+              questionId: 5c168750e1d5bf0014e5a926
+
+        400:
+          description: Invalid input
+          examples:
+            application/json:
+              error: "Reply validation failed: body: Path `body` is required."
+        500:
+          description: Internal server error
+          examples:
+            application/json:
+              error: "Internal server error: couldn't fulfill the request at the current time."
+
+  /content/latestQuestions:
+    get:
+      tags:
+        - content
+      summary: Get the latest questions
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          default: 1
+          minimum: 1
+          description: The page number of the questions (the first page consists of the latest questions).
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The latest questions in the given page
+          schema:
+            $ref: "#/definitions/Question"
+          examples:
+            application/json:
+              - id: 5c168750e1d5bf0014e5a926
+                createdAt: "2018-12-16T17:11:44.595Z"
+                updatedAt: "2018-12-16T17:11:44.595Z"
+                body: This is the body of the post
+                authorId: 5c07a5a54a9d0c0012cd8b35
+                replyId: null
+                title: 1st Post Title
+                tags:
+                  - children: []
+                    id: 5c1672b171616a001af4f800
+                    name: tag1
+                  - children: []
+                    id: 5c1672b171616a001af4f801
+                    name: tag2
+              - id: 7b6df98a97a8d6c7506118e3
+                createdAt: "2018-12-16T17:10:44.595Z"
+                updatedAt: "2018-12-16T17:10:44.595Z"
+                body: This is the body of the post
+                authorId: 146ef04af628bd6703f1d744
+                replyId: null
+                title: 2nd Post Title
+                tags:
+                  - children: []
+                    id: 5c1672b171616a001af4f801
+                    name: tag2
+        400:
+          description: The requested page doesn't exist
+          examples:
+            application/json:
+              error: "The requested page doesn't exist."
+        500:
+          description: Internal server error
+          examples:
+            application/json:
+              error: "Internal server error: couldn't fulfill the request at the current time."
+
+  # Thread routes
+  /thread/{questionId}:
+    get:
+      tags:
+        - "thread"
+      summary: Get the full question and replies in a thread
+      parameters:
+        - in: path
+          required: true
+          name: questionId
+          type: string
+          format: ObjectId
+          description: The ObjectId of the question that is the root content of the thread.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The question and its replies
+          schema:
+            $ref: "#/definitions/Thread"
+          examples:
+            application/json:
+              question:
+                id: 5c168750e1d5bf0014e5a926
+                createdAt: "2018-12-16T17:11:44.595Z"
+                updatedAt: "2018-12-16T17:11:44.595Z"
+                body: This is the body of the question
+                authorId: 5c07a5a54a9d0c0012cd8b35
+                replyId: c932174c0a2c2374f1939625
+                title: Title!
+                tags:
+                  - children: []
+                    id: 5c1672b171616a001af4f800
+                    name: tag1
+                  - children: []
+                    id: 5c1672b171616a001af4f801
+                    name: tag2
+              replies:
+                - id: c932174c0a2c2374f1939625
+                  createdAt: "2018-12-17T17:13:44.595Z"
+                  updatedAt: "2018-12-17T17:13:44.595Z"
+                  body: This is the body of the reply
+                  authorId: fbd6815d47bc704863e1dc70
+                  replyId: 99b83996c8b32b803ef1101d
+                - id: 99b83996c8b32b803ef1101d
+                  createdAt: "2018-12-17T17:14:44.595Z"
+                  updatedAt: "2018-12-17T17:14:44.595Z"
+                  body: And another one!
+                  authorId: ef1ccbe9c911de177a1d1571
+                  replyId: null
+        404:
+          description: Thread not found
+          examples:
+            application/json:
+              error: "Couldn't find a thread beginning with a question with the given ID."
+        500:
+          description: Internal server error
+          examples:
+            application/json:
+              error: "Internal server error: couldn't fulfill the request at the current time."
 
   # Tag routes
-  /tag/{tagId}:
+  /tag/{tagName}:
     get:
       tags:
         - "tag"
@@ -213,139 +329,165 @@ paths:
       parameters:
         - in: path
           required: true
-          name: tagId
+          name: tagName
           type: string
-          description: Tag to query questions for
+          description: The name of the tag to query questions for.
       produces:
         - application/json
       responses:
         200:
-          description: Array of posts
+          description: Array of matching questions
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Question"
           examples:
             application/json:
-              name: test test
-              email: test@test.com
-        500:
-          description: Invalid input / Server error
-          examples:
-            application/json:
-              - isQuestion: true
-                # ...
-              - isQuestion: false
-                # ...
-              - isQuestion: true
-                # ...
-              - isQuestion: false
-                # ...
-              - isQuestion: true
-                # ...
-
-  # Thread routes
-  /thread/{questionId}:
-    get:
-      tags:
-        - "thread"
-      summary: Get a list of posts in a thread
-      parameters:
-        - in: path
-          required: true
-          name: questionId
-          type: string
-          description: The ObjectId of the root post (the question) in a thread
-      produces:
-        - application/json
-      responses:
-        200:
-          description: Array of posts
-          examples:
-            application/json:
-              - isQuestion: true
-                title: "Question"
-                body: "This is the body of the question"
+              - id: 5c168750e1d5bf0014e5a926
+                createdAt: "2018-12-16T17:11:44.595Z"
+                updatedAt: "2018-12-16T17:11:44.595Z"
+                body: This is the body of the post
+                authorId: 5c07a5a54a9d0c0012cd8b35
+                replyId: null
+                title: 1st Post Title
                 tags:
-                - "tag1"
-                - "tag2"
-              - isQuestion: true
-                title: "Comment #1"
-                body: "This is the body of of the first reply in the thread"
+                  - children: []
+                    id: 5c1672b171616a001af4f800
+                    name: tag1
+                  - children: []
+                    id: 5c1672b171616a001af4f801
+                    name: tag2
+              - id: 7b6df98a97a8d6c7506118e3
+                createdAt: "2018-12-16T17:10:44.595Z"
+                updatedAt: "2018-12-16T17:10:44.595Z"
+                body: This is the body of the post
+                authorId: 146ef04af628bd6703f1d744
+                replyId: null
+                title: 2nd Post Title
                 tags:
-                - "tag3"
-                - "tag4"
+                  - children: []
+                    id: 5c1672b171616a001af4f801
+                    name: tag2
+        404:
+          description: No matching questions were found
+          examples:
+            application/json:
+              error: "Couldn't find any questions tagged with the given tag."
         500:
-          description: Server error
+          description: Internal server error
+          examples:
+            application/json:
+              error: "Internal server error: couldn't fulfill the request at the current time."
 
 # Models
 definitions:
-  Post:
+
+  Model:
     type: object
+    required:
+      - id
+      - createdAt
+      - updatedAt
     properties:
       id:
         type: string
-        format: "ObjectId"
-      type:
-        type: string
-        enum:
-          - question
-          - reply
-      title:
-        type: string
-      body:
-        type: string
-      replyId:
-        type: string
-        default: null
-      tags:
-        type: array
-        items:
-          type: string
-          format: ObjectId
+        format: ObjectId
       createdAt:
         type: string
         format: date-time
       updatedAt:
         type: string
         format: date-time
+
+  Content:
+    allOf:
+      - $ref: "#/definitions/Model" # Inherit everything from the Model definition
+      - required:
+        - body
+        - authorId
+      - properties:
+          body:
+            type: string
+          authorId:
+            type: string
+            format: ObjectId
+          replyId:
+            type: string
+            format: ObjectId
+            default: null
+
+  Question:
+    allOf:
+      - $ref: "#/definitions/Content" # Inherit everything from the Content definition
+      - required:
+        - title
+      - properties: # Extra properties specifically for questions
+          title:
+            type: string
+          tags:
+            type: array
+            items:
+              type: string
+              format: ObjectId
+
+  Reply:
+    allOf:
+      - $ref: "#/definitions/Content" # Inherit everything from the Content definition
+      - required:
+        - questionId
+      - properties: # Extra properties specifically for replies
+          questionId:
+            type: string
+            format: ObjectId
+
+  Thread:
+    type: object
+    required:
+      - id
+      - createdAt
+      - updatedAt
+    properties:
+      question:
+        $ref: "#/definitions/Question"
+      replies:
+        type: array
+        items:
+          $ref: "#/definitions/Reply"
+
   User:
-    type: object
-    properties:
-      id:
-        type: string
-        format: ObjectId
-      name:
-        type: string
-      email:
-        type: string
-        format: email
-      passwordHash:
-        type: string
-        format: sha512
-      createdAt:
-        type: string
-        format: date-time
-      updatedAt:
-        type: string
-        format: date-time
+    allOf:
+      - $ref: "#/definitions/Model" # Inherit everything from the Model definition
+      - required:
+        - name
+        - email
+        - passwordHash
+      - properties:
+          name:
+            type: string
+          email:
+            type: string
+            format: email
+          passwordHash:
+            type: string
+            format: sha512
+
   Tag:
-    type: object
-    properties:
-      id:
-        type: string
-        format: ObjectId
-      name:
-        type: string
-      status:
-        type: string
-        enum:
-          - pending
-          - approved
-      children:
-        type: array
-        items:
-          type: string
-          format: ObjectId
-      createdAt:
-        type: string
-        format: date-time
-      updatedAt:
-        type: string
-        format: date-time
+    allOf:
+      - $ref: "#/definitions/Model" # Inherit everything from the Model definition
+      - required:
+        - name
+        - status
+        - children
+      - properties:
+          name:
+            type: string
+          status:
+            type: string
+            enum:
+              - pending
+              - approved
+          children:
+            type: array
+            items:
+              type: string
+              format: ObjectId
