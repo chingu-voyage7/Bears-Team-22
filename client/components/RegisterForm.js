@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Link from "next/link";
 import {Form, Input, Button} from "antd";
 
@@ -110,5 +111,9 @@ class RegisterForm extends React.Component {
 		);
 	}
 }
+
+RegisterForm.propTypes = {
+	form: PropTypes.object.isRequired
+};
 
 export default Form.create()(RegisterForm);

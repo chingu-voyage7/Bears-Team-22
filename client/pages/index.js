@@ -1,7 +1,7 @@
 import React from "react";
 
-import Login from "./login";
+import Search from "./search";
 
 import "../static/styles/index.css";
 
-export default () => <Login/>;
+export default () => <Search/>;

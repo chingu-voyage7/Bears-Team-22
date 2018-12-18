@@ -2,7 +2,6 @@ import React from "react";
 import {Layout} from "antd";
 
 import Head from "./Head";
-import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Footer from "./Footer";
 import Loading from "./Loading";
@@ -29,10 +28,9 @@ export default class MainLayout extends React.Component {
 		}
 
 		return (
-			<Layout style={{minHeight: "100vh"}}>
+			<React.Fragment>
 				<Head/>
-				<Sidebar/>
-				<Layout>
+				<Layout style={{minHeight: "100vh"}}>
 					<Header/>
 					<Content style={{margin: "24px 16px 0"}}>
 						<div style={{padding: 24, background: "#fff", minHeight: 360}}>
@@ -41,7 +39,7 @@ export default class MainLayout extends React.Component {
 					</Content>
 					<Footer/>
 				</Layout>
-			</Layout>
+			</React.Fragment>
 		);
 	}
 }
