@@ -13,8 +13,6 @@ tags:
     description: Create, modify, read, remove and authenticate users
   - name: content
     description: Create and get various types of content
-  - name: thread
-    description: Do operations on threads
   - name: tag
     description: Create, verify and query tags
 
@@ -200,11 +198,12 @@ paths:
             application/json:
               error: "Internal server error: couldn't fulfill the request at the current time."
 
-  /content/latestQuestions:
+  # Search routes
+  /search:
     get:
       tags:
         - content
-      summary: Get the latest questions
+      summary: Search the content of the website and find items matching a given query
       parameters:
         - in: query
           name: page
@@ -212,11 +211,16 @@ paths:
           default: 1
           minimum: 1
           description: The page number of the questions (the first page consists of the latest questions).
+        - in: query
+          name: q
+          type: string
+          default: "sort:latest"
+          description: The query to use for matching questions. The query can contain custom query-tags to enhance the search capabilities (more on this will be added in the future once the tags are decided on).
       produces:
         - application/json
       responses:
         200:
-          description: The latest questions in the given page
+          description: Found questions matching the given query
           schema:
             $ref: "#/definitions/Question"
           examples:
@@ -246,11 +250,11 @@ paths:
                   - children: []
                     id: 5c1672b171616a001af4f801
                     name: tag2
-        400:
-          description: The requested page doesn't exist
+        404:
+          description: No matching questions were found
           examples:
             application/json:
-              error: "The requested page doesn't exist."
+              error: "Couldn't find any questions matching the given query."
         500:
           description: Internal server error
           examples:
@@ -261,7 +265,7 @@ paths:
   /thread/{questionId}:
     get:
       tags:
-        - "thread"
+        - "content"
       summary: Get the full question and replies in a thread
       parameters:
         - in: path
