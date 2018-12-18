@@ -10,6 +10,11 @@ Developed in the Chingu Voyage-7 cohort by Bears Team 22. See more information o
 See [the MVP spec](mvp.md).
 
 
+## Development
+
+For more information on the backend API of Knowledge, see [the spec](http://htmlpreview.github.io/?https://raw.githubusercontent.com/chingu-voyage7/Bears-Team-22/backend/docs/index.html).
+
+
 ## Creators
 
 - [Itai Steinherz](https://github.com/itaisteinherz)
