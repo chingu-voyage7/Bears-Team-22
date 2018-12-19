@@ -2,23 +2,25 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
 	{
+		isQuestion: {
+			type: Boolean,
+			default: false
+		},
 		title: {
 			type: String,
-			required: true
+			required() {
+				return this.isQuestion;
+			}
 		},
 		body: {
 			type: String,
 			required: true
 		},
-		isQuestion: {
-			type: Boolean,
-			default: true,
-			required: true
-		},
-		tags: [{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Tag"
-		}],
+		tags:
+			[{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Tag"
+			}],
 		authorId: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
@@ -26,10 +28,11 @@ const postSchema = new mongoose.Schema(
 		},
 		replyId: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Post"
+			ref: "Post",
+			default: null
 		}
 	},
-	{timestamps: true}
+	{ timestamps: true }
 );
 
 postSchema.post("save", async (newPost, next) => {

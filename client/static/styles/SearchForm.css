@@ -1,0 +1,15 @@
+.search__input {
+    display: block;
+    width: 85%;
+    margin: 0 auto;
+}
+
+.search__input--title {
+    text-align: center;
+}
+
+@media(min-width: 30rem) {
+    .search__input {
+        width: 35%;
+    }
+}

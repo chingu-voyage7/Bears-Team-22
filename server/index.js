@@ -1,8 +1,9 @@
-const {promisify} = require("util");
+const { promisify } = require("util");
 
 const mongoose = require("mongoose");
 const express = require("express");
 
+const userRoutes = require("./components/users/user-routes");
 const postRoutes = require("./components/posts/post-routes");
 
 // Setting a few options to remove warnings on feature deprecations.
@@ -23,6 +24,7 @@ const port = 5000;
 const app = express();
 
 app.use(express.json());
+app.use("/user", userRoutes);
 app.use("/post", postRoutes);
 
 app.listen(port, () => {
