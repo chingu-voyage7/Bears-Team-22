@@ -1,12 +1,11 @@
 import React from "react";
-import "../static/styles/Question.css";
 
 const Question = props => (
 	<React.Fragment>
 		<div style={styles.wrapper}>
 			<div style={styles.qvote}>
 				<div style={styles.arrowUp} />
-				<div className="vote-data">33.0k</div>
+				<div className="vote-data">30k</div>
 				<div style={styles.arrowDown} />
 			</div>
 			<div className="q-title">
@@ -14,9 +13,9 @@ const Question = props => (
 				<span>submitted 11 hours ago by [RANDOM GUY]</span>
 			</div>
 		</div>
-		<form method="post" action="comment">
-			<textarea />
-			<input type="submit" value="add comment" />
+		<form style={styles.form} method="post" action="comment">
+			<textarea style={styles.textarea} />
+			<input style={styles.submit} type="submit" value="add comment" />
 		</form>
 	</React.Fragment>
 );
@@ -30,7 +29,8 @@ const styles = {
 		alignItems: "center",
 		justifyContent: "center",
 		flexDirection: "column",
-		paddingRight: "10px"
+		marginRight: "10px",
+		width: "20px"
 	},
 	arrowUp: {
 		width: "0",
@@ -48,6 +48,20 @@ const styles = {
 	},
 	title: {
 		margin: "0px"
+	},
+	// Form
+	form: {
+		paddingLeft: "30px"
+	},
+	textarea: {
+		display: "block",
+		marginTop: "10px",
+		marginBottom: "10px",
+		width: "500px",
+		height: "100px"
+	},
+	submit: {
+		marginBottom: "20px"
 	}
 };
 
