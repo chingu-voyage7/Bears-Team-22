@@ -1,4 +1,4 @@
-const {promisify} = require("util");
+const { promisify } = require("util");
 
 const mongoose = require("mongoose");
 const express = require("express");
