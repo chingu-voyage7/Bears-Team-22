@@ -3,9 +3,6 @@ import 'firebase/auth'
 
 import clientCredentials from '../../credentials/client'
 
-import Router from 'next/router';
-
-
 export default !firebase.apps.length ? firebase.initializeApp(clientCredentials) : firebase.app();
 
 /* 

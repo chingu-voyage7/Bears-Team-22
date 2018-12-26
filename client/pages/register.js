@@ -12,7 +12,7 @@ class Register extends React.Component {
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 		.then(userData => {
 			if(userData) {
-				Router.push(`/home?name=${userData.user.email}`);			
+				Router.push('/home');			
 			}
 		});
 	}

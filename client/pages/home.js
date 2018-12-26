@@ -8,15 +8,15 @@ import 'firebase/auth'
 class Home extends React.Component {
 
     logout = () => {
-        firebase.auth().signOut();
-        Router.push('/login');
+      fetch('http://localhost:5000/auth/logout', {credentials: 'include'})
+        .then(() =>  Router.push('/login'))
+        .catch(error => console.log(error));
     };
 
 	render() {
-        const { name } = Router.query;
 		return (
 			<MainLayout>
-                <h2>{`Welcome ${name}`}</h2>
+                <h2>Welcome!</h2>
                 <button onClick={this.logout}>Sign out</button>
 			</MainLayout>
 		);

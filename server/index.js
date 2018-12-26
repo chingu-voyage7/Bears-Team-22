@@ -1,15 +1,12 @@
-const { promisify } = require("util");
-
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require('cors');
-
+//const csrf = require('csurf');
 const admin = require('firebase-admin');
 const session = require('express-session');
-const Filestore = require('session-file-store')(session);
+const firebaseStore = require('connect-session-firebase')(session);
 
 const userRoutes = require("./components/users/user-routes");
-const postRoutes = require("./components/posts/post-routes");
 const authRoutes = require("./components/auth/auth-routes");
 const serviceAccount = require('./stuff.json');
 
@@ -39,22 +36,24 @@ app.use(corsMiddleware);
 app.options('*', corsMiddleware);
 
 app.use(session({
+	name: 'default-session-cookie',
 	secret: 'this_is_a_secret',
-	saveUninitialized: false,
-	resave: false,
-	store: new Filestore({ path: '/tmp/sessions', secret: 'super_this_secret_is_a'}),
-	cookie: { maxAge: 60 * 60 * 1000 }
+	saveUninitialized: true,
+	resave: true,
+	store: new firebaseStore({
+		database: firebase.database()
+	}),
 }));
 
 app.use((req, res, next) => {
 	req.firebaseServer = firebase;
 	next();
-})
+});
 
 app.use(express.json());
-app.use("/user", userRoutes);
+//app.use(csrf());
 app.use('/auth', authRoutes);
-app.use("/post", postRoutes);
+app.use("/user", userRoutes);
 
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`);
