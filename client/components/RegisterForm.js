@@ -19,6 +19,7 @@ class RegisterForm extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				console.log("all good!", values);
+				this.props.signup(values.email, values.password);
 			}
 		});
 	}
