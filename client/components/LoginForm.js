@@ -15,6 +15,7 @@ class LoginForm extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				console.log("all good!", values);
+				this.props.login(values.email, values.password);
 			}
 		});
 	}
