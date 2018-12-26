@@ -9,7 +9,6 @@ const session = require('express-session');
 const Filestore = require('session-file-store')(session);
 
 const userRoutes = require("./components/users/user-routes");
-const postRoutes = require("./components/posts/post-routes");
 const authRoutes = require("./components/auth/auth-routes");
 const serviceAccount = require('./stuff.json');
 
@@ -54,7 +53,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use("/user", userRoutes);
 app.use('/auth', authRoutes);
-app.use("/post", postRoutes);
 
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`);

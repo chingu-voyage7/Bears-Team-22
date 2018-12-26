@@ -3,7 +3,7 @@ import React from "react";
 import MainLayout from "../components/MainLayout";
 import Router from 'next/router';
 import firebase from '../components/Firebase/firebase-api';
-import 'firebase/auth'
+import 'firebase/auth';
 
 class Home extends React.Component {
 
