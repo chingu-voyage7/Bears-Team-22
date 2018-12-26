@@ -1,14 +1,11 @@
-import firebase from 'firebase/app';
-import 'firebase/auth'
+import firebase from "firebase/app";
+import "firebase/auth";
 
-import clientCredentials from '../../credentials/client'
+import clientCredentials from "../../credentials/client";
 
-import Router from 'next/router';
+export default firebase.apps.length > 0 ? firebase.app() : firebase.initializeApp(clientCredentials);
 
-
-export default !firebase.apps.length ? firebase.initializeApp(clientCredentials) : firebase.app();
-
-/* 
+/*
 
 doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);

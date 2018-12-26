@@ -1,23 +1,21 @@
 import React from "react";
 
+import Router from "next/router";
 import MainLayout from "../components/MainLayout";
-import Router from 'next/router';
-import firebase from '../components/Firebase/firebase-api';
-import 'firebase/auth';
+import "firebase/auth";
 
 class Home extends React.Component {
-
-    logout = () => {
-        firebase.auth().signOut();
-        Router.push('/login');
-    };
+	logout() {
+		fetch("http://localhost:5000/auth/logout", {credentials: "include"})
+			.then(() => Router.push("/login")) // eslint-disable-line promise/prefer-await-to-then
+			.catch(error => console.log(error));
+	}
 
 	render() {
-        const { name } = Router.query;
 		return (
 			<MainLayout>
-                <h2>{`Welcome ${name}`}</h2>
-                <button onClick={this.logout}>Sign out</button>
+				<h2>Welcome!</h2>
+				<button type="button" onClick={this.logout}>Sign out</button>
 			</MainLayout>
 		);
 	}
