@@ -35,6 +35,7 @@ exports.login = async (req, res) => {
 	try {
 		const expiresIn = 60 * 60 * 5 * 1000; // 5hrs
 		const sessionCookie = await req.firebaseServer.auth().createSessionCookie(req.body.idToken, {expiresIn});
+
 		// Set cookie policy for session cookie. To be safe it must be implemented on https
 		// const options = {maxAge: expiresIn, httpOnly: true, secure: true};
 		const options = {maxAge: expiresIn};
