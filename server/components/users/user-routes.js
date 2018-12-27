@@ -1,10 +1,12 @@
-const express = require("express");
+const express = require('express');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-const {registerUser, loginUser} = require("./user-controllers");
+const {sessionVerificationMw} = require('../auth/auth-controllers');
 
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-
+// MOCK ROUTING FOR TESTING
+router.get('/get-all', sessionVerificationMw, (req, res) => {
+	console.log('route reached');
+	res.status(200).json({message: 'protected route reached'});
+});
 module.exports = router;
