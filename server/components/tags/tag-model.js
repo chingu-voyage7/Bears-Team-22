@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const tagSchema = new mongoose.Schema({
 	name: {
@@ -10,6 +10,6 @@ const tagSchema = new mongoose.Schema({
 	}
 });
 
-tagSchema.index({name: "text"});
+tagSchema.index({name: 'text'});
 
-module.exports = mongoose.model("Tag", tagSchema);
+module.exports = mongoose.model('Tag', tagSchema);

@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import Search from "./search";
+import Search from './search';
 
-import "../static/styles/index.css";
+import '../static/styles/index.css';
 
 export default () => <Search/>;
+
