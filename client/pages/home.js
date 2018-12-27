@@ -30,7 +30,6 @@ class Home extends React.Component {
 		}
 	}
 
-
     logout = () => {
     	fetch("http://localhost:5000/auth/logout", {credentials: "include"})
     		.then(() => Router.push("/login"))
@@ -43,7 +42,6 @@ class Home extends React.Component {
     		.then(resp => console.log("response", resp))
     		.catch(error => console.log(error));
 	}
-	
 
 	updateEmail = () => {
  		let newEmail = '';
@@ -80,6 +78,7 @@ class Home extends React.Component {
 
     render() {
 		const { user } = this.state;
+
     	return (
 	<MainLayout>
 	<h2>Welcome!</h2>
