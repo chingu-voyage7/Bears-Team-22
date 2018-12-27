@@ -19,7 +19,7 @@ class RegisterForm extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				console.log("all good!", values);
-				this.props.signup(values.email, values.password);
+				this.props.signup(values);
 			}
 		});
 	}
@@ -114,7 +114,8 @@ class RegisterForm extends React.Component {
 }
 
 RegisterForm.propTypes = {
-	form: PropTypes.object.isRequired
+	form: PropTypes.object.isRequired,
+	signup: PropTypes.func.isRequired
 };
 
 export default Form.create()(RegisterForm);
