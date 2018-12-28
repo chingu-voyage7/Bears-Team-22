@@ -32,15 +32,17 @@ exports.login = async (req, res) => {
 		}
 	}
 
-	const expiresIn = 60 * 60 * 5 * 1000; // 5hrs
-	req.firebaseServer.auth().createSessionCookie(req.body.idToken, {expiresIn}).then(sessionCookie => {
+	try {
+		const expiresIn = 60 * 60 * 5 * 1000; // 5hrs
+		const sessionCookie = await req.firebaseServer.auth().createSessionCookie(req.body.idToken, {expiresIn});
 		// Set cookie policy for session cookie. To be safe it must be implemented on https
 		// const options = {maxAge: expiresIn, httpOnly: true, secure: true};
 		const options = {maxAge: expiresIn};
 		res.cookie('session', sessionCookie, options);
 		res.status(200).json({loggedUser});
-	})
-		.catch(() => res.status(401).send('UNAUTHORIZED REQUEST!')); // Invalid token
+	} catch (error) {
+		res.status(401).send('UNAUTHORIZED REQUEST!'); // Invalid token
+	}
 };
 
 exports.logout = (req, res) => {
@@ -48,16 +50,17 @@ exports.logout = (req, res) => {
 	res.status(204).end();
 };
 
-exports.sessionVerificationMw = (req, res, next) => {
+exports.sessionVerificationMw = async (req, res, next) => {
 	// Thanks to cookieParser the cookie named 'session' is accessible
 	if (req.cookies.session) {
-		req.firebaseServer.auth().verifySessionCookie(req.cookies.session, true)
-			.then(userInfo => {
-				// Once the cookie is verified the user info are available and set to a custom property on the req object
-				req.knowledgeUserInfo = userInfo;
-				next();
-			})
-			.catch(() => res.status(401).json({message: 'Unauthorized'})); // Verification cookie failed
+		try {
+			const userInfo = await req.firebaseServer.auth().verifySessionCookie(req.cookies.session, true);
+			// Once the cookie is verified the user info are available and set to a custom property on the req object
+			req.knowledgeUserInfo = userInfo;
+			next();
+		} catch (error) {
+			res.status(401).json({message: 'Unauthorized'}); // Verification cookie failed
+		}
 	} else {
 		res.status(401).json({message: 'Unauthorized'}); // No cookie named session provided
 	}
