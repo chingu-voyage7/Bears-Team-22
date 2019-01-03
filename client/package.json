@@ -16,7 +16,6 @@
 		"@zeit/next-css": "^1.0.1",
 		"antd": "^3.11.0",
 		"express": "^4.16.4",
-		"express-session": "^1.15.6",
 		"firebase": "^5.7.1",
 		"firebase-admin": "^6.4.0",
 		"isomorphic-unfetch": "^3.0.0",
@@ -24,8 +23,7 @@
 		"next": "^7.0.2",
 		"prop-types": "^15.6.2",
 		"react": "^16.6.3",
-		"react-dom": "^16.6.3",
-		"session-file-store": "^1.2.0"
+		"react-dom": "^16.6.3"
 	},
 	"devDependencies": {
 		"babel-eslint": "^10.0.1",

@@ -1,15 +1,36 @@
-const User = require("./user-model");
+const User = require('./user-model');
 
-exports.registerUser = async (req, res) => {
+exports.getUser = (req, res) => res.status(200).json(req.knowledgeUserInfo);
+
+// TODOS: user-delete and user-update method
+
+exports.updateUser = async (req, res) => {
+	if (req.body.email || req.body.password) {
+		try {
+			await req.firebaseServer.auth().updateUser(req.knowledgeUserInfo.uid, req.body);
+		} catch (error) {
+			console.error('fail', error);
+		}
+	}
+
 	try {
-		const newUser = await new User({
-			name: req.body.name,
-			email: req.body.email,
-			passwordHash: req.body.password
-		}).save();
+		const updatedUser = await User.findByIdAndUpdate(req.knowledgeUserInfo.uid, {$set: req.body}, {new: true, runValidators: true});
 
-		res.status(201).json({newUser});
+		res.status(200).json(updatedUser);
 	} catch (error) {
-		res.status(500).json({error});
+		res.status(500).json(error);
+	}
+};
+
+exports.deleteUser = async (req, res) => {
+	try {
+		// TODOS: Need to find a way to hold it in sync - A check when the app starts
+		// and if one user exists only into one db removing it
+		await req.firebaseServer.auth().deleteUser(req.knowledgeUserInfo.uid);
+		await User.findByIdAndDelete(req.knowledgeUserInfo.uid);
+		res.status(204).end();
+	} catch (error) {
+		console.error('fail', error);
+		res.status(500).json(error);
 	}
 };
