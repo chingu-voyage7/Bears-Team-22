@@ -35,6 +35,8 @@ const replySchema = new mongoose.Schema({
 	}
 });
 
+contentSchema.index({ 'title': 'text'});
+
 const Content = mongoose.model('Content', contentSchema);
 
 exports.Question = Content.discriminator('Question', questionSchema);
