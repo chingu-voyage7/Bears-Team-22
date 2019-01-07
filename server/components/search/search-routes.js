@@ -1,10 +1,10 @@
 const express = require('express');
 
-const {getQuestion, populate} = require('./search-controller');
+const {getQuestion, prepopulate} = require('./search-controller');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.get('/search', getQuestion);
-router.get('/pre-populate', populate);
+router.get('/pre-populate', prepopulate);
 
 module.exports = router;

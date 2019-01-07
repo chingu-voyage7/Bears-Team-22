@@ -1,4 +1,6 @@
 const { Question } = require('../content/content-model');
+const User = require('../users/user-model');
+const mongoose = require('mongoose');
 
 exports.getQuestion = async (req, res ) => {
 
@@ -15,21 +17,25 @@ exports.getQuestion = async (req, res ) => {
     qArr.map(wrd => {
         qString+= `"${wrd}" `
     })
-    
+
     try {
-        const result = await Question.find({ $text: {$search: qString}});
+        const result = await Question.find({ $text: {$search: qString}}).populate('authorId');
         res.status(200).json({result});
     } catch(err) {
-        res.status(500).json(err)
+        res.status(500).json(err)   
     }
 }
 
-exports.populate = async (req, res, next) => {
+exports.prepopulate = async (req, res, next) => {
     try {
-       await Question.create([
-            {title: "This is the first title", body: "This is the first body", authorId: "5c07a5a54a9d0c0012cd8b35"},
-            {title: "This is the second title", body: "This is the second body", authorId: "5c07a5a54a9d0c0012cd8b35"},{title: "This is the third title", body: "This is the third body", authorId: "5c07a5a54a9d0c0012cd8b35"},
-            {title: "This is the fourth title", body: "This is the fourth body", authorId: "5c07a5a54a9d0c0012cd8b35"}
+        await User.deleteMany({});
+        await Question.deleteMany({});
+
+        let user = await  User.create({name: 'test', email:'test@test.com'});
+        await Question.create([
+            {title: "This is the first title", body: "This is the first body", authorId: mongoose.Types.ObjectId(user._id)},
+            {title: "This is the second title", body: "This is the second body", authorId: mongoose.Types.ObjectId(user._id)},{title: "This is the third title", body: "This is the third body", authorId: mongoose.Types.ObjectId(user._id)},
+            {title: "This is the fourth title", body: "This is the fourth body", authorId: mongoose.Types.ObjectId(user._id)}
         ]); 
         /*  - Just write down the documents you want to insert
         await xxxx.create([
