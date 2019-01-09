@@ -61,7 +61,8 @@
 						"children",
 						"form",
 						"login",
-						"signup"
+						"signup",
+						"user"
 					]
 				}
 			],

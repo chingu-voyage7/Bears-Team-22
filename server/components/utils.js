@@ -1,4 +1,4 @@
-const Tag = require('./tags/tag-model');
+const Tag = require("./tags/tag-model");
 
 /* 	This code replace the name of the tag with
 	its id ( if exists otherwise it creates one); apparently

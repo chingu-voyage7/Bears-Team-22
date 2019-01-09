@@ -7,7 +7,7 @@ import "../static/styles/SearchForm.css";
 const InputSearch = Input.Search;
 
 class SearchForm extends React.Component {
-	onSearch = (value) => {
+	onSearch = value => {
 		console.log(value);
 	}
 

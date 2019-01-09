@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const contentSchema = new mongoose.Schema({
 	body: {
@@ -7,15 +7,15 @@ const contentSchema = new mongoose.Schema({
 	},
 	authorId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
+		ref: "User",
 		required: true
 	},
 	replyId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Content',
+		ref: "Content",
 		default: null
 	}
-}, {timestamps: true, discriminatorKey: 'type', collection: 'posts'});
+}, {timestamps: true, discriminatorKey: "type", collection: "posts"});
 
 const questionSchema = new mongoose.Schema({
 	title: {
@@ -24,20 +24,20 @@ const questionSchema = new mongoose.Schema({
 	},
 	tags: [{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Tag'
+		ref: "Tag"
 	}]
 });
 
 const replySchema = new mongoose.Schema({
 	questionId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Content'
+		ref: "Content"
 	}
 });
 
-contentSchema.index({ 'title': 'text'});
+contentSchema.index({title: "text"});
 
-const Content = mongoose.model('Content', contentSchema);
+const Content = mongoose.model("Content", contentSchema);
 
-exports.Question = Content.discriminator('Question', questionSchema);
-exports.Reply = Content.discriminator('Reply', replySchema);
+exports.Question = Content.discriminator("Question", questionSchema);
+exports.Reply = Content.discriminator("Reply", replySchema);
