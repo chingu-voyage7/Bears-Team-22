@@ -1,25 +1,52 @@
-const {promisify} = require("util");
+const mongoose = require('mongoose');
+const express = require('express');
+const cors = require('cors');
+// Const csrf = require('csurf');  <-- TODO
+const admin = require('firebase-admin');
+const cookieParser = require('cookie-parser');
 
-const mongoose = require("mongoose");
-const express = require("express");
+const userRoutes = require('./components/users/user-routes');
+const authRoutes = require('./components/auth/auth-routes');
+
+const serviceAccount = require('./stuff.json');
+
+const port = 5000;
+const app = express();
+
+const firebase = admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: 'https://react-firebase-85039.firebaseio.com'
+}, 'server');
 
 // Setting a few options to remove warnings on feature deprecations.
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useCreateIndex", true);
-mongoose.set("useFindAndModify", false);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 
-promisify(mongoose.connect)("mongodb://mongo:27017/test_db")
+mongoose.connect('mongodb://mongo:27017/test_db')
 	.then(() => {
-		console.log("Successfully connected to Mongo!");
+		console.log('Successfully connected to Mongo!');
 	})
 	.catch(error => {
 		console.log(`Error connecting to Mongo: ${error}`);
 	});
 
-const port = 5000;
+const corsMiddleware = cors({origin: 'http://localhost:3000', optionsSuccessStatus: 200, credentials: true});
 
-const app = express();
+app.use(corsMiddleware);
+app.options('*', corsMiddleware);
+
+app.use((req, res, next) => {
+	req.firebaseServer = firebase;
+	next();
+});
+
+app.use(cookieParser('this_is_a_secret'));
 app.use(express.json());
+// App.use(csrf());  <-- TODO
+app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
+
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`);
 });
