@@ -9,15 +9,10 @@ exports.getQuestion = async (req, res) => {
 	// multiple phrases hence make a AND research instead of
 	// OR research (passing the query 'foo bar' will now return
 	// the text with 'foo' AND 'bar' instead of 'foo' OR 'bar').
-	const qArr = query.split(" ");
-	let qString = "";
-
-	for (const word of qArr) {
-		qString += `"${word}" `;
-	}
+	const queryString = query.split(" ").map(word => `"${word}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
 
 	try {
-		const result = await Question.find({$text: {$search: qString}});
+		const result = await Question.find({$text: {$search: queryString}});
 		res.status(200).json({result});
 	} catch (error) {
 		res.status(500).json(error);
