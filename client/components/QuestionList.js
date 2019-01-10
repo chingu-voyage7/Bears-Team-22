@@ -9,19 +9,24 @@ class QuestionList extends React.Component {
 	}
 
 	render() {
-		return (
-        <List
-        itemLayout="horizontal"
-        dataSource={this.props.questions}
-        renderItem={item => (
-            <List.Item actions={[<span>Author: {item.authorId.name}</span>]} >
-            <List.Item.Meta
-            title={<b>{item.title}</b>}
-            description={item.body}
+        return (
+            <List
+                itemLayout="horizontal"
+                dataSource={this.props.questions}
+                renderItem={item => {
+                    console.log(item);
+
+                    return (
+                        <List.Item actions={[<span>Author: {item.authorId.name}</span>]} >
+                            <List.Item.Meta
+                                title={<b>{item.title}</b>}
+                                description={item.body}
+                            />
+                        </List.Item>
+                    );
+                }}
             />
-        </List.Item>
-    )}
-  />);
+        );
 	}
 }
 
