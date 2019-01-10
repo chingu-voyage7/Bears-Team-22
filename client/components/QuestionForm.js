@@ -7,21 +7,19 @@ import "antd/dist/antd.css";
 
 import "../static/styles/RegisterForm.css";
 
-const FormItem = Form.Item;
-const TextArea = Input.TextArea;
+const {Item: FormItem} = Form;
+const {TextArea} = Input;
 
 class QuestionForm extends React.Component {
-
-	handleSubmit = e => {
+	handleSubmit(e) {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				this.props.postQuestion(values);
-				Router.push('/search'); 
+				Router.push("/search");
 			}
 		});
 	}
-
 
 	render() {
 		const {getFieldDecorator} = this.props.form;
@@ -47,17 +45,17 @@ class QuestionForm extends React.Component {
 							getFieldDecorator("body", {
 								rules: [
 									{
-                                        required: true,
-                                        min: 20,
+										required: true,
+										min: 20,
 										message: "Body of the question cannot contain less than 20 character"
 									}
 								]
-							})(<TextArea placeholder="body" autosize={{minRows:5, maxRows: 5}} />)
+							})(<TextArea placeholder="body" autosize={{minRows: 5, maxRows: 5}}/>)
 						}
 					</FormItem>
 
 					<Button type="primary" style={{marginRight: "1rem"}}>Cancel</Button>
-                    <Button type="primary" htmlType="submit">Submit</Button>
+					<Button type="primary" htmlType="submit">Submit</Button>
 
 				</Form>
 			</div>
