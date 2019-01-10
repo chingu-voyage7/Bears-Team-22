@@ -16,17 +16,19 @@ exports.login = async (req, res) => {
 		// Handle registration + login | Save new user into our MongoDb
 		try {
 			loggedUser = await new User({
-				_id: firebaseUserInfo.uid,
+				firebaseId: firebaseUserInfo.uid,
 				name: req.body.registrationData.name,
 				email: req.body.registrationData.email
-			}).save().select('-__v');
+			}).save();
+			delete loggedUser.__v;
+			delete loggedUser.firebase_id;
 		} catch (error) {
 			return res.status(500).json({error});
 		}
 	} else {
 		// Handle login | Fetch user from mongoDb using the firebase id
 		try {
-			loggedUser = await User.findById(firebaseUserInfo.uid).select('-__v');
+			loggedUser = await User.findOne({firebaseId: firebaseUserInfo.uid}).select('-__v');
 		} catch (error) {
 			return res.status(500).json({error});
 		}
@@ -54,9 +56,15 @@ exports.sessionVerificationMw = async (req, res, next) => {
 	// Thanks to cookieParser the cookie named 'session' is accessible
 	if (req.cookies.session) {
 		try {
+			console.log(req.cookies.session);
 			const userInfo = await req.firebaseServer.auth().verifySessionCookie(req.cookies.session, true);
 			// Once the cookie is verified the user info are available and set to a custom property on the req object
 			req.knowledgeUserInfo = userInfo;
+			// Due to the incompatibility between the
+			// firebase uid and the mongoId is needed an
+			// additional call:
+			req.knowledgeUserInfo.mongoInstance = await User.findOne({firebaseId: userInfo.uid});
+			if(!req.knowledgeUserInfo.mongoInstance) throw new Error();
 			next();
 		} catch (error) {
 			res.status(401).json({message: 'Unauthorized'}); // Verification cookie failed

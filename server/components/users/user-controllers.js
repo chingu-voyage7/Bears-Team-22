@@ -14,7 +14,7 @@ exports.updateUser = async (req, res) => {
 	}
 
 	try {
-		const updatedUser = await User.findByIdAndUpdate(req.knowledgeUserInfo.uid, {$set: req.body}, {new: true, runValidators: true});
+		const updatedUser = await User.findByIdAndUpdate({firebaseId: req.knowledgeUserInfo.uid}, {$set: req.body}, {new: true, runValidators: true});
 
 		res.status(200).json(updatedUser);
 	} catch (error) {
@@ -27,7 +27,7 @@ exports.deleteUser = async (req, res) => {
 		// TODOS: Need to find a way to hold it in sync - A check when the app starts
 		// and if one user exists only into one db removing it
 		await req.firebaseServer.auth().deleteUser(req.knowledgeUserInfo.uid);
-		await User.findByIdAndDelete(req.knowledgeUserInfo.uid);
+		await User.findByIdAndDelete({firebaseId: req.knowledgeUserInfo.uid});
 		res.status(204).end();
 	} catch (error) {
 		console.error('fail', error);

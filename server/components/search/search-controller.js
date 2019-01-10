@@ -29,41 +29,43 @@ exports.getQuestion = async (req, res) => {
 
 exports.prepopulate = async (req, res) => {
 	try {
-		await User.deleteMany({});
+		/* 		Await User.deleteMany({});
 		await Question.deleteMany({});
 		await Reply.deleteMany({});
-		await Thread.deleteMany({});
+		await Thread.deleteMany({}); */
+		const mockData = await User.findOne({name: 'frank'});
+		if (!mockData) {
+			const frank = await User.create({name: 'frank', email: 'frank@test.com', firebaseId: 'nsN9j7ln7rQk7VBTr0WRSe7vo8L2'});
+			const jhon = await User.create({name: 'jhon', email: 'jhon@test.com', firebaseId: 'nsN9j7ln72bd7VBTr0WRSe7vo8L2'});
 
-		const frank = await User.create({name: 'frank', email: 'frank@test.com'});
-		const jhon = await User.create({name: 'jhon', email: 'jhon@test.com'});
-		const questions = await Question.create([
-			{title: 'This is the first title', body: 'This is the first body', authorId: mongoose.Types.ObjectId(frank._id)},
-			{title: 'This is the second title', body: 'This is the second body', authorId: mongoose.Types.ObjectId(frank._id)},
-			{title: 'This is the third title', body: 'This is the third body', authorId: mongoose.Types.ObjectId(jhon._id)},
-			{title: 'This is the fourth title', body: 'This is the fourth body', authorId: mongoose.Types.ObjectId(frank._id)}
-		]);
+			const questions = await Question.create([
+				{title: 'This is the first title', body: 'This is the first body', authorId: mongoose.Types.ObjectId(frank._id)},
+				{title: 'This is the second title', body: 'This is the second body', authorId: mongoose.Types.ObjectId(frank._id)},
+				{title: 'This is the third title', body: 'This is the third body', authorId: mongoose.Types.ObjectId(jhon._id)},
+				{title: 'This is the fourth title', body: 'This is the fourth body', authorId: mongoose.Types.ObjectId(frank._id)}
+			]);
+			const replies = await Reply.create([
+				{body: 'This is the first reply to the first question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
+				{body: 'This is the first reply to the second question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[1]._id)},
+				{body: 'This is the first reply to the third question', authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[2]._id)},
+				{body: 'This is the second reply to the first question', authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
+				{body: 'This is the third reply to the first question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
+				{body: 'This is the second reply to the third question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[2]._id)}
+			]);
+			const threads = [];
+			questions.forEach(question => {
+				const thread = {
+					question: question._id,
+					replies: replies.filter(reply => reply.questionId === question._id).map(el => el._id)};
+				threads.push(thread);
+			});
 
-		const replies = await Reply.create([
-			{body: 'This is the first reply to the first question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
-			{body: 'This is the first reply to the second question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[1]._id)},
-			{body: 'This is the first reply to the third question', authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[2]._id)},
-			{body: 'This is the second reply to the first question', authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
-			{body: 'This is the third reply to the first question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
-			{body: 'This is the second reply to the third question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[2]._id)}
-		]);
+			await Thread.create(threads);
+			console.log('questions', questions);
 
-		const threads = [];
-		questions.forEach(question => {
-			const thread = {
-				question: question._id,
-				replies: replies.filter(reply => reply.questionId === question._id).map(el => el._id)};
-			threads.push(thread);
-		});
-
-		await Thread.create(threads);
-		console.log('questions', questions);
-
-		res.status(200).json({message: 'Db Populated'});
+			return res.status(200).json({message: 'Db Populated'});
+		}
+		return res.status(200).json({message: 'Db was already filled with mock data'});
 	} catch (error) {
 		console.log(error);
 		res.status(500).json(error);
