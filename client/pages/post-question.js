@@ -15,7 +15,7 @@ class QuestionPage extends React.Component {
 		};
 
 		try {
-			const res = await fetch("http://localhost:5000/content/create-content", fetchOpts);
+			const res = await fetch("http://localhost:5000/content/create", fetchOpts);
 			const json = await res.json();
 
 			console.log("result", json);

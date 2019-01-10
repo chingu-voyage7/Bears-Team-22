@@ -35,7 +35,7 @@ const replySchema = new mongoose.Schema({
 	}
 });
 
-contentSchema.index({title: "text"});
+questionSchema.index({title: "text"}); // TODO: Check if the index should be for `contentSchema` or for `questionSchema`.
 
 const Content = mongoose.model("Content", contentSchema);
 

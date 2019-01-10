@@ -32,7 +32,7 @@ class Search extends React.Component {
 		}
 	}
 
-	render() {
+	render() { // TODO: Only show the option to post a new question once a user searches something, and hide it when the query text field changes.
 		return (
 			<MainLayout>
 				<SearchForm search={this.querySearch}/>
