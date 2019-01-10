@@ -9,6 +9,7 @@ const userRoutes = require('./components/users/user-routes');
 const authRoutes = require('./components/auth/auth-routes');
 const threadRoutes = require('./components/thread/thread-routes');
 const searchRoutes = require('./components/search/search-routes');
+const contentRoutes = require('./components/content/content-routes');
 const serviceAccount = require('./stuff.json');
 
 const port = 5000;
@@ -48,6 +49,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/thread', threadRoutes);
+app.use('/content', contentRoutes);
 app.use(searchRoutes);
 
 app.listen(port, () => {
