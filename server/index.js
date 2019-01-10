@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 
 const userRoutes = require('./components/users/user-routes');
 const authRoutes = require('./components/auth/auth-routes');
+const threadRoutes = require('./components/thread/thread-routes');
 const searchRoutes = require('./components/search/search-routes');
 const serviceAccount = require('./stuff.json');
 
@@ -43,9 +44,11 @@ app.use((req, res, next) => {
 
 app.use(cookieParser('this_is_a_secret'));
 app.use(express.json());
-// App.use(csrf());  <-- TODO
+
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/thread', threadRoutes);
+app.use(searchRoutes);
 
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`);
