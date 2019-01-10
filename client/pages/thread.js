@@ -9,13 +9,13 @@ class Thread extends React.Component {
 	// State should represent the entire tree of comments in nested json format
 	state = {
 		questions: {},
-		reply: {}
+		replies: {}
 	};
 	onSubmitReply = () => {};
 	loadSampleData = () => {
 		this.setState({
 			questions: sampleQuestions,
-			reply: sampleReplies
+			replies: sampleReplies
 		});
 	};
 	render() {
