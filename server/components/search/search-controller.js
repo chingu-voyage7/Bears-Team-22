@@ -38,6 +38,7 @@ exports.prepopulate = async (req, res) => {
 			const frank = await User.create({name: 'frank', email: 'frank@test.com', firebaseId: 'nsN9j7ln7rQk7VBTr0WRSe7vo8L2'});
 			const jhon = await User.create({name: 'jhon', email: 'jhon@test.com', firebaseId: 'nsN9j7ln72bd7VBTr0WRSe7vo8L2'});
 
+			/* eslint-disable new-cap */
 			const questions = await Question.create([
 				{title: 'This is the first title', body: 'This is the first body', authorId: mongoose.Types.ObjectId(frank._id)},
 				{title: 'This is the second title', body: 'This is the second body', authorId: mongoose.Types.ObjectId(frank._id)},
@@ -52,6 +53,7 @@ exports.prepopulate = async (req, res) => {
 				{body: 'This is the third reply to the first question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
 				{body: 'This is the second reply to the third question', authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[2]._id)}
 			]);
+			/* eslint-enable new-cap */
 			const threads = [];
 			questions.forEach(question => {
 				const thread = {
