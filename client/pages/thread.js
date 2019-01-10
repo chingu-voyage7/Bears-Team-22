@@ -12,11 +12,17 @@ class Thread extends React.Component {
 		reply: {}
 	};
 	onSubmitReply = () => {};
-	loadSampleFishes = () => {};
+	loadSampleData = () => {
+		this.setState({
+			questions: sampleQuestions,
+			reply: sampleReplies
+		});
+	};
 	render() {
 		const Tester = () => <div>Yo hey what's up dude</div>;
 		return (
 			<MainLayout>
+				<button onClick={this.loadSampleData}>Load Sample Data</button>
 				<Question submit />
 				{[1, 2, 3, 4, 5, 6].map((value, index) => {
 					return <Answer key={index}>{value}</Answer>;
