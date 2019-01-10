@@ -35,7 +35,7 @@ const replySchema = new mongoose.Schema({
 	}
 });
 
-contentSchema.index({ 'title': 'text'});
+contentSchema.index({title: 'text'});
 
 const Content = mongoose.model('Content', contentSchema);
 
