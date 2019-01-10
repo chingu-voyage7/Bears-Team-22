@@ -6,19 +6,18 @@ class Thread extends React.Component {
 	// Add state just for thread, may change down road
 	// State should represent the entire tree of comments in nested json format
 	state = {
-		questions: {
-			8863: {
-				by: "dhouston",
-				descendants: 71,
-				id: 8863,
-				kids: [8952, 9224, 8917],
-				score: 111,
-				time: 1175714200,
-				title: "My YC app: Dropbox - Throw away your USB drive",
-				type: "story",
-				url: "http://www.getdropbox.com/u/2/screencast.html"
+		questions: [
+			{
+				id: "1112345",
+				createdAt: "2015-05-10",
+				updatedAt: "2017-05-15",
+				body: "Lorem Ipsum lorem ipsum",
+				authorId: "dhouston",
+				replyId: "1112555",
+				title: "Whats the best way to learn to program?",
+				tags: ["javascsript", "programming", "beginner"]
 			}
-		},
+		],
 		comments: {
 			2921983: {
 				by: "norvig",
