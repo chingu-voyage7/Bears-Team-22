@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 
 const userRoutes = require('./components/users/user-routes');
 const authRoutes = require('./components/auth/auth-routes');
-
+const searchRoutes = require('./components/search/search-routes');
 const serviceAccount = require('./stuff.json');
 
 const port = 5000;
