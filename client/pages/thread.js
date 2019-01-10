@@ -23,10 +23,10 @@ class Thread extends React.Component {
 		return (
 			<MainLayout>
 				<button onClick={this.loadSampleData}>Load Sample Data</button>
-				{Object.keys(this.state.replies).map(reply => {
-					console.log("hello world!");
-				})}
 				<Question />
+				{Object.keys(this.state.replies).map(reply => {
+					return <Reply key={reply} />;
+				})}
 			</MainLayout>
 		);
 	}
