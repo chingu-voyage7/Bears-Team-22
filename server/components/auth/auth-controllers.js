@@ -1,4 +1,4 @@
-const User = require('../users/user-model');
+const User = require("../users/user-model");
 
 exports.login = async (req, res) => {
 	// No body, no token, no party!
@@ -19,16 +19,24 @@ exports.login = async (req, res) => {
 				firebaseId: firebaseUserInfo.uid,
 				name: req.body.registrationData.name,
 				email: req.body.registrationData.email
+<<<<<<< HEAD
 			}).save();
 			delete loggedUser.__v;
 			delete loggedUser.firebase_id;
+=======
+			}).save().select("-__v");
+>>>>>>> 3518b17b305f1c8da8aefecc92d8e1548c3ca01e
 		} catch (error) {
 			return res.status(500).json({error});
 		}
 	} else {
 		// Handle login | Fetch user from mongoDb using the firebase id
 		try {
+<<<<<<< HEAD
 			loggedUser = await User.findOne({firebaseId: firebaseUserInfo.uid}).select('-__v');
+=======
+			loggedUser = await User.findById(firebaseUserInfo.uid).select("-__v");
+>>>>>>> 3518b17b305f1c8da8aefecc92d8e1548c3ca01e
 		} catch (error) {
 			return res.status(500).json({error});
 		}
@@ -40,15 +48,15 @@ exports.login = async (req, res) => {
 		// Set cookie policy for session cookie. To be safe it must be implemented on https
 		// const options = {maxAge: expiresIn, httpOnly: true, secure: true};
 		const options = {maxAge: expiresIn};
-		res.cookie('session', sessionCookie, options);
+		res.cookie("session", sessionCookie, options);
 		res.status(200).json({loggedUser});
 	} catch (error) {
-		res.status(401).send('UNAUTHORIZED REQUEST!'); // Invalid token
+		res.status(401).send("UNAUTHORIZED REQUEST!"); // Invalid token
 	}
 };
 
 exports.logout = (req, res) => {
-	res.clearCookie('session');
+	res.clearCookie("session");
 	res.status(204).end();
 };
 
@@ -67,9 +75,9 @@ exports.sessionVerificationMw = async (req, res, next) => {
 			if(!req.knowledgeUserInfo.mongoInstance) throw new Error();
 			next();
 		} catch (error) {
-			res.status(401).json({message: 'Unauthorized'}); // Verification cookie failed
+			res.status(401).json({message: "Unauthorized"}); // Verification cookie failed
 		}
 	} else {
-		res.status(401).json({message: 'Unauthorized'}); // No cookie named session provided
+		res.status(401).json({message: "Unauthorized"}); // No cookie named session provided
 	}
 };
