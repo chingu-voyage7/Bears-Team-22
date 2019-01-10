@@ -5,8 +5,6 @@ import Question from "../components/Question";
 import { sampleQuestions, sampleReplies } from "../sample/data-thread";
 
 class Thread extends React.Component {
-	// Add state just for thread, may change down road
-	// State should represent the entire tree of comments in nested json format
 	state = {
 		questions: {},
 		replies: {}
@@ -33,7 +31,3 @@ class Thread extends React.Component {
 }
 
 export default Thread;
-
-// {[1, 2, 3, 4, 5, 6].map((value, index) => {
-// 	return <Answer key={index}>{value}</Answer>;
-// })}
