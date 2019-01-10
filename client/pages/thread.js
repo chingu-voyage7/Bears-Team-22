@@ -1,6 +1,6 @@
 import React from "react";
 import MainLayout from "../components/MainLayout";
-import Answer from "../components/Answer";
+import Reply from "../components/Reply";
 import Question from "../components/Question";
 import { sampleQuestions, sampleReplies } from "../sample/data-thread";
 
@@ -23,13 +23,14 @@ class Thread extends React.Component {
 		return (
 			<MainLayout>
 				<button onClick={this.loadSampleData}>Load Sample Data</button>
-				<Question submit />
-				{[1, 2, 3, 4, 5, 6].map((value, index) => {
-					return <Answer key={index}>{value}</Answer>;
-				})}
+				<Question />
 			</MainLayout>
 		);
 	}
 }
 
 export default Thread;
+
+// {[1, 2, 3, 4, 5, 6].map((value, index) => {
+// 	return <Answer key={index}>{value}</Answer>;
+// })}
