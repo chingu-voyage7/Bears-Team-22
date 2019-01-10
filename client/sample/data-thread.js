@@ -38,26 +38,25 @@
 // };
 
 // newer mocked data from swagger
-state = {
-	questions: {
-		8863: {
-			createdAt: "2015-05-15",
-			updatedAt: "2017-10-02",
-			body: "lorem ipsum lorem ipsum",
-			authorId: 8863,
-			replyId: "1115555",
-			title: "My YC app: Dropbox - Throw away your USB drive",
-			tags: ["ycombinator", "dropbox"]
-		}
-	},
-	reply: {
-		2921983: {
-			createdAt: "2015-05-15",
-			updatedAt: "2017-10-02",
-			body: "lorem ipsum lorem ipsum",
-			authorId: 8863,
-			replyId: "1115555",
-			questionId: "111125"
-		}
-	}
-};
+ export const	questions =  {
+  8863: {
+    createdAt: "2015-05-15",
+    updatedAt: "2017-10-02",
+    body: "lorem ipsum lorem ipsum",
+    authorId: 8863,
+    replyId: "1115555",
+    title: "My YC app: Dropbox - Throw away your USB drive",
+    tags: ["ycombinator", "dropbox"]
+  }
+},
+
+export const reply = {
+  2921983: {
+    createdAt: "2015-05-15",
+    updatedAt: "2017-10-02",
+    body: "lorem ipsum lorem ipsum",
+    authorId: 8863,
+    replyId: "1115555",
+    questionId: "111125"
+  }
+}
