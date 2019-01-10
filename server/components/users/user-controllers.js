@@ -2,18 +2,9 @@ const User = require("./user-model");
 
 exports.getUser = (req, res) => res.status(200).json({user: req.knowledgeUserInfo});
 
-// TODOS: user-delete and user-update method
-
 exports.updateUser = async (req, res) => {
-	if (req.body.email || req.body.password) {
-		try {
-			await req.firebaseServer.auth().updateUser(req.knowledgeUserInfo.uid, req.body);
-		} catch (error) {
-			console.error("fail", error);
-		}
-	}
-
 	try {
+		await req.firebaseServer.auth().updateUser(req.knowledgeUserInfo.uid, req.body); // TODO: Explicitly update the modified fields here as well as on Mongo (to avoid possible security issues).
 		const updatedUser = await User.findOneAndUpdate({firebaseId: req.knowledgeUserInfo.uid}, {$set: req.body}, {new: true, runValidators: true});
 
 		res.status(200).json(updatedUser);
@@ -30,7 +21,7 @@ exports.deleteUser = async (req, res) => {
 		await User.findOneAndDelete({firebaseId: req.knowledgeUserInfo.uid});
 		res.status(204).end();
 	} catch (error) {
-		console.error("fail", error);
+		console.log("fail", error);
 		res.status(500).json(error);
 	}
 };

@@ -19,6 +19,8 @@ class Search extends React.Component {
 			const res = await fetch(`http://localhost:5000/search?q=${encodeURIComponent(query)}`);
 			const json = await res.json();
 
+			console.log("search results:", json);
+
 			this.setState({
 				questions: json.result
 			});

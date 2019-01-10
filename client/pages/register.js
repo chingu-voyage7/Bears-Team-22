@@ -17,7 +17,7 @@ class Register extends React.Component {
 				method: "POST",
 				headers: new Headers({"Content-Type": "application/json"}),
 				credentials: "include",
-				body: JSON.stringify({idToken, registrationData})
+				body: JSON.stringify({idToken, registrationData}) // TODO: Make sure we don't send the plaintext password to the server.
 			};
 
 			// When a user login it makes a call to the server

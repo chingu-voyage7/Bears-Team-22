@@ -22,6 +22,7 @@
 		"js-cookie": "^2.2.0",
 		"next": "^7.0.2",
 		"prop-types": "^15.6.2",
+		"random-words": "^1.1.0",
 		"react": "^16.6.3",
 		"react-dom": "^16.6.3"
 	},

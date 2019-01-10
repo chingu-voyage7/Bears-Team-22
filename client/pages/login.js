@@ -1,6 +1,6 @@
 import React from "react";
 
-import {auth} from "firebase";
+import {auth} from "firebase/app";
 import "firebase/auth";
 import Router from "next/router";
 import firebase from "../components/Firebase/firebase-api";

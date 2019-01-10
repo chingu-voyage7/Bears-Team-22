@@ -4,6 +4,7 @@
 
 import React from "react";
 import Router from "next/router";
+import randomWords from "random-words";
 
 import "isomorphic-unfetch";
 import MainLayout from "../components/MainLayout";
@@ -30,6 +31,9 @@ class Home extends React.Component {
 		this.state = {
 			user: this.props.user
 		};
+
+		this.updateEmail = this.updateEmail.bind(this);
+		this.deleteUser = this.deleteUser.bind(this);
 	}
 
 	async logout() {
@@ -54,7 +58,8 @@ class Home extends React.Component {
 	}
 
 	async updateEmail() {
-		const newEmail = this.state.user.email === "test@test.com" ? "best@best.com" : "test@test.com";
+		const newEmail = `${randomWords(3).join("_")}@${randomWords(2).join("")}.com`;
+
 		const fetchOpts = {
 			method: "POST",
 			headers: new Headers({"Content-Type": "application/json"}),
@@ -66,7 +71,9 @@ class Home extends React.Component {
 			const response = await fetch("http://localhost:5000/user/update-user", fetchOpts);
 			const json = await response.json();
 
-			console.log("response", json);
+			console.log("user update response:", json);
+
+			this.setState(() => ({user: json}));
 		} catch (error) {
 			console.error(error);
 		}
