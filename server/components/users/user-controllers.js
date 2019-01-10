@@ -1,4 +1,4 @@
-const User = require("./user-model");
+const User = require('./user-model');
 
 exports.getUser = (req, res) => res.status(200).json(req.knowledgeUserInfo);
 
@@ -9,7 +9,7 @@ exports.updateUser = async (req, res) => {
 		try {
 			await req.firebaseServer.auth().updateUser(req.knowledgeUserInfo.uid, req.body);
 		} catch (error) {
-			console.error("fail", error);
+			console.error('fail', error);
 		}
 	}
 
@@ -30,7 +30,7 @@ exports.deleteUser = async (req, res) => {
 		await User.findByIdAndDelete({firebaseId: req.knowledgeUserInfo.uid});
 		res.status(204).end();
 	} catch (error) {
-		console.error("fail", error);
+		console.error('fail', error);
 		res.status(500).json(error);
 	}
 };
