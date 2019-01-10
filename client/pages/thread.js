@@ -5,11 +5,16 @@ import Question from "../components/Question";
 class Thread extends React.Component {
 	// Add state just for thread, may change down road
 	// State should represent the entire tree of comments in nested json format
+	state = {
+		questions: {},
+		reply: {}
+	};
+	onSubmitReply = () => {};
 	render() {
 		const Tester = () => <div>Yo hey what's up dude</div>;
 		return (
 			<MainLayout>
-				<Question />
+				<Question submit />
 				{[1, 2, 3, 4, 5, 6].map((value, index) => {
 					return <Answer key={index}>{value}</Answer>;
 				})}
