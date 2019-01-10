@@ -1,27 +1,32 @@
-import React from 'react';
+import React from "react";
 
-import MainLayout from '../components/MainLayout';
-import SearchForm from '../components/SearchForm';
-import QuestionList from '../components/QuestionList';
+import MainLayout from "../components/MainLayout";
+import SearchForm from "../components/SearchForm";
+import QuestionList from "../components/QuestionList";
+
 class Search extends React.Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
 			questions: []
+		};
+
+		this.querySearch = this.querySearch.bind(this);
+	}
+
+	async querySearch(query) {
+		try {
+			const res = await fetch(`http://localhost:5000/search?q=${encodeURIComponent(query)}`);
+			const json = await res.json();
+
+			this.setState({
+				questions: json.result
+			});
+		} catch (error) {
+			console.error(error);
 		}
 	}
 
-	querySearch = querySearch => {
-		fetch(`http://localhost:5000/search?q=${encodeURIComponent(querySearch)}`)
-		.then(res => res.json())
-		.then(result => {
-			this.setState({
-				questions: result.result
-			})
-		})
-		.catch(err => console.log('err', err));
-	}
 	render() {
 		return (
 			<MainLayout>
