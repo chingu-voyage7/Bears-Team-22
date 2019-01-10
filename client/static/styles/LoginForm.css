@@ -19,6 +19,10 @@
     margin-top: 0.75rem;
 }
 
+.login__form > a {
+    font-weight: bold;
+}
+
 @media(min-width: 30rem) {
     .login__form {
         justify-content: center;

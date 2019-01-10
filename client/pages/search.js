@@ -1,8 +1,11 @@
 import React from "react";
+import Link from "next/link";
 
 import MainLayout from "../components/MainLayout";
 import SearchForm from "../components/SearchForm";
 import QuestionList from "../components/QuestionList";
+
+import "../static/styles/Search.css";
 
 class Search extends React.Component {
 	constructor(props) {
@@ -34,6 +37,12 @@ class Search extends React.Component {
 			<MainLayout>
 				<SearchForm search={this.querySearch}/>
 				<QuestionList questions={this.state.questions}/>
+				<div className="post__question">
+					<p>Couldn't find a result that answers your question?</p>
+					<Link href="/post-question">
+						<a>Post a new question</a>
+					</Link>
+				</div>
 			</MainLayout>
 		);
 	}

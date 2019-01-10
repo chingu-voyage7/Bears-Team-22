@@ -1,0 +1,17 @@
+.post__question {
+    display: grid;
+}
+
+.post__question > * {
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+.post__question > p {
+    font-style: italic;
+}
+
+.post__question > a {
+    font-weight: bold;
+}

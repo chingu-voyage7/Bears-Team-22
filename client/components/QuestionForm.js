@@ -5,12 +5,18 @@ import {Form, Input, Button} from "antd";
 
 import "antd/dist/antd.css";
 
-import "../static/styles/RegisterForm.css";
+import "../static/styles/QuestionForm.css";
 
 const {Item: FormItem} = Form;
 const {TextArea} = Input;
 
 class QuestionForm extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
@@ -26,8 +32,8 @@ class QuestionForm extends React.Component {
 
 		return (
 			<div>
-				<h1 className="register__form--title">Post a new question</h1>
-				<Form className="register__form" onSubmit={this.handleSubmit}>
+				<h1 className="post__question__form--title">Post a new question</h1>
+				<Form className="post__question__form" onSubmit={this.handleSubmit}>
 					<FormItem>
 						{
 							getFieldDecorator("title", {
@@ -54,9 +60,8 @@ class QuestionForm extends React.Component {
 						}
 					</FormItem>
 
-					<Button type="primary" style={{marginRight: "1rem"}}>Cancel</Button>
+					<Button type="danger" style={{marginRight: "1rem"}}>Cancel</Button>
 					<Button type="primary" htmlType="submit">Submit</Button>
-
 				</Form>
 			</div>
 		);
