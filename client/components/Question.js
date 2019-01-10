@@ -15,7 +15,9 @@ const Question = props => (
 		</div>
 		<form style={styles.form} method="post" action="comment">
 			<textarea style={styles.textarea} />
-			<input style={styles.submit} type="submit" value="add comment" />
+			<button style={styles.submit} type="submit" value="add comment">
+				Add Comment
+			</button>
 		</form>
 	</React.Fragment>
 );
