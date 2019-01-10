@@ -19,14 +19,14 @@ exports.login = async (req, res) => {
 				_id: firebaseUserInfo.uid,
 				name: req.body.registrationData.name,
 				email: req.body.registrationData.email
-			}).save();
+			}).save().select('-__v');
 		} catch (error) {
 			return res.status(500).json({error});
 		}
 	} else {
 		// Handle login | Fetch user from mongoDb using the firebase id
 		try {
-			loggedUser = await User.findById(firebaseUserInfo.uid);
+			loggedUser = await User.findById(firebaseUserInfo.uid).select('-__v');
 		} catch (error) {
 			return res.status(500).json({error});
 		}
