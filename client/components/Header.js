@@ -32,6 +32,13 @@ const MainMenu = ({mode = "horizontal", className = "header__menu", theme = "lig
 				</Link>
 			</span>
 		</MenuItem>
+		<MenuItem key="5">
+			<span className="nav-text">
+				<Link href="/new-question-form">
+					<a>Post a new question!</a>
+				</Link>
+			</span>
+		</MenuItem>
 	</Menu>
 );
 
