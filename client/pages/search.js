@@ -38,7 +38,7 @@ class Search extends React.Component {
 				<SearchForm search={this.querySearch}/>
 				<QuestionList questions={this.state.questions}/>
 				<div className="post__question">
-					<p>Couldn't find a result that answers your question?</p>
+					<p>Couldn't find a result that answers your question?</p> {/* eslint-disable-line react/no-unescaped-entities */}
 					<Link href="/post-question">
 						<a>Post a new question</a>
 					</Link>

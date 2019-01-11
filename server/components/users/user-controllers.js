@@ -7,6 +7,8 @@ exports.updateUser = async (req, res) => {
 		await req.firebaseServer.auth().updateUser(req.knowledgeUserInfo.uid, req.body); // TODO: Explicitly update the modified fields here as well as on Mongo (to avoid possible security issues).
 		const updatedUser = await User.findOneAndUpdate({firebaseId: req.knowledgeUserInfo.uid}, {$set: req.body}, {new: true, runValidators: true});
 
+		delete updatedUser.__v;
+
 		res.status(200).json(updatedUser);
 	} catch (error) {
 		res.status(500).json(error);
@@ -19,6 +21,7 @@ exports.deleteUser = async (req, res) => {
 		// and if one user exists only into one db removing it
 		await req.firebaseServer.auth().deleteUser(req.knowledgeUserInfo.uid);
 		await User.findOneAndDelete({firebaseId: req.knowledgeUserInfo.uid});
+
 		res.status(204).end();
 	} catch (error) {
 		console.log("fail", error);
