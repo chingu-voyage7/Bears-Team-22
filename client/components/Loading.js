@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import {Spin} from 'antd';
+import React, {Fragment} from "react";
+import {Spin} from "antd";
 
 export default props => (
 	<Fragment>

@@ -5,31 +5,35 @@ import {Form, Input, Button} from "antd";
 
 import "antd/dist/antd.css";
 
-import "../static/styles/RegisterForm.css";
+import "../static/styles/QuestionForm.css";
 
-const FormItem = Form.Item;
-const TextArea = Input.TextArea;
+const {Item: FormItem} = Form;
+const {TextArea} = Input;
 
 class QuestionForm extends React.Component {
+	constructor(props) {
+		super(props);
 
-	handleSubmit = e => {
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleSubmit(e) {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				this.props.postQuestion(values);
-				Router.push('/search'); 
+				Router.push("/search");
 			}
 		});
 	}
-
 
 	render() {
 		const {getFieldDecorator} = this.props.form;
 
 		return (
 			<div>
-				<h1 className="register__form--title">Post a new question</h1>
-				<Form className="register__form" onSubmit={this.handleSubmit}>
+				<h1 className="post__question__form--title">Post a new question</h1>
+				<Form className="post__question__form" onSubmit={this.handleSubmit}>
 					<FormItem>
 						{
 							getFieldDecorator("title", {
@@ -47,18 +51,17 @@ class QuestionForm extends React.Component {
 							getFieldDecorator("body", {
 								rules: [
 									{
-                                        required: true,
-                                        min: 20,
+										required: true,
+										min: 20,
 										message: "Body of the question cannot contain less than 20 character"
 									}
 								]
-							})(<TextArea placeholder="body" autosize={{minRows:5, maxRows: 5}} />)
+							})(<TextArea placeholder="body" autosize={{minRows: 5, maxRows: 5}}/>)
 						}
 					</FormItem>
 
-					<Button type="primary" style={{marginRight: "1rem"}}>Cancel</Button>
-                    <Button type="primary" htmlType="submit">Submit</Button>
-
+					<Button type="danger" style={{marginRight: "1rem"}}>Cancel</Button>
+					<Button type="primary" htmlType="submit">Submit</Button>
 				</Form>
 			</div>
 		);
