@@ -30,7 +30,10 @@ class Login extends React.Component {
 			// to set the cookie and sync mongo with firebase
 			await fetch("http://localhost:5000/auth/login", fetchOpts);
 			await firebase.auth().signOut(); // Cookies are set, no need to mantain the token in the storage
+			
 			Router.push("/home"); // MOCK ROUTING - To be optimized accordingly to the front-end schema
+			
+			
 		} catch (error) {
 			console.log(error);
 		}

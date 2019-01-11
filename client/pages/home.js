@@ -18,7 +18,8 @@ class Home extends React.Component {
 			}
 
 			const user = await response.json();
-			return user;
+			
+			return {user:user.user};
 		} catch (error) {
 			console.error(error);
 			return {};
