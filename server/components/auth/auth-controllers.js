@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
 				name: req.body.registrationData.name,
 				email: req.body.registrationData.email
 			}).save();
-			
+
 			loggedUser.__v = undefined;
 			loggedUser.firebaseId = undefined;
 		} catch (error) {
@@ -69,9 +69,9 @@ exports.sessionVerificationMw = async (req, res, next) => {
 			}
 			next();
 		} catch (error) {
-			res.status(401).json({message: 'Unauthorized', error}); // Verification cookie failed
+			res.status(401).json({message: "Unauthorized", error}); // Verification cookie failed
 		}
 	} else {
-		res.status(401).json({message: 'Unauthorized', error}); // No cookie named session provided
+		res.status(401).json({message: "Unauthorized"}); // No cookie named session provided
 	}
 };
