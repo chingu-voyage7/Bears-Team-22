@@ -18,9 +18,9 @@ class Home extends React.Component {
 				throw new Error("Unauthorized!");
 			}
 
-			const user = await response.json();
-			
-			return {user:user.user};
+			const {user} = await response.json();
+
+			return {user};
 		} catch (error) {
 			console.error(error);
 			return {};
