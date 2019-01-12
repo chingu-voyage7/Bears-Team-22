@@ -35,8 +35,7 @@ const replySchema = new mongoose.Schema({
 	}
 });
 
-questionSchema.index({title: "text"}); // TODO: Check if the index should be for `contentSchema` or for `questionSchema`.
-
+questionSchema.index({title: "text", body: "text"}); // TODO: Check if the index should be for `contentSchema` or for `questionSchema`.
 const Content = mongoose.model("Content", contentSchema);
 
 exports.Question = Content.discriminator("Question", questionSchema);
