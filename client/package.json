@@ -15,6 +15,7 @@
 	"dependencies": {
 		"@zeit/next-css": "^1.0.1",
 		"antd": "^3.11.0",
+		"delay": "^4.1.0",
 		"express": "^4.16.4",
 		"firebase": "^5.7.1",
 		"firebase-admin": "^6.4.0",
@@ -66,7 +67,9 @@
 						"search",
 						"questions",
 						"user",
-						"postQuestion"
+						"postQuestion",
+						"authState",
+						"authStateListener"
 					]
 				}
 			],

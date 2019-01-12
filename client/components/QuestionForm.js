@@ -22,9 +22,12 @@ class QuestionForm extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				this.props.postQuestion(values);
-				Router.push("/search");
 			}
 		});
+	}
+
+	cancel() {
+		Router.push("/");
 	}
 
 	render() {
@@ -60,7 +63,7 @@ class QuestionForm extends React.Component {
 						}
 					</FormItem>
 
-					<Button type="danger" style={{marginRight: "1rem"}}>Cancel</Button>
+					<Button type="danger" style={{marginRight: "1rem"}} onClick={this.cancel}>Cancel</Button>
 					<Button type="primary" htmlType="submit">Submit</Button>
 				</Form>
 			</div>
