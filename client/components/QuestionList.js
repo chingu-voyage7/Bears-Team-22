@@ -12,7 +12,7 @@ class QuestionList extends React.Component {
 		return (
 			<List
 				itemLayout="horizontal"
-				locale={{emptyText:' '}}
+				locale={{emptyText: " "}}
 				dataSource={this.props.questions}
 				renderItem={item => ( // eslint-disable-next-line react/jsx-key
 					<List.Item actions={[<span>Author: {item.authorId.name}</span>]}>

@@ -32,22 +32,21 @@ class QuestionPage extends React.Component {
 		};
 
 		try {
-			let resp = await fetch("http://localhost:5000/content/create", fetchOpts);
+			const {status: statusCode} = await fetch("http://localhost:5000/content/create", fetchOpts);
 
-			if (resp.status === 201) {
-			this.setState(() => ({
-				status: "posted"
-			}));
+			if (statusCode === 201) {
+				this.setState(() => ({
+					status: "posted"
+				}));
 
-			await delay(1500);
-			await Router.push("/");
-				
-		} else {
-			this.setState(() => ({
-				status: "drafting"
-			}));
-			console.log('failed to post the question');
-		}
+				await delay(1500);
+				await Router.push("/");
+			} else {
+				this.setState(() => ({
+					status: "drafting"
+				}));
+				console.log("failed to post the question");
+			}
 		} catch (error) {
 			console.log("error", error);
 
