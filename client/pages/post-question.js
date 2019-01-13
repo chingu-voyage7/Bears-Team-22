@@ -63,7 +63,7 @@ class QuestionPage extends React.Component {
 		return (
 			<MainLayout>
 				{status === "drafting" ?
-					<QuestionForm postQuestion={this.postQuestion}/>				:
+					<QuestionForm postQuestion={this.postQuestion}/> :
 					<p>{this.status === "posting" ? "Posting the question..." : "Question posted! Redirecting you to the search page..."}</p>
 				}
 				{status === "posting" ? <Loading/> : null}

@@ -8,7 +8,7 @@
     text-align: center;
 }
 
-@media(min-width: 30rem) {
+@media(min-width: 700px) {
     .search__input {
         width: 35%;
     }

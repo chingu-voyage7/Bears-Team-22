@@ -47,7 +47,7 @@ class Search extends React.Component {
 		return (
 			<MainLayout authStateListener={this.updatePostQuestion}>
 				<SearchForm search={this.querySearch}/>
-				<QuestionList questions={this.state.questions}/>
+				<QuestionList questions={this.state.questions}/>  {/* TODO: Set the list to `loading` when searching a query. */}
 				{showPost ?
 					<div className="post__question">
 						<p>Couldn't find a result that answers your question?</p> {/* eslint-disable-line react/no-unescaped-entities */}
