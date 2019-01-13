@@ -3,7 +3,6 @@ import Router from "next/router"; // TODO: Use `withRouter` instead of Router (s
 import delay from "delay";
 import "firebase/auth";
 
-import MainLayout from "../components/MainLayout";
 import Loading from "../components/Loading";
 
 export default class Logout extends React.Component {
@@ -31,11 +30,10 @@ export default class Logout extends React.Component {
 	}
 
 	render() {
+		const {loading, status} = this.state;
+
 		return (
-			<MainLayout>
-				<p>{this.state.status}</p>
-				{this.state.loading ? <Loading/> : null}
-			</MainLayout>
+			<Loading mounted loading={loading} status={status}/>
 		);
 	}
 }

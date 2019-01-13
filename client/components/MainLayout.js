@@ -48,7 +48,7 @@ export default class MainLayout extends React.Component {
 		const {loading, authState} = this.state;
 
 		if (loading) {
-			return <Loading size="large"/>;
+			return <Loading mounted={false} size="large"/>;
 		}
 
 		return (

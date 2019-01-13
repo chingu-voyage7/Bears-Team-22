@@ -8,6 +8,23 @@ import Loading from "../components/Loading";
 
 import "isomorphic-unfetch";
 
+const CenteredText = ({children}) => (
+	<div className="big__text">
+		<p>{children}</p>
+		<style jsx>{`
+			.big__text {
+				display: grid;
+				justify-content: center;
+				align-items: center;
+				justify-items: center;
+				text-align: center;
+				height: 100vh;
+			}    
+		`}
+		</style>
+	</div>
+);
+
 class QuestionPage extends React.Component {
 	state = {
 		status: "drafting"
@@ -63,9 +80,8 @@ class QuestionPage extends React.Component {
 			<MainLayout>
 				{status === "drafting" ?
 					<QuestionForm postQuestion={this.postQuestion}/> :
-					<p>{this.status === "posting" ? "Posting the question..." : "Question posted! Redirecting you to the search page..."}</p>
+					<Loading mounted={true} loading={status === "posting"} noWrapper={true} status={status === "posting" ? "Posting the question..." : "Question posted! Redirecting you to the search page..."}/>
 				}
-				{status === "posting" ? <Loading/> : null}
 			</MainLayout>
 		);
 	}
