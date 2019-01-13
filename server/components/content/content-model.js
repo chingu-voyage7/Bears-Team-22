@@ -9,11 +9,6 @@ const contentSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User",
 		required: true
-	},
-	replyId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Content",
-		default: null
 	}
 }, {timestamps: true, discriminatorKey: "type", collection: "posts"});
 
