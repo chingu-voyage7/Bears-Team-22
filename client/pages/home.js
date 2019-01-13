@@ -1,25 +1,29 @@
-/*****************************************/ 
+/*****************************************/
 // FAKE HOMEPAGE MADE FOR TESTING PURPOSE!
 /*****************************************/
 
 import React from "react";
 import Router from "next/router";
+import randomWords from "random-words";
 
 import "isomorphic-unfetch";
 import MainLayout from "../components/MainLayout";
+
 class Home extends React.Component {
 	// Get the user from the appropriate endpoint
-	static async getInitialProps () {
+	static async getInitialProps() {
 		try {
-			const response = await fetch('http://localhost:5000/user/current-user', {credentials: 'include'})
+			const response = await fetch("http://localhost:5000/user/current-user", {credentials: "include"});
 			if (response.status !== 200) {
-				throw new Error('Unauthorized!');
+				throw new Error("Unauthorized!");
 			}
-			const user = await response.json()
-			return { user }
-		} catch ( error ) {
+
+			const {user} = await response.json();
+
+			return {user};
+		} catch (error) {
 			console.error(error);
-			return {}
+			return {};
 		}
 	}
 
@@ -27,29 +31,35 @@ class Home extends React.Component {
 		super(props);
 		this.state = {
 			user: this.props.user
+		};
+
+		this.updateEmail = this.updateEmail.bind(this);
+		this.deleteUser = this.deleteUser.bind(this);
+	}
+
+	async logout() {
+		try {
+			await fetch("http://localhost:5000/auth/logout", {credentials: "include"});
+			await Router.push("/login");
+		} catch (error) {
+			console.error(error);
 		}
 	}
 
+	async handleClick() {
+		try {
+			const response = await fetch("http://localhost:5000/user/get-all", {credentials: "include"});
+			const json = await response.json();
 
-    logout = () => {
-    	fetch("http://localhost:5000/auth/logout", {credentials: "include"})
-    		.then(() => Router.push("/login"))
-    		.catch(error => console.log(error));
-    };
-
-    handleClick = () => {
-    	fetch("http://localhost:5000/user/get-all", {credentials: "include"})
-    		.then(response => response.json())
-    		.then(resp => console.log("response", resp))
-    		.catch(error => console.log(error));
+			console.log("response", json);
+		} catch (error) {
+			console.error(error);
+			return {};
+		}
 	}
-	
 
-	updateEmail = () => {
- 		let newEmail = '';
-		this.state.user.email === 'test@test.com' 
-		? newEmail= 'best@best.com' 
-		: newEmail = 'test@test.com';
+	async updateEmail() {
+		const newEmail = `${randomWords(3).join("_")}@${randomWords(2).join("")}.com`;
 
 		const fetchOpts = {
 			method: "POST",
@@ -58,39 +68,48 @@ class Home extends React.Component {
 			body: JSON.stringify({email: newEmail})
 		};
 
-		fetch("http://localhost:5000/user/update-user", fetchOpts)
-    		.then(response => response.json())
-    		.then(resp => console.log("response", resp))
-    		.catch(error => console.log(error));
+		try {
+			const response = await fetch("http://localhost:5000/user/update-user", fetchOpts);
+			const json = await response.json();
+
+			console.log("user update response:", json);
+
+			this.setState(() => ({user: json}));
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
-	deleteUser = () => {
+	async deleteUser() {
 		const fetchOpts = {
 			method: "DELETE",
 			credentials: "include"
 		};
 
-		fetch("http://localhost:5000/user/delete-user", fetchOpts)
-    		.then(() => {
-				console.log('user deleted correctly!')
-				this.logout();
-			})
-    		.catch(error => console.log(error));
+		try {
+			await fetch("http://localhost:5000/user/delete-user", fetchOpts);
+
+			console.log("user deleted correctly!");
+			this.logout();
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
-    render() {
-		const { user } = this.state;
-    	return (
-	<MainLayout>
-	<h2>Welcome!</h2>
-	<button onClick={this.logout}>Sign out</button>
-	<button onClick={this.handleClick}>Test protected route</button>
-	<button onClick={this.updateEmail} >Update email</button>
-	<button onClick={this.deleteUser} >Delete user ( care, one click one shot! )</button>
-	<p>{user ? user.email : 'nobody'} is logged in</p>
-    		</MainLayout>
-    	);
-    }
+	render() {
+		const {user} = this.state;
+
+		return (
+			<MainLayout>
+				<h2>Welcome!</h2>
+				<button type="button" onClick={this.logout}>Sign out</button>
+				<button type="button" onClick={this.handleClick}>Test protected route</button>
+				<button type="button" onClick={this.updateEmail}>Update email</button>
+				<button type="button" onClick={this.deleteUser}>Delete user ( care, one click one shot! )</button>
+				<p>{user ? user.email : "nobody"} is logged in</p>
+			</MainLayout>
+		);
+	}
 }
 
 export default Home;
