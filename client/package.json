@@ -74,7 +74,7 @@
 				}
 			],
 			"unicorn/filename-case": "warning",
-			"import/no-unassigned-import": "off"
+			"import/no-unassigned-import": "warning"
 		}
 	},
 	"browserslist": [

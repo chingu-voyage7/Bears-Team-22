@@ -5,7 +5,7 @@ RUN mkdir /server
 COPY . /server
 
 WORKDIR /server
-RUN npm install
+RUN npm install --production
 
 EXPOSE 5000
 

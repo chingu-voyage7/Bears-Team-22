@@ -13,7 +13,6 @@
 		"test": "npm run lint"
 	},
 	"dependencies": {
-		"bcryptjs": "^2.4.3",
 		"connect-session-firebase": "^5.13.0",
 		"cookie-parser": "^1.4.3",
 		"cors": "^2.8.5",
