@@ -19,6 +19,14 @@
     text-align: center;
 }
 
+.register__form > p {
+    font-style: italic;
+}
+
+.register__form > a {
+    font-weight: bold;
+}
+
 @media(min-width: 30rem) {
     .register__form {
         justify-content: center;

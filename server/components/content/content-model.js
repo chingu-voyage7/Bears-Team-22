@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const contentSchema = new mongoose.Schema({
 	body: {
@@ -7,15 +7,10 @@ const contentSchema = new mongoose.Schema({
 	},
 	authorId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
+		ref: "User",
 		required: true
-	},
-	replyId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Content',
-		default: null
 	}
-}, {timestamps: true, discriminatorKey: 'type', collection: 'posts'});
+}, {timestamps: true, discriminatorKey: "type", collection: "posts"});
 
 const questionSchema = new mongoose.Schema({
 	title: {
@@ -24,18 +19,19 @@ const questionSchema = new mongoose.Schema({
 	},
 	tags: [{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Tag'
+		ref: "Tag"
 	}]
 });
 
 const replySchema = new mongoose.Schema({
 	questionId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Content'
+		ref: "Content"
 	}
 });
 
-const Content = mongoose.model('Content', contentSchema);
+questionSchema.index({title: "text", body: "text"}); // TODO: Check if the index should be for `contentSchema` or for `questionSchema`.
+const Content = mongoose.model("Content", contentSchema);
 
-exports.Question = Content.discriminator('Question', questionSchema);
-exports.Reply = Content.discriminator('Reply', replySchema);
+exports.Question = Content.discriminator("Question", questionSchema);
+exports.Reply = Content.discriminator("Reply", replySchema);

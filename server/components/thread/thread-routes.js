@@ -1,10 +1,9 @@
 const express = require("express");
 
-const {login, logout} = require("./auth-controllers");
-
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.post("/login", login);
-router.get("/logout", logout);
+const {getThread} = require("./thread-controller");
+
+router.get("/:questionId", getThread);
 
 module.exports = router;

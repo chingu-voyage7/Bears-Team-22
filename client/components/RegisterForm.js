@@ -103,7 +103,7 @@ class RegisterForm extends React.Component {
 					<Button type="primary" htmlType="submit">
 					Register
 					</Button>
-					already have an account?
+					<p>already have an account?</p>
 					<Link href="/login">
 						<a>Log in</a>
 					</Link>
