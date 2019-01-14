@@ -1,0 +1,21 @@
+.post__question__form {
+    grid-gap: 10px;
+    text-align: center;
+    padding: 1rem;
+    margin: 0;
+}
+
+.post__question__form button {
+    margin-top: 0.75rem;
+}
+
+.post__question__form--title {
+    text-align: center;
+}
+
+@media(min-width: 100rem) {
+    .post__question__form {
+        justify-content: center;
+        align-content: center;
+    }
+}

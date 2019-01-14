@@ -15,6 +15,7 @@ class LoginForm extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				console.log("all good!", values);
+				this.props.login(values.email, values.password);
 			}
 		});
 	}
@@ -64,7 +65,8 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-	form: PropTypes.object.isRequired
+	form: PropTypes.object.isRequired,
+	login: PropTypes.func.isRequired
 };
 
 export default Form.create()(LoginForm);
