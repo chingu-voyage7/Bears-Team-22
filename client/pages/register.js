@@ -33,7 +33,7 @@ class Register extends React.Component {
 	render() {
 		return (
 			<MainLayout>
-				<RegisterForm signup={this.signup}/>
+				<RegisterForm signup={this.signup}/>r
 			</MainLayout>
 		);
 	}

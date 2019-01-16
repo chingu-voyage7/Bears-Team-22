@@ -63,18 +63,7 @@
 				"error",
 				{
 					"ignore": [
-						"children",
-						"form",
-						"login",
-						"signup",
-						"search",
-						"questions",
-						"user",
-						"postQuestion",
-						"authState",
-						"authStateListener",
-						"id",
-						"data"
+						"children"
 					]
 				}
 			],

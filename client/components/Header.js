@@ -62,26 +62,19 @@ MainDrawer.propTypes = {
 export default class MainHeader extends React.Component {
 	state = {
 		drawerIsVisible: false
-	}
+	};
 
-	constructor(props) {
-		super(props);
-
-		this.openDrawer = this.openDrawer.bind(this);
-		this.closeDrawer = this.closeDrawer.bind(this);
-	}
-
-	openDrawer() {
-		this.setState({
+	openDrawer = () => {
+		this.setState(() => ({
 			drawerIsVisible: true
-		});
-	}
+		}));
+	};
 
-	closeDrawer() {
-		this.setState({
+	closeDrawer = () => {
+		this.setState(() => ({
 			drawerIsVisible: false
-		});
-	}
+		}));
+	};
 
 	render() {
 		const {drawerIsVisible} = this.state;
