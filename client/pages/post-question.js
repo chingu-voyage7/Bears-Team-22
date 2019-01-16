@@ -44,7 +44,7 @@ class QuestionPage extends React.Component {
 				}));
 
 				await delay(500);
-				await Router.push(`/thread?id=${questionId}`); // TODO: Redirect the user to the question's thread page instead of to the search page.
+				await Router.push(`/thread?id=${questionId}`);
 			} else {
 				this.setState(() => ({
 					status: "drafting"

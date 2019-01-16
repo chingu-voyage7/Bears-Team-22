@@ -28,7 +28,7 @@ class Thread extends React.Component {
 			this.setState(() => ({thread}));
 		} catch (error) {
 			console.error(error);
-			return {};
+			return {error};
 		}
 	}
 
@@ -42,10 +42,17 @@ class Thread extends React.Component {
 
 		console.log(this.state.thread);
 
-		if (!(id && question && replies)) {
+		if (!id || this.state.error) { // TODO: Properly inform the user of the error in case it isn't `null`.
 			return (
 				<MainLayout>
 					<Loading mounted noWrapper loading={false} status="Thread with given ID not found."/>
+				</MainLayout>
+			);
+		}
+		if (id && Object.keys(this.state.thread).length === 0) {
+			return (
+				<MainLayout>
+					<Loading mounted noWrapper loading={false} status="Loading thread..."/>
 				</MainLayout>
 			);
 		}
