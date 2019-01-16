@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {Card} from "antd";
 import moment from "moment";
 
@@ -25,6 +26,10 @@ export default class Reply extends React.Component {
 		);
 	}
 }
+
+Reply.propTypes = {
+	data: PropTypes.object.isRequired
+};
 
 const styles = {
 	card: {

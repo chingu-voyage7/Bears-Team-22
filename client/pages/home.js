@@ -3,6 +3,7 @@
 /*****************************************/
 
 import React from "react";
+import PropTypes from "prop-types";
 import Router from "next/router";
 import randomWords from "random-words";
 import "isomorphic-unfetch";
@@ -111,5 +112,12 @@ class Home extends React.Component {
 		);
 	}
 }
+
+Home.propTypes = {
+	user: PropTypes.object
+};
+Home.defaultProps = {
+	user: {}
+};
 
 export default Home;

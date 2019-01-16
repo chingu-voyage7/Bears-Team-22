@@ -72,7 +72,8 @@ class QuestionForm extends React.Component {
 }
 
 QuestionForm.propTypes = {
-	form: PropTypes.object.isRequired
+	form: PropTypes.object.isRequired,
+	postQuestion: PropTypes.func.isRequired
 };
 
 export default Form.create()(QuestionForm);

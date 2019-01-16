@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import MainLayout from "../components/MainLayout";
 import Question from "../components/Question";
@@ -65,5 +66,9 @@ class Thread extends React.Component {
 		);
 	}
 }
+
+Thread.propTypes = {
+	id: PropTypes.string.isRequired
+};
 
 export default Thread;
