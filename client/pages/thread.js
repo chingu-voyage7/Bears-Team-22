@@ -1,30 +1,59 @@
 import React from "react";
+
 import MainLayout from "../components/MainLayout";
-import Reply from "../components/Reply";
 import Question from "../components/Question";
-import { sampleQuestions, sampleReplies } from "../sample/data-thread";
+import Reply from "../components/Reply";
+import Loading from "../components/Loading";
 
 class Thread extends React.Component {
 	state = {
-		questions: {},
-		replies: {}
+		thread: {}
 	};
-	onSubmitReply = () => {};
-	loadSampleData = () => {
-		this.setState({
-			questions: sampleQuestions,
-			replies: sampleReplies
-		});
-	};
+
+	static async getInitialProps({query}) {
+		return {id: query.id};
+	}
+
+	async componentDidMount() {
+		const {id} = this.props;
+
+		try {
+			const response = await fetch(`http://localhost:5000/thread/${id}`, {credentials: "include"});
+			if (response.status !== 200) {
+				throw new Error("Unauthorized!");
+			}
+
+			const {thread} = await response.json();
+
+			this.setState(() => ({thread}));
+		} catch (error) {
+			console.error(error);
+			return {};
+		}
+	}
+
+	onSubmitReply() {
+		// ...
+	}
+
 	render() {
-		const Tester = () => <div>Yo hey what's up dude</div>;
+		const {id} = this.props;
+		const {question, replies} = this.state.thread;
+
+		console.log(this.state.thread);
+
+		if (!(id && question && replies)) {
+			return (
+				<MainLayout>
+					<Loading mounted noWrapper loading={false} status="Thread with given ID not found."/>
+				</MainLayout>
+			);
+		}
+
 		return (
 			<MainLayout>
-				<button onClick={this.loadSampleData}>Load Sample Data</button>
-				<Question />
-				{Object.keys(this.state.replies).map(reply => {
-					return <Reply key={reply} />;
-				})}
+				<Question data={question}/>
+				{replies.map(reply => <Reply key={reply._id} data={reply}/>)}
 			</MainLayout>
 		);
 	}

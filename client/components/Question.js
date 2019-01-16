@@ -1,70 +1,44 @@
 import React from "react";
+import {Card} from "antd";
+import moment from "moment";
 
-const Question = props => (
-	<React.Fragment>
-		<div style={styles.wrapper}>
-			<div style={styles.qvote}>
-				<div style={styles.arrowUp} />
-				<div className="vote-data">30k</div>
-				<div style={styles.arrowDown} />
-			</div>
-			<div className="q-title">
-				<h4 style={styles.title}>What's not as bad as everyone says?</h4>
-				<span>submitted 11 hours ago by [RANDOM GUY]</span>
-			</div>
-		</div>
-		<form style={styles.form} method="post" action="comment">
-			<textarea style={styles.textarea} />
-			<button style={styles.submit} type="submit" value="add comment">
-				Add Comment
-			</button>
-		</form>
-	</React.Fragment>
-);
+export default class Question extends React.Component {
+	render() {
+		const {title, authorId, createdAt, body} = this.props.data;
+
+		return (
+			<Card style={styles.card}>
+				<div style={styles.wrapper}>
+					<div className="q-title">
+						<h4 style={styles.title}>{title}</h4>
+						<span>posted {moment(createdAt).fromNow()} by {authorId.name}</span>
+					</div>
+					<div style={styles.body}>
+						<span>{body}</span>
+					</div>
+				</div>
+			</Card>
+		);
+	}
+}
 
 const styles = {
+	card: {
+		backgroundColor: "#3D7667",
+		border: "0px",
+		color: "white",
+		margin: "10px",
+		marginBottom: "25px"
+	},
 	wrapper: {
-		display: "flex"
-	},
-	qvote: {
 		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-		flexDirection: "column",
-		marginRight: "10px",
-		width: "20px"
+		flexDirection: "column"
 	},
-	arrowUp: {
-		width: "0",
-		height: "0",
-		borderLeft: "5px solid transparent",
-		borderRight: "5px solid transparent",
-		borderBottom: "5px solid black"
-	},
-	arrowDown: {
-		width: "0",
-		height: "0",
-		borderLeft: "5px solid transparent",
-		borderRight: "5px solid transparent",
-		borderTop: "5px solid black"
+	body: {
+		paddingTop: "10px"
 	},
 	title: {
-		margin: "0px"
-	},
-	// Form
-	form: {
-		paddingLeft: "30px"
-	},
-	textarea: {
-		display: "block",
-		marginTop: "10px",
-		marginBottom: "10px",
-		width: "500px",
-		height: "100px"
-	},
-	submit: {
-		marginBottom: "20px"
+		margin: "0px",
+		color: "white"
 	}
 };
-
-export default Question;
