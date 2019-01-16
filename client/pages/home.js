@@ -5,8 +5,8 @@
 import React from "react";
 import Router from "next/router";
 import randomWords from "random-words";
-
 import "isomorphic-unfetch";
+
 import MainLayout from "../components/MainLayout";
 
 class Home extends React.Component {

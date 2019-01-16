@@ -21,7 +21,7 @@ For more information on the backend API of Knowledge, see [the spec](http://html
 - [Stas Maksin](https://github.com/mastas3)
 - [George Keloglou](https://github.com/geokeloglou)
 - [Stanislav Ivanov](https://github.com/stan-ivanov)
-
+- [Vincent Tang](https://github.com/vincentntang)
 
 ## License
 

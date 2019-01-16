@@ -32,15 +32,19 @@ class QuestionPage extends React.Component {
 		};
 
 		try {
-			const {status: statusCode} = await fetch("http://localhost:5000/content/create", fetchOpts);
+			const res = await fetch("http://localhost:5000/content/create", fetchOpts);
+			const {status: statusCode} = res;
+
+			const json = await res.json();
+			const {_id: questionId} = json;
 
 			if (statusCode === 201) {
 				this.setState(() => ({
 					status: "posted"
 				}));
 
-				await delay(1500);
-				await Router.push("/");
+				await delay(500);
+				await Router.push(`/thread?id=${questionId}`);
 			} else {
 				this.setState(() => ({
 					status: "drafting"
@@ -63,7 +67,7 @@ class QuestionPage extends React.Component {
 			<MainLayout>
 				{status === "drafting" ?
 					<QuestionForm postQuestion={this.postQuestion}/> :
-					<Loading mounted noWrapper loading={status === "posting"} status={status === "posting" ? "Posting the question..." : "Question posted! Redirecting you to the search page..."}/>
+					<Loading mounted noWrapper loading={status === "posting"} status={status === "posting" ? "Posting the question..." : "Question posted! Redirecting you to the thread page..."}/>
 				}
 			</MainLayout>
 		);
