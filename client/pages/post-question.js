@@ -11,15 +11,9 @@ import "isomorphic-unfetch";
 class QuestionPage extends React.Component {
 	state = {
 		status: "drafting"
-	}
+	};
 
-	constructor(props) {
-		super(props);
-
-		this.postQuestion = this.postQuestion.bind(this);
-	}
-
-	async postQuestion(questionData) {
+	postQuestion = async questionData => {
 		this.setState(() => ({
 			status: "posting"
 		}));
@@ -58,7 +52,7 @@ class QuestionPage extends React.Component {
 				status: "drafting"
 			}));
 		}
-	}
+	};
 
 	render() {
 		const {status} = this.state;

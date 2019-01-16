@@ -40,8 +40,6 @@ class Thread extends React.Component {
 		const {id} = this.props;
 		const {question, replies} = this.state.thread;
 
-		console.log(this.state.thread);
-
 		if (!id || this.state.error) { // TODO: Properly inform the user of the error in case it isn't `null`.
 			return (
 				<MainLayout>

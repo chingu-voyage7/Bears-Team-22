@@ -1,0 +1,8 @@
+.reply_card {
+	display: flex;
+	margin: 10px;
+	margin-left: 50px;
+	background-color: #4FC089;
+	border: 0px;
+	color: white;
+}

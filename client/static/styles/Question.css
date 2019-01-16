@@ -1,0 +1,18 @@
+.question_card {
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
+	margin-bottom: 25px;
+	background-color: #3D7667;
+	border: 0px;
+	color: white;
+}
+
+.question_card__meta__title {
+	margin: 0px;
+	color: white;
+}
+
+.question_card__body {
+	padding-top: 10px;
+}

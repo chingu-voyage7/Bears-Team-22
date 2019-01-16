@@ -11,20 +11,14 @@ const {Item: FormItem} = Form;
 const {TextArea} = Input;
 
 class QuestionForm extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-
-	handleSubmit(e) {
+	handleSubmit = e => {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				this.props.postQuestion(values);
 			}
 		});
-	}
+	};
 
 	cancel() {
 		Router.push("/");

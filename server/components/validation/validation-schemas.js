@@ -1,7 +1,7 @@
 const {body} = require("express-validator/check");
 const mongoose = require("mongoose");
 
-exports.validate = value => {
+exports.validate = path => {
 	switch (value) {
 		case "post-question":
 			return [
@@ -17,7 +17,7 @@ exports.validate = value => {
 					.escape(),
 				body("tags").optional().isArray()
 			];
-		case "post-reply":
+		case "thread": // Happens when a user posts a reply.
 			return [
 				body("type", "unknown type").isString().matches(/reply/),
 				body("body", "Please provide a body")
