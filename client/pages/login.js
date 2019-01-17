@@ -11,7 +11,7 @@ import LoginForm from "../components/LoginForm";
 import "isomorphic-unfetch";
 
 class Login extends React.Component {
-	async login(email, password) {
+	login = async (email, password) => {
 		// Since we will use sessions the token auth will be saved and removed
 		try {
 			firebase.auth().setPersistence(auth.Auth.Persistence.NONE);
@@ -35,7 +35,7 @@ class Login extends React.Component {
 		} catch (error) {
 			console.log(error);
 		}
-	}
+	};
 
 	render() {
 		return (

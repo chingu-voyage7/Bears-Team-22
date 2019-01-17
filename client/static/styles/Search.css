@@ -1,10 +1,12 @@
 .post__question {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-top: 40px;
 }
 
 .post__question > * {
-    justify-content: center;
-    align-content: center;
     text-align: center;
 }
 

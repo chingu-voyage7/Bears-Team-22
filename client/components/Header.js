@@ -20,13 +20,15 @@ const MainMenu = ({mode = "horizontal", className = "header__menu", theme = "lig
 				</span>
 			</MenuItem> :
 			null}
-		<MenuItem key="2">
-			<span className="nav-text">
-				<Link href="/register">
-					<a>Register</a>
-				</Link>
-			</span>
-		</MenuItem>
+		{authState === "logged out" ?
+			<MenuItem key="2">
+				<span className="nav-text">
+					<Link href="/register">
+						<a>Register</a>
+					</Link>
+				</span>
+			</MenuItem> :
+			null}
 	</Menu>
 );
 
@@ -62,26 +64,19 @@ MainDrawer.propTypes = {
 export default class MainHeader extends React.Component {
 	state = {
 		drawerIsVisible: false
-	}
+	};
 
-	constructor(props) {
-		super(props);
-
-		this.openDrawer = this.openDrawer.bind(this);
-		this.closeDrawer = this.closeDrawer.bind(this);
-	}
-
-	openDrawer() {
+	openDrawer = () => {
 		this.setState({
 			drawerIsVisible: true
 		});
-	}
+	};
 
-	closeDrawer() {
+	closeDrawer = () => {
 		this.setState({
 			drawerIsVisible: false
 		});
-	}
+	};
 
 	render() {
 		const {drawerIsVisible} = this.state;
