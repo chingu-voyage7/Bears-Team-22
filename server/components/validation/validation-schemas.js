@@ -2,8 +2,8 @@ const {body} = require("express-validator/check");
 const mongoose = require("mongoose");
 
 exports.validate = path => {
-	switch (value) {
-		case "post-question":
+	switch (path) {
+		case "post-question": // Happens when a user posts a question.
 			return [
 				body("type", "unknown type").isString().matches(/question/),
 				body("title", "Please provide a title")
