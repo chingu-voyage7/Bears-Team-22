@@ -14,7 +14,7 @@ class Thread extends React.Component {
 		auth: false
 	};
 
-	static async getInitialProps({query}) {
+	static getInitialProps({query}) {
 		return {id: query.id};
 	}
 
@@ -86,7 +86,8 @@ class Thread extends React.Component {
 
 	render() {
 		const {id} = this.props;
-		const {question, replies, auth} = this.state.thread;
+		const {thread, auth} = this.state;
+		const {question, replies} = thread;
 
 		if (!id || this.state.error) { // TODO: Properly inform the user of the error in case it isn't `null`.
 			return (
