@@ -63,6 +63,7 @@ exports.prepopulate = async (req, res) => {
 
 			return res.status(200).json({message: "Db Populated"});
 		}
+
 		return res.status(200).json({message: "Db was already filled with mock data"});
 	} catch (error) {
 		console.log(error);

@@ -52,7 +52,7 @@ export default class MainLayout extends React.Component {
 		}
 
 		return (
-			<React.Fragment>
+			<>
 				<Head/>
 				<Layout style={{minHeight: "100vh"}}>
 					<Header authState={authState}/>
@@ -63,7 +63,7 @@ export default class MainLayout extends React.Component {
 					</Content>
 					<Footer/>
 				</Layout>
-			</React.Fragment>
+			</>
 		);
 	}
 }
