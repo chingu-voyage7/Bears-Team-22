@@ -1,18 +1,20 @@
-.post__question__form {
+.reply_actions {
+    padding-top: 30px;
+}
+
+.post_reply__form {
+    justify-content: center;
+    align-content: center;
     grid-gap: 10px;
-    text-align: center;
     padding: 1rem;
+    padding-top: 0px;
     margin: 0;
 }
 
-.post__question__form button {
-    margin-top: 0.75rem;
+.post_reply__form--cancel {
+    margin-right: 1rem;
 }
 
-
-@media(min-width: 100rem) {
-    .post__question__form {
-        justify-content: center;
-        align-content: center;
-    }
+.post_reply__form button {
+    margin-top: 0.75rem;
 }

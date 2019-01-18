@@ -20,8 +20,13 @@ class Thread extends React.Component {
 
 	componentDidMount() {
 		this.fetchThread();
-		this.checkAuth();
 	}
+
+	updateAuthState = authState => {
+		this.setState(() => ({
+			auth: authState === "logged in"
+		}));
+	};
 
 	async fetchThread() {
 		const {id} = this.props;
@@ -41,15 +46,6 @@ class Thread extends React.Component {
 		}
 	}
 
-	async checkAuth() {
-		const authState = await fetch("http://localhost:5000/user/current-user", {credentials: "include"});
-		if (authState.status === 200) {
-			this.setState({auth: true});
-		} else {
-			this.setState({auth: false});
-		}
-	}
-
 	onReply = () => {
 		this.setState({
 			replyIsActive: true
@@ -57,7 +53,7 @@ class Thread extends React.Component {
 	};
 
 	onSubmitReply = async replyData => {
-		if (replyData) {
+		if (replyData) { // TODO: Keep the reply active and display some sort of error message in case the given reply is empty / invalid (i.e. too short / has empty fields).
 			const questionId = this.state.thread.question._id;
 			const fetchOpts = {
 				method: "POST",
@@ -69,10 +65,10 @@ class Thread extends React.Component {
 			try {
 				const res = await fetch("http://localhost:5000/content/create", fetchOpts);
 
-				if (res.statusCode === 201) {
+				if (res.status === 201) {
 					this.fetchThread();
 				} else {
-					console.log("failed to post the question");
+					console.log("failed to post the reply");
 				}
 			} catch (error) {
 				console.log("error", error);
@@ -82,7 +78,7 @@ class Thread extends React.Component {
 		this.setState({
 			replyIsActive: false
 		});
-	}
+	};
 
 	render() {
 		const {id} = this.props;
@@ -99,20 +95,24 @@ class Thread extends React.Component {
 		if (id && Object.keys(this.state.thread).length === 0) {
 			return (
 				<MainLayout>
-					<Loading mounted noWrapper loading={false} status="Loading thread..."/>
+					<Loading mounted noWrapper loading={false} status=""/>
 				</MainLayout>
 			);
 		}
 
+		const replyActions = this.state.replyIsActive ?
+			<ReplyForm submit={this.onSubmitReply}/> :
+			<Button className="create_reply" onClick={this.onReply}>Reply</Button>;
+
 		return (
-			<MainLayout>
+			<MainLayout authStateListener={this.updateAuthState}>
 				<Question data={question}/>
 				{replies.map(reply => <Reply key={reply._id} data={reply}/>)}
-				{auth &&
-					(this.state.replyIsActive ?
-						<ReplyForm submit={this.onSubmitReply}/> :
-						<Button onClick={this.onReply}> Reply </Button>)
-				}
+				{auth ?
+					<div className="reply_actions">
+						{replyActions}
+					</div> :
+					null}
 			</MainLayout>
 		);
 	}

@@ -10,13 +10,7 @@ const {Item: FormItem} = Form;
 const {TextArea} = Input;
 
 class ReplyForm extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-
-	handleSubmit(e) {
+	handleSubmit = e => {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
@@ -29,26 +23,24 @@ class ReplyForm extends React.Component {
 		const {getFieldDecorator} = this.props.form;
 
 		return (
-			<div>
-				<Form className="post__question__form" onSubmit={this.handleSubmit}>
-					<FormItem>
-						{
-							getFieldDecorator("body", {
-								rules: [
-									{
-										required: true,
-										min: 20,
-										message: "Body of the question cannot contain less than 20 character"
-									}
-								]
-							})(<TextArea placeholder="body" autosize={{minRows: 5, maxRows: 5}}/>)
-						}
-					</FormItem>
+			<Form className="post_reply__form" onSubmit={this.handleSubmit}>
+				<FormItem>
+					{
+						getFieldDecorator("body", {
+							rules: [
+								{
+									required: true,
+									min: 20,
+									message: "The reply's body cannot contain less than 20 character"
+								}
+							]
+						})(<TextArea placeholder="The body of the reply" autosize={{minRows: 5, maxRows: 5}}/>)
+					}
+				</FormItem>
 
-					<Button type="danger" style={{marginRight: "1rem"}} onClick={() => this.props.submit(null)}>Cancel</Button>
-					<Button type="primary" htmlType="submit">Submit</Button>
-				</Form>
-			</div>
+				<Button type="danger" className="post_reply__form--cancel" onClick={() => this.props.submit(null)}>Cancel</Button>
+				<Button type="primary" htmlType="submit">Post</Button>
+			</Form>
 		);
 	}
 }
