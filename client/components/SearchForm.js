@@ -8,7 +8,7 @@ const InputSearch = Input.Search;
 
 class SearchForm extends React.Component {
 	onSearch = value => {
-		console.log(value);
+		this.props.search(value);
 	}
 
 	render() {
@@ -18,7 +18,7 @@ class SearchForm extends React.Component {
 				<InputSearch
 					enterButton
 					className="search__input"
-					placeholder="Search..."
+					placeholder="Type your query here..."
 					onSearch={this.onSearch}/>
 			</div>
 		);

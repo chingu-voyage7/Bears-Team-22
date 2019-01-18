@@ -3,4 +3,5 @@ node_modules
 .next
 *.log*
 stuff.json
-client.js
+client/credentials/*
+.env

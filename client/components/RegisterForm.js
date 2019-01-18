@@ -16,21 +16,21 @@ class RegisterForm extends React.Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		this.props.form.validateFields((err, values) => {
-			if (!err) {
-				console.log("all good!", values);
+		this.props.form.validateFields((err, values) => { // TODO: Visually inform the user if there are any issues with the given input.
+			if (!err) { // The given inputs are valid.
+				this.props.signup(values);
 			}
 		});
-	}
+	};
 
 	compareToFirstPassword = (rule, value, callback) => {
 		const {form} = this.props;
 		if (value && value !== form.getFieldValue("password")) {
-			callback("Two passwords that you enter is inconsistent!");
+			callback("The two given passwords do not match.");
 		} else {
 			callback();
 		}
-	}
+	};
 
 	validateToNextPassword = (rule, value, callback) => {
 		const {form} = this.props;
@@ -38,7 +38,7 @@ class RegisterForm extends React.Component {
 			form.validateFields(["confirm"], {force: true});
 		}
 		callback();
-	}
+	};
 
 	render() {
 		const {getFieldDecorator} = this.props.form;
@@ -102,7 +102,7 @@ class RegisterForm extends React.Component {
 					<Button type="primary" htmlType="submit">
 					Register
 					</Button>
-					already have an account?
+					<p>already have an account?</p>
 					<Link href="/login">
 						<a>Log in</a>
 					</Link>
@@ -113,7 +113,8 @@ class RegisterForm extends React.Component {
 }
 
 RegisterForm.propTypes = {
-	form: PropTypes.object.isRequired
+	form: PropTypes.object.isRequired,
+	signup: PropTypes.func.isRequired
 };
 
 export default Form.create()(RegisterForm);

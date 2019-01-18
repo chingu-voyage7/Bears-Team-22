@@ -8,43 +8,42 @@ import "../static/styles/Header.css";
 const {Header} = Layout;
 const MenuItem = Menu.Item;
 
-const MainMenu = ({mode = "horizontal", className = "header__menu", theme = "light"}) => (
+const MainMenu = ({mode = "horizontal", className = "header__menu", theme = "light", authState = "unchecked"}) => (
 	<Menu theme={theme} mode={mode} className={className}>
 		<div className="logo"/>
-		<MenuItem key="1">
-			<span className="nav-text">
-				<Link href="/">
-					<a>Home</a>
-				</Link>
-			</span>
-		</MenuItem>
-		<MenuItem key="3">
-			<span className="nav-text">
-				<Link href="/login">
-					<a>Login</a>
-				</Link>
-			</span>
-		</MenuItem>
-		<MenuItem key="4">
-			<span className="nav-text">
-				<Link href="/register">
-					<a>Register</a>
-				</Link>
-			</span>
-		</MenuItem>
+		{authState !== "unchecked" ? // eslint-disable-line no-negated-condition
+			<MenuItem key="1">
+				<span className="nav-text">
+					<Link href={`/${authState === "logged in" ? "logout" : "login"}`}>
+						<a>{authState === "logged in" ? "Logout" : "Login"}</a>
+					</Link>
+				</span>
+			</MenuItem> :
+			null}
+		{authState === "logged out" ?
+			<MenuItem key="2">
+				<span className="nav-text">
+					<Link href="/register">
+						<a>Register</a>
+					</Link>
+				</span>
+			</MenuItem> :
+			null}
 	</Menu>
 );
 
 MainMenu.propTypes = {
 	mode: PropTypes.string,
 	className: PropTypes.string,
-	theme: PropTypes.string
+	theme: PropTypes.string,
+	authState: PropTypes.string
 };
 
 MainMenu.defaultProps = {
 	mode: "horizontal",
 	className: "header__menu",
-	theme: "light"
+	theme: "light",
+	authState: "unchecked"
 };
 
 const MainDrawer = ({drawerIsVisible, onClose}) => {
@@ -65,22 +64,24 @@ MainDrawer.propTypes = {
 export default class MainHeader extends React.Component {
 	state = {
 		drawerIsVisible: false
-	}
+	};
 
 	openDrawer = () => {
 		this.setState({
 			drawerIsVisible: true
 		});
-	}
+	};
 
 	closeDrawer = () => {
 		this.setState({
 			drawerIsVisible: false
 		});
-	}
+	};
 
 	render() {
 		const {drawerIsVisible} = this.state;
+		const {authState} = this.props;
+
 		return (
 			<Header className="header">
 				<nav className="header__nav">
@@ -89,7 +90,7 @@ export default class MainHeader extends React.Component {
 							<a>Knowledge</a>
 						</Link>
 					</div>
-					<MainMenu/>
+					<MainMenu authState={authState}/>
 					<div className="header__drawer--toggle" onClick={this.openDrawer}>
 						<Icon type="bars" onClick={this.openDrawer}/>
 					</div>

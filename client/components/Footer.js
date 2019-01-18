@@ -7,6 +7,6 @@ const {Footer} = Layout;
 
 export default () => (
 	<Footer className="footer">
-	Bears Team 22 | Chingu Voyage-7
+		Bears Team 22 | Chingu Voyage-7
 	</Footer>
 );

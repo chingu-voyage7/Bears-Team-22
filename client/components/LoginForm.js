@@ -3,21 +3,20 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import {Form, Input, Button, Icon} from "antd";
 
-import "antd/dist/antd.css";
-
 import "../static/styles/LoginForm.css";
 
-const FormItem = Form.Item;
+const {Item: FormItem} = Form;
 
 class LoginForm extends React.Component {
 	handleSubmit = e => {
 		e.preventDefault();
-		this.props.form.validateFields((err, values) => {
-			if (!err) {
-				console.log("all good!", values);
+
+		this.props.form.validateFields((err, values) => { // TODO: Visually inform the user if there are any issues with the given input.
+			if (!err) { // The given inputs are valid.
+				this.props.login(values.email, values.password);
 			}
 		});
-	}
+	};
 
 	render() {
 		const {getFieldDecorator} = this.props.form;
@@ -64,7 +63,8 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-	form: PropTypes.object.isRequired
+	form: PropTypes.object.isRequired,
+	login: PropTypes.func.isRequired
 };
 
 export default Form.create()(LoginForm);
