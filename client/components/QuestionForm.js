@@ -40,7 +40,7 @@ class QuestionForm extends React.Component {
 										message: "A title is required "
 									}
 								]
-							})(<Input placeholder="title"/>)
+							})(<Input placeholder="The title of the question"/>)
 						}
 					</FormItem>
 					<FormItem>
@@ -50,15 +50,15 @@ class QuestionForm extends React.Component {
 									{
 										required: true,
 										min: 20,
-										message: "Body of the question cannot contain less than 20 character"
+										message: "The question's body cannot contain less than 20 character"
 									}
 								]
-							})(<TextArea placeholder="body" autosize={{minRows: 5, maxRows: 5}}/>)
+							})(<TextArea placeholder="The body of the question" autosize={{minRows: 5, maxRows: 5}}/>)
 						}
 					</FormItem>
 
 					<Button type="danger" style={{marginRight: "1rem"}} onClick={this.cancel}>Cancel</Button>
-					<Button type="primary" htmlType="submit">Submit</Button>
+					<Button type="primary" htmlType="submit">Post</Button>
 				</Form>
 			</div>
 		);
