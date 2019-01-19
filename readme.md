@@ -25,7 +25,7 @@ $ npm start
 
 The app should then be running on http://localhost:3000, with the backend API running on http://localhost:5000.
 
-See our backend API documentation [here](https://chingu-voyage7.github.io/Bears-Team-22).
+See our backend API documentation [here](https://rawcdn.githack.com/chingu-voyage7/Bears-Team-22/a666ca417134b6b29758eb851f257af446b78d61/docs/index.html).
 
 
 ## Creators
