@@ -12,7 +12,18 @@ See [the MVP spec](mvp.md).
 
 ## Development
 
-For more information on the backend API of Knowledge, see [the spec](http://htmlpreview.github.io/?https://raw.githubusercontent.com/chingu-voyage7/Bears-Team-22/backend/docs/index.html).
+### Getting started
+
+To get started run the following:
+
+```bash
+$ npm install
+$ npm start
+```
+
+The app should then be running on http://localhost:3000, with the backend API running on http://localhost:5000.
+
+See our API documentation [here](https://chingu-voyage7.github.io/Bears-Team-22).
 
 
 ## Creators
