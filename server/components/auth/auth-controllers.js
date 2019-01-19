@@ -67,6 +67,7 @@ exports.sessionVerificationMw = async (req, res, next) => {
 			if (!req.knowledgeUserInfo.mongoInstance) {
 				throw new Error("User not found in the database.");
 			}
+
 			next();
 		} catch (error) {
 			res.status(401).json({message: "Unauthorized", error}); // Verification cookie failed

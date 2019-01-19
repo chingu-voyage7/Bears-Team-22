@@ -11,6 +11,10 @@ import "isomorphic-unfetch";
 import MainLayout from "../components/MainLayout";
 
 class Home extends React.Component {
+	state = {
+		user: ""
+	};
+
 	// Get the user from the appropriate endpoint
 	static async getInitialProps() {
 		try {
@@ -26,16 +30,6 @@ class Home extends React.Component {
 			console.error(error);
 			return {};
 		}
-	}
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			user: this.props.user
-		};
-
-		this.updateEmail = this.updateEmail.bind(this);
-		this.deleteUser = this.deleteUser.bind(this);
 	}
 
 	async logout() {
@@ -59,7 +53,7 @@ class Home extends React.Component {
 		}
 	}
 
-	async updateEmail() {
+	updateEmail = async () => {
 		const newEmail = `${randomWords(3).join("_")}@${randomWords(2).join("")}.com`;
 
 		const fetchOpts = {
@@ -79,9 +73,9 @@ class Home extends React.Component {
 		} catch (error) {
 			console.error(error);
 		}
-	}
+	};
 
-	async deleteUser() {
+	deleteUser = async () => {
 		const fetchOpts = {
 			method: "DELETE",
 			credentials: "include"
@@ -95,7 +89,7 @@ class Home extends React.Component {
 		} catch (error) {
 			console.error(error);
 		}
-	}
+	};
 
 	render() {
 		const {user} = this.state;

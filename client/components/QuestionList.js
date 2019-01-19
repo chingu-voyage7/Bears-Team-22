@@ -16,7 +16,7 @@ class QuestionList extends React.Component {
 				itemLayout="horizontal"
 				locale={{emptyText: " "}}
 				dataSource={this.props.questions}
-				renderItem={item => ( // eslint-disable-next-line react/jsx-key
+				renderItem={item => (
 					<Link href={`/thread?id=${item._id}`}>
 						<a style={{textDecoration: "none"}}>
 							<List.Item actions={[<span>Author: {item.authorId.name}</span>]}> {/* eslint-disable-line react/jsx-key */}

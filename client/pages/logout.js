@@ -9,17 +9,17 @@ export default class Logout extends React.Component {
 	state = {
 		status: "Logging out...",
 		loading: true
-	}
+	};
 
 	async componentDidMount() {
 		try {
 			await fetch("http://localhost:5000/auth/logout", {credentials: "include"});
 			this.setState(() => ({
-				status: "Logged out successfully! Redirecting you to the homepage...",
+				status: "Logged out successfully! Returning to the previous page...",
 				loading: false
 			}));
 			await delay(500);
-			await Router.push("/");
+			await Router.back();
 		} catch (error) {
 			this.setState(() => ({
 				status: `Error logging out:\n\n${error}`,

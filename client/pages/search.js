@@ -11,16 +11,9 @@ class Search extends React.Component {
 	state = {
 		questions: [],
 		showPost: false
-	}
+	};
 
-	constructor(props) {
-		super(props);
-
-		this.querySearch = this.querySearch.bind(this);
-		this.updatePostQuestion = this.updatePostQuestion.bind(this);
-	}
-
-	async querySearch(query) {
+	querySearch = async query => {
 		try {
 			const res = await fetch(`http://localhost:5000/search?q=${encodeURIComponent(query)}`);
 			const json = await res.json();
@@ -33,13 +26,13 @@ class Search extends React.Component {
 		} catch (error) {
 			console.error(error);
 		}
-	}
+	};
 
-	updatePostQuestion(authState) {
+	updatePostQuestion = authState => {
 		this.setState(() => ({
 			showPost: authState === "logged in"
 		}));
-	}
+	};
 
 	render() { // TODO: Only show the option to post a new question once a user searches something, and hide it when the query text field changes.
 		const {showPost} = this.state;

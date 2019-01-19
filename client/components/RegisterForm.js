@@ -16,30 +16,30 @@ class RegisterForm extends React.Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		this.props.form.validateFields((err, values) => {
-			if (!err) {
-				console.log("all good!", values);
+		this.props.form.validateFields((err, values) => { // TODO: Visually inform the user if there are any issues with the given input.
+			if (!err) { // The given inputs are valid.
 				this.props.signup(values);
 			}
 		});
-	}
+	};
 
 	compareToFirstPassword = (rule, value, callback) => {
 		const {form} = this.props;
 		if (value && value !== form.getFieldValue("password")) {
-			callback("Two passwords that you enter is inconsistent!");
+			callback("The two given passwords do not match.");
 		} else {
 			callback();
 		}
-	}
+	};
 
 	validateToNextPassword = (rule, value, callback) => {
 		const {form} = this.props;
 		if (value && this.state.confirmDirty) {
 			form.validateFields(["confirm"], {force: true});
 		}
+
 		callback();
-	}
+	};
 
 	render() {
 		const {getFieldDecorator} = this.props.form;

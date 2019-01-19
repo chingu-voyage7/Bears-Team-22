@@ -24,6 +24,7 @@ class Register extends React.Component {
 			// to set the cookie and sync mongo with firebase
 			await fetch("http://localhost:5000/auth/login", fetchOpts);
 			await firebase.auth().signOut();
+
 			await Router.push("/");
 		} catch (error) {
 			console.error(error);

@@ -45,7 +45,6 @@ app.use((req, res, next) => {
 
 app.use(cookieParser("this_is_a_secret"));
 app.use(express.json());
-
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/thread", threadRoutes);

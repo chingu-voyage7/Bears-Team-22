@@ -24,6 +24,7 @@ exports.createContent = async (req, res) => {
 				console.log(error);
 				res.status(500).json({message: "Internal server error: couldn't fulfill the request at the current time", error});
 			}
+
 			break;
 		case "reply":
 			try {
@@ -39,6 +40,7 @@ exports.createContent = async (req, res) => {
 			} catch (error) {
 				res.status(500).json({message: "Internal server error: couldn't fulfill the request at the current time", error});
 			}
+
 			break;
 		default:
 			res.status(400).json({message: "Invalid content type"});

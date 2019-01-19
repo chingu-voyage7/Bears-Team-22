@@ -20,13 +20,15 @@ const MainMenu = ({mode = "horizontal", className = "header__menu", theme = "lig
 				</span>
 			</MenuItem> :
 			null}
-		<MenuItem key="2">
-			<span className="nav-text">
-				<Link href="/register">
-					<a>Register</a>
-				</Link>
-			</span>
-		</MenuItem>
+		{authState === "logged out" ?
+			<MenuItem key="2">
+				<span className="nav-text">
+					<Link href="/register">
+						<a>Register</a>
+					</Link>
+				</span>
+			</MenuItem> :
+			null}
 	</Menu>
 );
 
@@ -65,15 +67,15 @@ export default class MainHeader extends React.Component {
 	};
 
 	openDrawer = () => {
-		this.setState(() => ({
+		this.setState({
 			drawerIsVisible: true
-		}));
+		});
 	};
 
 	closeDrawer = () => {
-		this.setState(() => ({
+		this.setState({
 			drawerIsVisible: false
-		}));
+		});
 	};
 
 	render() {

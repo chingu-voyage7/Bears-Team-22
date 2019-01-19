@@ -11,15 +11,9 @@ import "isomorphic-unfetch";
 class QuestionPage extends React.Component {
 	state = {
 		status: "drafting"
-	}
+	};
 
-	constructor(props) {
-		super(props);
-
-		this.postQuestion = this.postQuestion.bind(this);
-	}
-
-	async postQuestion(questionData) {
+	postQuestion = async questionData => {
 		this.setState(() => ({
 			status: "posting"
 		}));
@@ -33,12 +27,11 @@ class QuestionPage extends React.Component {
 
 		try {
 			const res = await fetch("http://localhost:5000/content/create", fetchOpts);
-			const {status: statusCode} = res;
 
 			const json = await res.json();
 			const {_id: questionId} = json;
 
-			if (statusCode === 201) {
+			if (res.status === 201) {
 				this.setState(() => ({
 					status: "posted"
 				}));
@@ -58,7 +51,7 @@ class QuestionPage extends React.Component {
 				status: "drafting"
 			}));
 		}
-	}
+	};
 
 	render() {
 		const {status} = this.state;

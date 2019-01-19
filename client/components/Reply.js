@@ -3,24 +3,19 @@ import PropTypes from "prop-types";
 import {Card} from "antd";
 import moment from "moment";
 
-import "../static/styles/Answer.css";
-import "../static/styles/Question.css";
+import "../static/styles/Reply.css";
 
 export default class Reply extends React.Component {
 	render() {
 		const {authorId, createdAt, body} = this.props.data;
 
 		return (
-			<Card style={styles.card}>
-				<div style={styles.wrapper}>
-					<div style={styles.commentBlock}>
-						<div className="q-title">
-							<span>posted {moment(createdAt).fromNow()} by {authorId.name}</span>
-						</div>
-						<div style={styles.comment}>
-							<span>{body}</span>
-						</div>
-					</div>
+			<Card className="reply_card">
+				<div className="reply_card__title">
+					<span>posted {moment(createdAt).fromNow()} by {authorId.name}</span>
+				</div>
+				<div className="reply_card__body">
+					<span>{body}</span>
 				</div>
 			</Card>
 		);
@@ -29,17 +24,4 @@ export default class Reply extends React.Component {
 
 Reply.propTypes = {
 	data: PropTypes.object.isRequired
-};
-
-const styles = {
-	card: {
-		backgroundColor: "#4FC089",
-		border: "0px",
-		margin: "10px",
-		marginLeft: "50px",
-		color: "white"
-	},
-	wrapper: {
-		display: "flex"
-	}
 };
