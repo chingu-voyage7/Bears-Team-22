@@ -1,7 +1,5 @@
+*.log*
 yarn.lock
 node_modules
 .next
-*.log*
-stuff.json
-client/credentials/*
 .env
