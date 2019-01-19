@@ -3,7 +3,6 @@
 /*****************************************/
 
 import React from "react";
-import PropTypes from "prop-types";
 import Router from "next/router";
 import randomWords from "random-words";
 import "isomorphic-unfetch";
@@ -11,10 +10,6 @@ import "isomorphic-unfetch";
 import MainLayout from "../components/MainLayout";
 
 class Home extends React.Component {
-	state = {
-		user: ""
-	};
-
 	// Get the user from the appropriate endpoint
 	static async getInitialProps() {
 		try {
@@ -92,7 +87,7 @@ class Home extends React.Component {
 	};
 
 	render() {
-		const {user} = this.state;
+		const {user} = this.props;
 
 		return (
 			<MainLayout>
@@ -106,12 +101,5 @@ class Home extends React.Component {
 		);
 	}
 }
-
-Home.propTypes = {
-	user: PropTypes.object
-};
-Home.defaultProps = {
-	user: {}
-};
 
 export default Home;
