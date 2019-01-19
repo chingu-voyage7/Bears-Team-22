@@ -92,6 +92,7 @@ class Thread extends React.Component {
 				</MainLayout>
 			);
 		}
+
 		if (id && Object.keys(this.state.thread).length === 0) {
 			return (
 				<MainLayout>

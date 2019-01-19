@@ -25,6 +25,7 @@ const validator = (req, res, next) => {
 			if (err) {
 				return res.status(422).json({validationErrors: err});
 			}
+
 			req.body = validData;
 			next();
 		}
