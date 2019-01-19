@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {Layout} from "antd";
 
 import Head from "./Head";
@@ -67,3 +68,7 @@ export default class MainLayout extends React.Component {
 		);
 	}
 }
+
+MainLayout.propTypes = {
+	authStateListener: PropTypes.func.isRequired
+};

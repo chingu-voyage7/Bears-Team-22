@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Link from "next/link";
 import {List} from "antd";
 
@@ -17,7 +18,7 @@ class QuestionList extends React.Component {
 				dataSource={this.props.questions}
 				renderItem={item => (
 					<Link href={`/thread?id=${item._id}`}>
-						<a>
+						<a style={{textDecoration: "none"}}>
 							<List.Item actions={[<span>Author: {item.authorId.name}</span>]}> {/* eslint-disable-line react/jsx-key */}
 								<List.Item.Meta
 									title={<b>{item.title}</b>}
@@ -31,5 +32,13 @@ class QuestionList extends React.Component {
 		);
 	}
 }
+
+QuestionList.propTypes = {
+	search: PropTypes.func,
+	questions: PropTypes.array.isRequired
+};
+QuestionList.defaultProps = {
+	search: () => {}
+};
 
 export default QuestionList;

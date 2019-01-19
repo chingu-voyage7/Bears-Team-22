@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {Card} from "antd";
 import moment from "moment";
 
@@ -21,3 +22,7 @@ export default class Question extends React.Component {
 		);
 	}
 }
+
+Question.propTypes = {
+	data: PropTypes.object.isRequired
+};

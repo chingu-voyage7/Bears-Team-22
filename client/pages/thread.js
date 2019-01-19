@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import {Button} from "antd";
 import MainLayout from "../components/MainLayout";
@@ -118,5 +119,9 @@ class Thread extends React.Component {
 		);
 	}
 }
+
+Thread.propTypes = {
+	id: PropTypes.string.isRequired
+};
 
 export default Thread;
