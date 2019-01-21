@@ -7,16 +7,20 @@ import "../static/styles/Question.css";
 
 export default class Question extends React.Component {
 	render() {
-		const {title, authorId, createdAt, body} = this.props.data;
+		const {title, authorId, tags, createdAt, body} = this.props.data;
+		const tagsList = tags.map(tag => tag.name).join(", ");
 
 		return (
 			<Card className="question_card">
 				<div className="question_card__meta">
 					<h4 className="question_card__meta__title">{title}</h4>
-					<span>posted {moment(createdAt).fromNow()} by {authorId.name}</span>
+					<span className="question_card__meta__creation">posted {moment(createdAt).fromNow()} by {authorId.name}</span>
 				</div>
 				<div className="question_card__body">
 					<span>{body}</span>
+				</div>
+				<div className="question_card__tags">
+					<span>Tags: {tagsList}</span>
 				</div>
 			</Card>
 		);
