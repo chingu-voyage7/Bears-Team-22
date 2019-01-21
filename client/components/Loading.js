@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {Spin} from "antd";
 
@@ -44,11 +44,12 @@ const Loading = props => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			{contents}
-		</Fragment>
+		</>
 	);
 };
+
 export default Loading;
 
 Loading.propTypes = {

@@ -11,11 +11,11 @@ import MainLayout from "../components/MainLayout";
 
 class Home extends React.Component {
 	state = {
-		user: ""
+		user: {}
 	};
 
 	// Get the user from the appropriate endpoint
-	static async getInitialProps() {
+	async componentDidMount() {
 		try {
 			const response = await fetch("http://localhost:5000/user/current-user", {credentials: "include"});
 			if (response.status !== 200) {
@@ -24,10 +24,9 @@ class Home extends React.Component {
 
 			const {user} = await response.json();
 
-			return {user};
+			this.setState({user});
 		} catch (error) {
 			console.error(error);
-			return {};
 		}
 	}
 
@@ -48,7 +47,6 @@ class Home extends React.Component {
 			console.log("response", json);
 		} catch (error) {
 			console.error(error);
-			return {};
 		}
 	}
 
@@ -68,7 +66,7 @@ class Home extends React.Component {
 
 			console.log("user update response:", json);
 
-			this.setState(() => ({user: json}));
+			this.setState({user: json});
 		} catch (error) {
 			console.error(error);
 		}
@@ -100,7 +98,7 @@ class Home extends React.Component {
 				<button type="button" onClick={this.handleClick}>Test protected route</button>
 				<button type="button" onClick={this.updateEmail}>Update email</button>
 				<button type="button" onClick={this.deleteUser}>Delete user ( care, one click one shot! )</button>
-				<p>{user ? user.email : "nobody"} is logged in</p>
+				<p>{user && user.email ? user.email : "nobody"} is logged in</p>
 			</MainLayout>
 		);
 	}

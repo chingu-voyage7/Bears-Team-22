@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {Form, Input} from "antd";
 
 import "antd/dist/antd.css";
@@ -24,5 +25,9 @@ class SearchForm extends React.Component {
 		);
 	}
 }
+
+SearchForm.propTypes = {
+	search: PropTypes.func.isRequired
+};
 
 export default Form.create()(SearchForm);

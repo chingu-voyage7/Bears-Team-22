@@ -100,3 +100,7 @@ export default class MainHeader extends React.Component {
 		);
 	}
 }
+
+MainHeader.propTypes = {
+	authState: PropTypes.string.isRequired
+};

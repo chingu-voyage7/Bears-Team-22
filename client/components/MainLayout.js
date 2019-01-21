@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {Layout} from "antd";
 
 import Head from "./Head";
@@ -52,7 +53,7 @@ export default class MainLayout extends React.Component {
 		}
 
 		return (
-			<React.Fragment>
+			<>
 				<Head/>
 				<Layout style={{minHeight: "100vh"}}>
 					<Header authState={authState}/>
@@ -63,7 +64,11 @@ export default class MainLayout extends React.Component {
 					</Content>
 					<Footer/>
 				</Layout>
-			</React.Fragment>
+			</>
 		);
 	}
 }
+
+MainLayout.propTypes = {
+	authStateListener: PropTypes.func.isRequired
+};

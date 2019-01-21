@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
-// Const csrf = require('csurf');  <-- TODO
 const admin = require("firebase-admin");
 const cookieParser = require("cookie-parser");
 
@@ -10,7 +9,7 @@ const authRoutes = require("./components/auth/auth-routes");
 const threadRoutes = require("./components/thread/thread-routes");
 const searchRoutes = require("./components/search/search-routes");
 const contentRoutes = require("./components/content/content-routes");
-const serviceAccount = require("./stuff.json");
+const serviceAccount = require("./server-cred");
 
 const port = 5000;
 const app = express();
@@ -45,7 +44,6 @@ app.use((req, res, next) => {
 
 app.use(cookieParser("this_is_a_secret"));
 app.use(express.json());
-
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/thread", threadRoutes);

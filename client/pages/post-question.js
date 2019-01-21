@@ -27,12 +27,11 @@ class QuestionPage extends React.Component {
 
 		try {
 			const res = await fetch("http://localhost:5000/content/create", fetchOpts);
-			const {status: statusCode} = res;
 
 			const json = await res.json();
 			const {_id: questionId} = json;
 
-			if (statusCode === 201) {
+			if (res.status === 201) {
 				this.setState(() => ({
 					status: "posted"
 				}));

@@ -1,9 +1,35 @@
-const {validationResult} = require("express-validator/check");
+const joi = require("joi");
+const validationSchemas = require("./validation-schemas");
 
-exports.checkValidation = (req, res, next) => {
-	if (!validationResult(req).isEmpty()) {
-		const validationErrors = validationResult(req).array();
-		return res.status(422).json({validationErrors});
+const validator = (req, res, next) => {
+	let schema = {};
+	switch (req.body.type) {
+		case "question":
+			schema = validationSchemas.questionSchema;
+			break;
+		case "reply":
+			schema = validationSchemas.replySchema;
+			break;
+		default:
+			break;
 	}
-	next();
+
+	joi.validate(
+		req.body,
+		schema,
+		{
+			abortEarly: false,
+			allowUnknown: false
+		},
+		(err, validData) => {
+			if (err) {
+				return res.status(422).json({validationErrors: err});
+			}
+
+			req.body = validData;
+			next();
+		}
+	);
 };
+
+module.exports = validator;
