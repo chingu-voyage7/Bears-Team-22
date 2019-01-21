@@ -16,18 +16,23 @@ class QuestionList extends React.Component {
 				itemLayout="horizontal"
 				locale={{emptyText: " "}}
 				dataSource={this.props.questions}
-				renderItem={item => (
-					<Link href={`/thread?id=${item._id}`}>
-						<a style={{textDecoration: "none"}}>
-							<List.Item actions={[<span>Author: {item.authorId.name}</span>]}> {/* eslint-disable-line react/jsx-key */}
-								<List.Item.Meta
-									title={<b>{item.title}</b>}
-									description={item.body}
-								/>
-							</List.Item>
-						</a>
-					</Link>
-				)}
+				renderItem={item => {
+					const {_id, authorId, tags, title, body} = item;
+					const tagsList = tags.map(tag => tag.name).join(", ");
+
+					return (
+						<Link href={`/thread?id=${_id}`}>
+							<a style={{textDecoration: "none"}}>
+								<List.Item actions={[<span>Author: {authorId.name}</span>, <span>Tags: {tagsList}</span>]}> {/* eslint-disable-line react/jsx-key */}
+									<List.Item.Meta
+										title={<b>{title}</b>}
+										description={body}
+									/>
+								</List.Item>
+							</a>
+						</Link>
+					);
+				}}
 			/>
 		);
 	}
