@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const userRoutes = require("./components/users/user-routes");
 const authRoutes = require("./components/auth/auth-routes");
 const threadRoutes = require("./components/thread/thread-routes");
+const tagRoutes = require("./components/tag/tag-routes");
 const searchRoutes = require("./components/search/search-routes");
 const contentRoutes = require("./components/content/content-routes");
 const tagRoutes = require("./components/tags/tag-routes");
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
 
 app.use(cookieParser("this_is_a_secret"));
 app.use(express.json());
+app.use("/tag", tagRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/thread", threadRoutes);
