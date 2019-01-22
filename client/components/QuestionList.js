@@ -21,11 +21,12 @@ class QuestionList extends React.Component {
 				renderItem={item => {
 					const {_id, authorId, tags, title, body} = item;
 					const tagsList = tags.map(tag => tag.name).join(", ");
+					const tagsAction = tagsList.length > 0 ? [<span>Tags: {tagsList}</span>] : []; // eslint-disable-line react/jsx-key
 
 					return (
 						<Link href={`/thread?id=${_id}`}>
 							<a style={{textDecoration: "none"}}>
-								<List.Item actions={[<span>Author: {authorId.name}</span>, <span>Tags: {tagsList}</span>]}> {/* eslint-disable-line react/jsx-key */}
+								<List.Item actions={[<span>Author: {authorId.name}</span>, ...tagsAction]}> {/* eslint-disable-line react/jsx-key */}
 									<List.Item.Meta
 										title={<b>{title}</b>}
 										description={body}
