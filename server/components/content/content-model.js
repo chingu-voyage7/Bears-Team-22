@@ -12,6 +12,15 @@ const contentSchema = new mongoose.Schema({
 	}
 }, {timestamps: true, discriminatorKey: "type", collection: "posts"});
 
+const populateAuthor = function(next) {
+	this.populate("authorId", "-__v -firebaseId");
+	next();
+};
+
+contentSchema.
+	pre('findOne', populateAuthor).
+	pre('find', populateAuthor);
+
 const questionSchema = new mongoose.Schema({
 	title: {
 		type: String,
@@ -23,10 +32,19 @@ const questionSchema = new mongoose.Schema({
 	}]
 });
 
+const populateTags = function(next) {
+	this.populate("tags", "-__v");
+	next();
+};
+
+questionSchema.
+	pre('findOne', populateTags).
+	pre('find', populateTags);
+
 const replySchema = new mongoose.Schema({
 	questionId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "Content"
+		ref: "Question"
 	}
 });
 
