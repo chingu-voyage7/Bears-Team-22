@@ -16,7 +16,10 @@ exports.getQuestion = async (req, res) => {
 	const queryString = query.split(" ").map(word => `"${word}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
 
 	try {
-		const result = await Question.find({$text: {$search: queryString}})
+		const result = await Question
+			.find({$text: {$search: queryString}})
+			.sort({createdAt: "desc"})
+			.limit(20)
 			.populate("authorId", "-__v")
 			.populate("tags", "-__v")
 			.select("-__v");

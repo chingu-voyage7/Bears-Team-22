@@ -21,8 +21,8 @@ exports.login = async (req, res) => {
 				email: req.body.registrationData.email
 			}).save();
 
-			loggedUser.__v = undefined;
-			loggedUser.firebaseId = undefined;
+			delete loggedUser.__v;
+			delete loggedUser.firebaseId;
 		} catch (error) {
 			return res.status(500).json({error});
 		}

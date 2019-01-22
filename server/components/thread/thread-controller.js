@@ -8,25 +8,11 @@ exports.getThread = async (req, res) => {
 			.findOne({question: questionId})
 			.populate({
 				path: "question",
-				select: "-__v",
-				populate: [
-					{
-						path: "authorId",
-						select: "-__v -firebaseId"
-					},
-					{
-						path: "tags",
-						select: "-__v"
-					}
-				]
+				select: "-__v"
 			})
 			.populate({
 				path: "replies",
-				select: "-__v",
-				populate: {
-					path: "authorId",
-					select: "-__v -firebaseId"
-				}
+				select: "-__v"
 			})
 			.select("-__v");
 
