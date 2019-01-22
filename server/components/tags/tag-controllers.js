@@ -1,5 +1,5 @@
-const Tag = require("./tag-model");
 const {Question} = require("../content/content-model");
+const Tag = require("./tag-model");
 
 exports.getTagQuestions = async (req, res) => {
 	const {tagName} = req.params;
@@ -11,7 +11,7 @@ exports.getTagQuestions = async (req, res) => {
 			.sort({createdAt: "desc"})
 			.limit(20)
 			.select("-__v");
-	
+
 		res.status(200).json({questions});
 	} catch (error) {
 		res.status(500).json(error);
