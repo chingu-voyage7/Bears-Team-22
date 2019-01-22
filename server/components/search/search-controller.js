@@ -1,29 +1,47 @@
 const mongoose = require("mongoose");
 
-const Tag = require("../tags/tag-model");
 const {Question, Reply} = require("../content/content-model");
+const Tag = require("../tag/tag-model");
 const Thread = require("../thread/thread-model");
 const User = require("../users/user-model");
+const {replaceTagNameWithTagId} = require("../utils");
 
 exports.getQuestion = async (req, res) => {
-	const {q: query} = req.query;
-
+	const {q: query, t: tags} = req.query;
 	// Split query into words then each word is wrapped in
 	// double quotes to allow mongo to recognize those as
 	// multiple phrases hence make a AND research instead of
 	// OR research (passing the query 'foo bar' will now return
 	// the text with 'foo' AND 'bar' instead of 'foo' OR 'bar').
 	const queryString = query.split(" ").map(word => `"${word}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
+	let queryIds = [];
+	if (tags) {
+		let queryTag = [];
+		// If a single tag is passed express will not parse it into an array
+		Array.isArray(tags) ?
+			queryTag = [...tags] :
+			queryTag.push(tags);
+
+		queryIds = await replaceTagNameWithTagId(queryTag);
+		queryIds = queryIds.filter(el => Boolean(el) === true);
+	}
 
 	try {
+		const queryData = await Question.find({$text: {$search: queryString}}).explain(true);
+		const stemmedWords = queryData[0].queryPlanner.winningPlan.inputStage.parsedTextQuery.terms;
+
 		const result = await Question
-			.find({$text: {$search: queryString}})
+			.find({
+				$or: [
+					{$text: {$search: queryString}},
+					{tags: {$elemMatch: {$in: queryIds}}}
+				]
+			})
 			.sort({createdAt: "desc"})
 			.limit(20)
-			.populate("authorId", "-__v")
-			.populate("tags", "-__v")
 			.select("-__v");
-		res.status(200).json({result});
+
+		res.status(200).json({result, stemmedWords});
 	} catch (error) {
 		res.status(500).json(error);
 	}
@@ -40,18 +58,40 @@ exports.prepopulate = async (req, res) => {
 		const jhon = await User.create({name: "jhon", email: "jhon@test.com", firebaseId: "nsN9j7ln72bd7VBTr0WRSe7vo8L2"});
 
 		/* eslint-disable new-cap */
-		const tags = await Tag.create([
-			{name: "tag1"},
-			{name: "tag2"},
-			{name: "tag3"},
-			{name: "tag4"},
-			{name: "tag5"}
+		const mockTags = await Tag.create([
+			{name: "first"},
+			{name: "Beta"},
+			{name: "Chi"},
+			{name: "Delta"},
+			{name: "Eta"},
+			{name: "frank"},
+			{name: "fourth"},
+			{name: "Gamma"},
+			{name: "Happy"},
+			{name: "Joy"},
+			{name: "Iota"},
+			{name: "Kappa"},
+			{name: "Lambda"},
+			{name: "Mu"},
+			{name: "Nu"},
+			{name: "Omicron"},
+			{name: "Phi"},
+			{name: "Quentin"},
+			{name: "Rho"},
+			{name: "Signma"},
+			{name: "Tau"},
+			{name: "Upsilon"},
+			{name: "Veritas"},
+			{name: "Wombat"},
+			{name: "Xi"},
+			{name: "Yawn"},
+			{name: "Zorro"}
 		]);
 		const questions = await Question.create([
-			{title: "This is the first title", body: "This is the first body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mongoose.Types.ObjectId(tags[0]._id), mongoose.Types.ObjectId(tags[1]._id)]},
-			{title: "This is the second title", body: "This is the second body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mongoose.Types.ObjectId(tags[1]._id), mongoose.Types.ObjectId(tags[2]._id)]},
+			{title: "This is the first title", body: "This is the first body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mockTags[0]._id, mockTags[5]._id]},
+			{title: "This is the second title", body: "This is the second body", authorId: mongoose.Types.ObjectId(frank._id)},
 			{title: "This is the third title", body: "This is the third body", authorId: mongoose.Types.ObjectId(jhon._id)},
-			{title: "This is the fourth title", body: "This is the fourth body", authorId: mongoose.Types.ObjectId(frank._id)}
+			{title: "This is the fourth title", body: "This is the fourth body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mockTags[5]._id, mockTags[6]._id]}
 		]);
 		const replies = await Reply.create([
 			{body: "This is the first reply to the first question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
@@ -72,6 +112,7 @@ exports.prepopulate = async (req, res) => {
 		}
 
 		await Thread.create(threads);
+		console.log("questions", questions);
 
 		return res.status(200).json({message: "Db Populated"});
 	} catch (error) {
