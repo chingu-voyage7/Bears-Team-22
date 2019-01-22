@@ -11,10 +11,12 @@ class QuestionList extends React.Component {
 	}
 
 	render() {
+		const {ranSearch = false} = this.props;
+
 		return (
 			<List
 				itemLayout="horizontal"
-				locale={{emptyText: " "}}
+				locale={{emptyText: ranSearch ? "No results matching the given query where found." : " "}}
 				dataSource={this.props.questions}
 				renderItem={item => {
 					const {_id, authorId, tags, title, body} = item;
@@ -40,10 +42,12 @@ class QuestionList extends React.Component {
 
 QuestionList.propTypes = {
 	search: PropTypes.func,
-	questions: PropTypes.array.isRequired
+	ranSearch: PropTypes.bool,
+	questions: PropTypes.array.isRequired,
 };
 QuestionList.defaultProps = {
-	search: () => {}
+	search: () => {},
+	ranSearch: false
 };
 
 export default QuestionList;

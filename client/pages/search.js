@@ -10,6 +10,7 @@ import "../static/styles/Search.css";
 class Search extends React.Component {
 	state = {
 		questions: [],
+		ranSearch: false,
 		showPost: false
 	};
 
@@ -26,6 +27,8 @@ class Search extends React.Component {
 		} catch (error) {
 			console.error(error);
 		}
+
+		this.setState({ranSearch: true});
 	};
 
 	updatePostQuestion = authState => {
@@ -35,12 +38,12 @@ class Search extends React.Component {
 	};
 
 	render() { // TODO: Only show the option to post a new question once a user searches something, and hide it when the query text field changes.
-		const {showPost} = this.state;
+		const {questions, ranSearch, showPost} = this.state;
 
 		return (
 			<MainLayout authStateListener={this.updatePostQuestion}>
 				<SearchForm search={this.querySearch}/>
-				<QuestionList questions={this.state.questions}/>  {/* TODO: Set the list to `loading` when searching a query. */}
+				<QuestionList questions={questions} ranSearch={ranSearch && questions.length === 0}/>  {/* TODO: Set the list to `loading` when searching a query. */}
 				{showPost ?
 					<div className="post__question">
 						<p>Couldn't find a result that answers your question?</p> {/* eslint-disable-line react/no-unescaped-entities */}
