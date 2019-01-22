@@ -8,6 +8,8 @@ exports.getTagQuestions = async (req, res) => {
 	try {
 		const questions = await Question
 			.find({tags: tagId})
+			.sort({createdAt: "desc"})
+			.limit(20)
 			.select("-__v");
 	
 		res.status(200).json({questions});
