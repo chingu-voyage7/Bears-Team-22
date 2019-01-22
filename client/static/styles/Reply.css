@@ -6,3 +6,7 @@
 	border: 0px !important;
 	color: white !important;
 }
+
+.reply_card__creation {
+	color: rgb(220, 220, 220);
+}

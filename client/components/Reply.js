@@ -11,7 +11,7 @@ export default class Reply extends React.Component {
 
 		return (
 			<Card className="reply_card">
-				<div className="reply_card__title">
+				<div className="reply_card__creation">
 					<span>posted {moment(createdAt).fromNow()} by {authorId.name}</span>
 				</div>
 				<div className="reply_card__body">
