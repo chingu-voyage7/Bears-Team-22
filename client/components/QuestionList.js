@@ -43,7 +43,7 @@ class QuestionList extends React.Component {
 QuestionList.propTypes = {
 	search: PropTypes.func,
 	ranSearch: PropTypes.bool,
-	questions: PropTypes.array.isRequired,
+	questions: PropTypes.array.isRequired
 };
 QuestionList.defaultProps = {
 	search: () => {},
