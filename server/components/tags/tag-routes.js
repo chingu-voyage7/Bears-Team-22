@@ -2,8 +2,9 @@ const express = require("express");
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-const {getTagQuestions} = require("./tag-controllers");
+const {getTags, getTagQuestions} = require("./tag-controllers");
 
-router.get("/:tagName", getTagQuestions);
+router.get("/browse", getTags);
+router.get("/browse/:tagName", getTagQuestions);
 
 module.exports = router;

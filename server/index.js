@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser");
 const userRoutes = require("./components/users/user-routes");
 const authRoutes = require("./components/auth/auth-routes");
 const threadRoutes = require("./components/thread/thread-routes");
-const tagRoutes = require("./components/tag/tag-routes");
 const searchRoutes = require("./components/search/search-routes");
 const contentRoutes = require("./components/content/content-routes");
 const tagRoutes = require("./components/tags/tag-routes");

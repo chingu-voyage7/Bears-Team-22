@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const arrify = require("arrify");
 
 const {Question, Reply} = require("../content/content-model");
-const Tag = require("../tag/tag-model");
+const Tag = require("../tags/tag-model");
 const Thread = require("../thread/thread-model");
 const User = require("../users/user-model");
 const {replaceTagNameWithTagId} = require("../utils");
@@ -16,14 +17,10 @@ exports.getQuestion = async (req, res) => {
 	const queryString = query.split(" ").map(word => `"${word}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
 	let queryIds = [];
 	if (tags) {
-		let queryTag = [];
-		// If a single tag is passed express will not parse it into an array
-		Array.isArray(tags) ?
-			queryTag = [...tags] :
-			queryTag.push(tags);
+		const queryTag = arrify(tags); // If a single tag is passed, Express will not parse it into an array
 
 		queryIds = await replaceTagNameWithTagId(queryTag);
-		queryIds = queryIds.filter(el => Boolean(el) === true);
+		queryIds = queryIds.filter(el => Boolean(el));
 	}
 
 	try {

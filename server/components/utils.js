@@ -1,4 +1,4 @@
-const Tag = require("./tag/tag-model");
+const Tag = require("./tags/tag-model");
 
 /* 	This code replace the name of the tag with
 	its id ( if exists otherwise it creates one); apparently
@@ -17,7 +17,7 @@ exports.replaceTagNameWithTagId = async tagArray => {
 			return;
 			// Commented out the creation of the tag since it has
 			// to be submitted to approval
-/* 			Const newTag = await new Tag({name: tag, children: []}).save();
+			/* 			Const newTag = await new Tag({name: tag, children: []}).save();
 			return newTag._id; */
 		} catch (error) {
 			return error;

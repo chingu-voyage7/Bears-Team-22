@@ -18,16 +18,10 @@ class Search extends React.Component {
 	};
 
 	querySearch = async query => {
-		const hasTags = this.state.activeTags.length > 0;
-		let tagParam = "";
-		if (hasTags) {
-			tagParam = this.state.activeTags.reduce((acc, curr, i) => i === this.state.activeTags.length - 1 ?
-				acc += `t=${curr}` :
-				acc += `t=${curr}&`, "");
-		}
+		const tagParam = this.state.activeTags.map(tag => `t=${tag}`).join("&");
 
 		try {
-			const queryString = hasTags ?
+			const queryString = tagParam ?
 				`q=${encodeURIComponent(query)}&${tagParam}` :
 				`q=${encodeURIComponent(query)}`;
 			const res = await fetch(`http://localhost:5000/search?${queryString}`);
@@ -59,7 +53,7 @@ class Search extends React.Component {
 	};
 
 	render() { // TODO: Only show the option to post a new question once a user searches something, and hide it when the query text field changes.
-		const {questions, stemmedWords, anSearch, showPost} = this.state;
+		const {questions, stemmedWords, ranSearch, showPost} = this.state;
 
 		return (
 			<MainLayout authStateListener={this.updatePostQuestion}>
