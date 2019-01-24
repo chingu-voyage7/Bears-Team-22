@@ -15,7 +15,7 @@ class SearchForm extends React.Component {
 	}
 
 	render() {
-		const {ranSearch, stemmedWords, updateTags} = this.props;
+		const {ranSearch = false, stemmedWords = [], updateTags} = this.props;
 
 		return (
 			<div>
@@ -31,11 +31,16 @@ class SearchForm extends React.Component {
 	}
 }
 
-SearchForm.propTypes = { // TODO: Set the `defaultProps` as well.
+SearchForm.propTypes = {
 	search: PropTypes.func.isRequired,
 	ranSearch: PropTypes.bool,
 	stemmedWords: PropTypes.arrayOf(PropTypes.string),
 	updateTags: PropTypes.func
+};
+SearchForm.defaultProps = {
+	ranSearch: false,
+	stemmedWords: [],
+	updateTags: () => {}
 };
 
 export default Form.create()(SearchForm);
