@@ -4,7 +4,6 @@ import Link from "next/link";
 import MainLayout from "../components/MainLayout";
 import SearchForm from "../components/SearchForm";
 import QuestionList from "../components/QuestionList";
-import SearchTag from "../components/SearchTag";
 
 import "../static/styles/Search.css";
 
@@ -42,8 +41,7 @@ class Search extends React.Component {
 	updateActiveTags = tag => {
 		this.setState(prevState => ({
 			activeTags: [...prevState.activeTags, tag]
-		})
-		);
+		}));
 	}
 
 	updatePostQuestion = authState => {
@@ -57,8 +55,7 @@ class Search extends React.Component {
 
 		return (
 			<MainLayout authStateListener={this.updatePostQuestion}>
-				<SearchForm search={this.querySearch}/>
-				<SearchTag stemmedWords={stemmedWords} updateTags={this.updateActiveTags}/>
+				<SearchForm search={this.querySearch} ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={this.updateActiveTags}/>
 				<QuestionList questions={questions} ranSearch={ranSearch && questions.length === 0}/>  {/* TODO: Set the list to `loading` when searching a query. */}
 				{showPost ?
 					<div className="post__question">

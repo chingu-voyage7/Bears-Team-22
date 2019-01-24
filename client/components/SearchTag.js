@@ -49,8 +49,12 @@ class SearchTag extends React.Component {
 	}
 
 	render() {
+		const {ranSearch = false} = this.props;
 		const tags = this.state.tags || [];
-		console.log({tags});
+
+		if (!ranSearch) {
+			return <></>;
+		}
 
 		return (
 			<Select
@@ -68,10 +72,12 @@ class SearchTag extends React.Component {
 }
 
 SearchTag.propTypes = {
+	ranSearch: PropTypes.bool,
 	stemmedWords: PropTypes.arrayOf(PropTypes.string),
 	updateTags: PropTypes.func.isRequired
 };
 SearchTag.defaultProps = {
+	ranSearch: false,
 	stemmedWords: []
 };
 
