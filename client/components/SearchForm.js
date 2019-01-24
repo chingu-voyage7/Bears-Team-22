@@ -19,10 +19,10 @@ class SearchForm extends React.Component {
 
 		return (
 			<div>
-				<h1 className="search__input--title">Search</h1>
+				<h1 className="search_input--title">Search</h1>
 				<InputSearch
 					enterButton
-					className="search__input"
+					className="search_input"
 					placeholder="Type your query here..."
 					onSearch={this.onSearch}/>
 				<SearchTag ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={updateTags}/>

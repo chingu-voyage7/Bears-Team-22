@@ -1,15 +1,15 @@
-.search__input {
+.search_input {
     display: block;
     width: 85%;
     margin: 0 auto;
 }
 
-.search__input--title {
+.search_input--title {
     text-align: center;
 }
 
 @media(min-width: 700px) {
-    .search__input {
+    .search_input {
         width: 35%;
     }
 }

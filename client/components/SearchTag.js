@@ -4,6 +4,9 @@ import {Select} from "antd";
 
 import "isomorphic-unfetch";
 
+import "antd/dist/antd.css";
+import "../static/styles/SearchTag.css";
+
 const {Option} = Select;
 
 class SearchTag extends React.Component {
@@ -57,16 +60,18 @@ class SearchTag extends React.Component {
 		}
 
 		return (
-			<Select
-				mode="tags"
-				style={{width: "100%"}}
-				placeholder="Multiple Mode"
-				tokenSeparators={[","]}
-				value={this.state.activeTags}
-				onChange={this.handleChange}
-			>
-				{tags.map(tag => <Option key={tag.name}>{tag.name}</Option>)}
-			</Select>
+			<div className="search_input tag_select">
+				<Select
+					mode="tags"
+					style={{width: "100%"}}
+					placeholder="Multiple Mode"
+					tokenSeparators={[","]}
+					value={this.state.activeTags}
+					onChange={this.handleChange}
+				>
+					{tags.map(tag => <Option key={tag.name}>{tag.name}</Option>)}
+				</Select>
+			</div>
 		);
 	}
 }
