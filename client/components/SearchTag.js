@@ -26,13 +26,11 @@ class SearchTag extends React.Component {
 		}
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps) { // TODO: Only update the tags if a new query has been searched for (i.e. the user has removed all contents from the search input and then typed a new query).
 		const {activeTags} = this.state;
 
 		if (this.props.stemmedWords && prevProps.stemmedWords !== this.props.stemmedWords) {
-			const uniqueWords = this.props.stemmedWords.filter(word => {
-				return !activeTags.includes(word);
-			});
+			const uniqueWords = this.props.stemmedWords.filter(word => !activeTags.includes(word));
 
 			this.setState({ // eslint-disable-line react/no-did-update-set-state
 				activeTags: [
@@ -49,7 +47,7 @@ class SearchTag extends React.Component {
 		});
 
 		this.props.updateTags(val);
-	}
+	};
 
 	render() {
 		const {ranSearch = false} = this.props;
@@ -61,11 +59,11 @@ class SearchTag extends React.Component {
 
 		return (
 			<div className="search_input tag_select">
-				<Select
+				<Select // TODO: Only allow users to select tags they haven't selected yet.
 					mode="tags"
 					style={{width: "100%"}}
-					placeholder="Multiple Mode"
-					tokenSeparators={[","]}
+					placeholder="Tags to search for..."
+					notFoundContent="No matching tags found"
 					value={this.state.activeTags}
 					onChange={this.handleChange}
 				>
