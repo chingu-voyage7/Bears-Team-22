@@ -17,16 +17,16 @@ class Search extends React.Component {
 	};
 
 	querySearch = async query => {
-		const tagParam = this.state.activeTags.map(tag => `t=${tag}`).join("&");
+		const tagParam = this.state.activeTags.map(tag => `tags=${tag}`).join("&");
+		const encodedQuery = encodeURIComponent(query);
+		const queryString = tagParam ? `q=${encodedQuery}&${tagParam}` : `q=${encodedQuery}`;
 
 		try {
-			const queryString = tagParam ?
-				`q=${encodeURIComponent(query)}&${tagParam}` :
-				`q=${encodeURIComponent(query)}`;
-			const res = await fetch(`http://localhost:5000/search?${queryString}`);
-			const json = await res.json();
+			const response = await fetch(`http://localhost:5000/search?${queryString}`);
+			const json = await response.json();
 
 			console.log("search results:", json);
+
 			this.setState({
 				questions: json.result,
 				stemmedWords: json.stemmedWords
@@ -40,8 +40,7 @@ class Search extends React.Component {
 
 	updateActiveTags = tags => {
 		this.setState({
-			activeTags: [...tags]	// All active tags are passed in. The other way you coudn't remove tags or
-			// you would have to make more than a single operation
+			activeTags: [...tags]
 		});
 	}
 

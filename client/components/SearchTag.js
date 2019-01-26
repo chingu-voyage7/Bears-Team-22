@@ -54,26 +54,26 @@ class SearchTag extends React.Component {
 		}
 	}
 
-	handleChange = val => {
-		this.setState(prevState => ({
-			activeTags: this.toggleElementIntoArray(val, prevState.activeTags)
-		}), () => {
-			this.props.updateTags(this.state.activeTags);
-		});
-	};
-
-	toggleElementIntoArray = (el, arr) => {
+	toggleElementIntoArray = (element, arr) => {
 		const clonedArr = [...arr];
-		const elementIndex = arr.indexOf(el);
+		const elementIndex = arr.indexOf(element);
 
 		if (elementIndex > -1) {
 			clonedArr.splice(elementIndex, 1);
 		} else {
-			clonedArr.push(el);
+			clonedArr.push(element);
 		}
 
 		return clonedArr;
-	}
+	};
+
+	handleChange = tag => {
+		this.setState(prevState => ({
+			activeTags: this.toggleElementIntoArray(tag, prevState.activeTags)
+		}), () => {
+			this.props.updateTags(this.state.activeTags);
+		});
+	};
 
 	render() {
 		const {ranSearch = false} = this.props;

@@ -11,7 +11,7 @@ const InputSearch = Input.Search;
 
 class SearchForm extends React.Component {
 	state = {
-		isNewQuery: true
+		isNewQuery: true // TODO: Make sure this always recognizes new queries correctly, even if we remove all query text except for one character.
 	}
 
 	handleChange = e => {

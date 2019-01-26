@@ -5,21 +5,45 @@ const {Question, Reply} = require("../content/content-model");
 const Tag = require("../tags/tag-model");
 const Thread = require("../thread/thread-model");
 const User = require("../users/user-model");
-const {replaceTagNameWithTagId} = require("../utils");
+
+const resolveTagNames = tagArray => {
+	return Promise.all(tagArray.map(async tag => {
+		try {
+			const tagDoc = await Tag.findOne({name: tag}).exec();
+
+			if (tagDoc) {
+				return tagDoc._id;
+			}
+
+			return;
+
+			/* (Commented out the creation of the tag since it has
+			   to be submitted to approval.)
+
+			   const newTag = await new Tag({name: tag}).save();
+			   return newTag._id;
+			*/
+		} catch (error) {
+			return error;
+		}
+	}));
+};
 
 exports.getQuestion = async (req, res) => {
-	const {q: query, t: tags} = req.query;
+	const {q: query, tags} = req.query;
+	const parsedTags = tags.map(decodeURIComponent);
+
 	// Split query into words then each word is wrapped in
 	// double quotes to allow mongo to recognize those as
 	// multiple phrases hence make a AND research instead of
 	// OR research (passing the query 'foo bar' will now return
 	// the text with 'foo' AND 'bar' instead of 'foo' OR 'bar').
-	const queryString = query.split(" ").map(word => `"${word}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
+	const queryString = query.split(" ").map(word => `"${decodeURIComponent(word)}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
 	let queryIds = [];
 	if (tags) {
-		const queryTag = arrify(tags); // If a single tag is passed, Express will not parse it into an array
+		const queryTag = arrify(parsedTags);
 
-		queryIds = await replaceTagNameWithTagId(queryTag);
+		queryIds = await resolveTagNames(queryTag);
 		queryIds = queryIds.filter(el => Boolean(el));
 	}
 
@@ -44,14 +68,9 @@ exports.getQuestion = async (req, res) => {
 	}
 };
 
+// TEMP: This endpoint won't exist in production. It's used for testing purposes only.
 exports.prepopulate = async (req, res) => {
 	try {
-		/* 		Await User.deleteMany({});
-		await Question.deleteMany({});
-		await Reply.deleteMany({});
-		await Thread.deleteMany({});
-		await Tag.deleteMany({}); */
-
 		const mockData = await User.findOne({name: "frank"});
 		if (mockData) {
 			return res.status(200).json({message: "Db was already filled with mock data"});
@@ -106,6 +125,8 @@ exports.prepopulate = async (req, res) => {
 		]);
 		/* eslint-enable new-cap */
 
+		console.log("questions created", questions);
+
 		const threads = [];
 		for (const question of questions) {
 			threads.push({
@@ -115,9 +136,8 @@ exports.prepopulate = async (req, res) => {
 		}
 
 		await Thread.create(threads);
-		console.log("questions", questions);
 
-		return res.status(200).json({message: "Db Populated"});
+		return res.status(200).json({message: "The database was successfully populated."});
 	} catch (error) {
 		console.log(error);
 		res.status(500).json(error);
