@@ -4,7 +4,6 @@ import Link from "next/link";
 import MainLayout from "../components/MainLayout";
 import SearchForm from "../components/SearchForm";
 import QuestionList from "../components/QuestionList";
-import SearchTag from "../components/SearchTag";
 
 import "../static/styles/Search.css";
 
@@ -12,13 +11,12 @@ class Search extends React.Component {
 	state = {
 		activeTags: [],
 		questions: [],
-		activeTags: [],
 		stemmedWords: [],
 		ranSearch: false,
 		showPost: false
 	};
 
-	querySearch = async (query) => {
+	querySearch = async query => {
 		const tagParam = this.state.activeTags.map(tag => `t=${tag}`).join("&");
 
 		try {
@@ -42,8 +40,8 @@ class Search extends React.Component {
 
 	updateActiveTags = tags => {
 		this.setState({
-			activeTags: [...tags]	// all active tags are passed in. The other way you coudn't remove tags or
-									// you would have to make more than a single operation
+			activeTags: [...tags]	// All active tags are passed in. The other way you coudn't remove tags or
+			// you would have to make more than a single operation
 		});
 	}
 

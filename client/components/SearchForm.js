@@ -10,26 +10,25 @@ import "../static/styles/SearchForm.css";
 const InputSearch = Input.Search;
 
 class SearchForm extends React.Component {
-
 	state = {
-		isNew: true
+		isNewQuery: true
 	}
 
 	handleChange = e => {
-		if(e.target.value.length === 1) {
+		if (e.target.value.length === 1) {
 			this.setState({
-				isNew: true
+				isNewQuery: true
 			});
 		}
 	}
 
-	onSearch = value => {
-		this.props.search(value)
-		.then(() => 
-			this.setState({isNew: false})
-		)
-		.catch(err => console.error('err', err));
-		
+	onSearch = async value => {
+		try {
+			await this.props.search(value);
+			this.setState({isNewQuery: false});
+		} catch (error) {
+			console.error("error", error);
+		}
 	}
 
 	render() {
@@ -44,8 +43,8 @@ class SearchForm extends React.Component {
 					placeholder="Type your query here..."
 					onSearch={this.onSearch}
 					onChange={this.handleChange}
-					/>
-				<SearchTag ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={updateTags} isNew={this.state.isNew}/>
+				/>
+				<SearchTag ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={updateTags} isNewQuery={this.state.isNewQuery}/>
 			</div>
 		);
 	}

@@ -107,12 +107,12 @@ exports.prepopulate = async (req, res) => {
 		/* eslint-enable new-cap */
 
 		const threads = [];
-		questions.forEach(question => {
-			const thread = {
+		for (const question of questions) {
+			threads.push({
 				question: question._id,
-				replies: replies.filter(reply => reply.questionId === question._id).map(el => el._id)};
-			threads.push(thread);
-		});
+				replies: replies.filter(reply => reply.questionId === question._id).map(el => el._id)
+			});
+		}
 
 		await Thread.create(threads);
 		console.log("questions", questions);

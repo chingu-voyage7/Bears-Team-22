@@ -27,18 +27,17 @@ class SearchTag extends React.Component {
 	}
 
 	componentDidUpdate(prevProps) { // TODO: Only update the tags if a new query has been searched for (i.e. the user has removed all contents from the search input and then typed a new query).
-		
 		const {tags, activeTags} = this.state;
-		const { isNew, stemmedWords } = this.props;
+		const {isNewQuery = true, stemmedWords} = this.props;
+		
 		const tagNames = tags.map(tag => tag.name);
-		if (stemmedWords && isNew && prevProps.stemmedWords !== stemmedWords) {
-			const uniqueTags = stemmedWords.filter(word => 
-				!activeTags.includes(word) && tagNames.includes(word)
-				);
 
+		if (stemmedWords && isNewQuery && prevProps.stemmedWords !== stemmedWords) {
+			const uniqueTags = stemmedWords.filter(word => tagNames.includes(word));
+			
+			// TODO: Find a solution better than updating the state of the component in `componentDidUpdate`.
 			this.setState({ // eslint-disable-line react/no-did-update-set-state
 				activeTags: [
-					//...activeTags, 	// Since it updates only on new queries the old tags will be discarded
 					...uniqueTags
 				]
 			});
@@ -46,28 +45,30 @@ class SearchTag extends React.Component {
 	}
 
 	handleChange = val => {
-		this.setState({
-			activeTags: this.toggleElementIntoArray(val, this.state.activeTags)
-		}, () => {
-			this.props.updateTags(this.state.activeTags)
+		this.setState(prevState => ({
+			activeTags: this.toggleElementIntoArray(val, prevState.activeTags)
+		}), () => {
+			this.props.updateTags(this.state.activeTags);
 		});
 	};
 
 	toggleElementIntoArray = (el, arr) => {
-		let elIndex = arr.indexOf(el);
-		let newArr = [...arr];
+		const clonedArr = [...arr];
+		const elementIndex = arr.indexOf(el);
 
-		elIndex === -1 ? 
-		newArr.push(el) :
-		newArr.splice(elIndex, 1);
+		if (elementIndex > -1) {
+			clonedArr.splice(elementIndex, 1);
+		} else {
+			clonedArr.push(el);
+		}
 
-		return newArr;
+		return clonedArr;
 	}
 
 	render() {
 		const {ranSearch = false} = this.props;
 		const tags = this.state.tags || [];
-		const { activeTags } = this.state;
+		const {activeTags} = this.state;
 
 		if (!ranSearch) {
 			return <></>;
@@ -84,11 +85,13 @@ class SearchTag extends React.Component {
 					onSelect={this.handleChange}
 					onDeselect={this.handleChange}
 				>
-					{tags.map(tag => <Option key={tag.name}>{tag.name}</Option>)
-						 .filter(el => !activeTags.includes(el.key)) // exclude all the already selected ones. Can't limit to 5 the result here
-																	  // in case one of those 5 has already been included in activeTags 
-																	  // ( it won't be displayed -> unpredictable number of el displayed)
-						 .filter((_, i) => i < 5 )		// limits to max 5 result
+					{tags
+						.map(tag => <Option key={tag.name}>{tag.name}</Option>)
+						// Exclude all the already selected ones. Can't limit to 5 the result here
+						// in case one of those 5 has already been included in activeTags
+						// ( it won't be displayed -> unpredictable number of el displayed)
+						.filter(el => !activeTags.includes(el.key))
+						.filter((_, i) => i < 5)		// Limits to max 5 result
 					}
 				</Select>
 			</div>
@@ -98,11 +101,13 @@ class SearchTag extends React.Component {
 
 SearchTag.propTypes = {
 	ranSearch: PropTypes.bool,
+	isNewQuery: PropTypes.bool,
 	stemmedWords: PropTypes.arrayOf(PropTypes.string),
 	updateTags: PropTypes.func.isRequired
 };
 SearchTag.defaultProps = {
 	ranSearch: false,
+	isNewQuery: true,
 	stemmedWords: []
 };
 
