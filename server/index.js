@@ -45,11 +45,11 @@ app.use((req, res, next) => {
 
 app.use(cookieParser("this_is_a_secret"));
 app.use(express.json());
-app.use("/tag", tagRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
-app.use("/thread", threadRoutes);
 app.use("/content", contentRoutes);
+app.use("/tag", tagRoutes);
+app.use("/thread", threadRoutes);
 app.use(searchRoutes);
 
 app.listen(port, () => {

@@ -2,10 +2,15 @@ const {Question} = require("../content/content-model");
 const Tag = require("./tag-model");
 
 exports.getTags = async (req, res) => {
+	const {query} = req.params;
+	const findParams = query ? [{ // Only pass an argument to `Tag.find()` if `query` is given and not empty.
+		name: new RegExp(decodeURIComponent(query), "gi")
+	}] : [];
+
 	try {
 		const tags = await Tag
-			.find()
-			.limit(20)
+			.find(...findParams)
+			.limit(5)
 			.select("-__v");
 
 		res.status(200).json({tags});

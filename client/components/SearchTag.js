@@ -15,26 +15,36 @@ class SearchTag extends React.Component {
 		activeTags: []
 	};
 
-	async componentDidMount() {
+	updateTags = async e => {
 		try {
-			const response = await fetch("http://localhost:5000/tag/browse");
+			const response = await fetch(`http://localhost:5000/tag/tags/${e ? encodeURIComponent(e.target.value) : ""}`);
 			const {tags} = await response.json();
 
 			this.setState({tags});
 		} catch (error) {
 			console.log(error);
+			return [];
 		}
+	};
+
+	componentDidMount() {
+		this.updateTags();
 	}
 
 	componentDidUpdate(prevProps) { // TODO: Only update the tags if a new query has been searched for (i.e. the user has removed all contents from the search input and then typed a new query).
-		const {tags, activeTags} = this.state;
+		const tagSearchField = document.querySelector(".ant-select-search__field");
+		if (tagSearchField) {
+			tagSearchField.addEventListener("input", this.updateTags); // TODO: Make sure that we always have at least 5 tags in the autocomplete list.
+		}
+
+		const {tags} = this.state;
 		const {isNewQuery = true, stemmedWords} = this.props;
-		
+
 		const tagNames = tags.map(tag => tag.name);
 
 		if (stemmedWords && isNewQuery && prevProps.stemmedWords !== stemmedWords) {
 			const uniqueTags = stemmedWords.filter(word => tagNames.includes(word));
-			
+
 			// TODO: Find a solution better than updating the state of the component in `componentDidUpdate`.
 			this.setState({ // eslint-disable-line react/no-did-update-set-state
 				activeTags: [
