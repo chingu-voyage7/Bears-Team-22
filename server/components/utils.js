@@ -17,7 +17,7 @@ exports.replaceTagNameWithTagId = async tagArray => {
 			return;
 			// Commented out the creation of the tag since it has
 			// to be submitted to approval
-/* 			Const newTag = await new Tag({name: tag, children: []}).save();
+			/* 			Const newTag = await new Tag({name: tag, children: []}).save();
 			return newTag._id; */
 		} catch (error) {
 			return error;

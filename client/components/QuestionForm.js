@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import Router from "next/router";
 import {Form, Input, Button} from "antd";
 
-import "antd/dist/antd.css";
-
 import "../static/styles/QuestionForm.css";
 
 const {Item: FormItem} = Form;

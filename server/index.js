@@ -10,6 +10,7 @@ const threadRoutes = require("./components/thread/thread-routes");
 const tagRoutes = require("./components/tag/tag-routes");
 const searchRoutes = require("./components/search/search-routes");
 const contentRoutes = require("./components/content/content-routes");
+const tagRoutes = require("./components/tags/tag-routes");
 const serviceAccount = require("./server-cred");
 
 const port = 5000;
@@ -50,6 +51,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/thread", threadRoutes);
 app.use("/content", contentRoutes);
+app.use("/tag", tagRoutes);
 app.use(searchRoutes);
 
 app.listen(port, () => {

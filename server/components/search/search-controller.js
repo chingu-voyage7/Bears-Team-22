@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+const arrify = require("arrify");
 
 const {Question, Reply} = require("../content/content-model");
+const Tag = require("../tags/tag-model");
 const Thread = require("../thread/thread-model");
 const User = require("../users/user-model");
-const Tag = require("../tag/tag-model");
 const {replaceTagNameWithTagId} = require("../utils");
 
 exports.getQuestion = async (req, res) => {
@@ -16,36 +17,27 @@ exports.getQuestion = async (req, res) => {
 	const queryString = query.split(" ").map(word => `"${word}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
 	let queryIds = [];
 	if (tags) {
-		let queryTag = [];
-		// If a single tag is passed express will not parse it into an array
-		Array.isArray(tags) ?
-			queryTag = [...tags] :
-			queryTag.push(tags);
+		const queryTag = arrify(tags); // If a single tag is passed, Express will not parse it into an array
 
 		queryIds = await replaceTagNameWithTagId(queryTag);
-		queryIds = queryIds.filter(el => Boolean(el) === true);
+		queryIds = queryIds.filter(el => Boolean(el));
 	}
 
 	try {
 		const queryData = await Question.find({$text: {$search: queryString}}).explain(true);
 		const stemmedWords = queryData[0].queryPlanner.winningPlan.inputStage.parsedTextQuery.terms;
 
-		const result = await Question.find({
-			$or: [
-				{$text: {$search: queryString}},
-				{tags: {$elemMatch: {$in: queryIds}}}
-			]})
-			.populate([
-				{
-					path: "authorId",
-					select: "-__v -firebaseId"
-				},
-				{
-					path: "tags",
-					select: "-__v"
-				}
-			])
+		const result = await Question
+			.find({
+				$or: [
+					{$text: {$search: queryString}},
+					{tags: {$elemMatch: {$in: queryIds}}}
+				]
+			})
+			.sort({createdAt: "desc"})
+			.limit(20)
 			.select("-__v");
+
 		res.status(200).json({result, stemmedWords});
 	} catch (error) {
 		res.status(500).json(error);
@@ -61,56 +53,58 @@ exports.prepopulate = async (req, res) => {
 		await Tag.deleteMany({}); */
 
 		const mockData = await User.findOne({name: "frank"});
-		if (!mockData) {
-			const frank = await User.create({name: "frank", email: "frank@test.com", firebaseId: "nsN9j7ln7rQk7VBTr0WRSe7vo8L2"});
-			const jhon = await User.create({name: "jhon", email: "jhon@test.com", firebaseId: "nsN9j7ln72bd7VBTr0WRSe7vo8L2"});
+		if (mockData) {
+			return res.status(200).json({message: "Db was already filled with mock data"});
+}
+		const frank = await User.create({name: "frank", email: "frank@test.com", firebaseId: "nsN9j7ln7rQk7VBTr0WRSe7vo8L2"});
+		const jhon = await User.create({name: "jhon", email: "jhon@test.com", firebaseId: "nsN9j7ln72bd7VBTr0WRSe7vo8L2"});
 
-			const mockTags = await Tag.create([
-				{name: "first"},
-				{name: "Beta"},
-				{name: "Chi"},
-				{name: "Delta"},
-				{name: "Eta"},
-				{name: "frank"},
-				{name: "fourth"},
-				{name: "Gamma"},
-				{name: "Happy"},
-				{name: "Joy"},
-				{name: "Iota"},
-				{name: "Kappa"},
-				{name: "Lambda"},
-				{name: "Mu"},
-				{name: "Nu"},
-				{name: "Omicron"},
-				{name: "Phi"},
-				{name: "Quentin"},
-				{name: "Rho"},
-				{name: "Signma"},
-				{name: "Tau"},
-				{name: "Upsilon"},
-				{name: "Veritas"},
-				{name: "Wombat"},
-				{name: "Xi"},
-				{name: "Yawn"},
-				{name: "Zorro"}
-			]);
 
-			/* eslint-disable new-cap */
-			const questions = await Question.create([
-				{title: "This is the first title", body: "This is the first body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mockTags[0]._id, mockTags[5]._id]},
-				{title: "This is the second title", body: "This is the second body", authorId: mongoose.Types.ObjectId(frank._id)},
-				{title: "This is the third title", body: "This is the third body", authorId: mongoose.Types.ObjectId(jhon._id)},
-				{title: "This is the fourth title", body: "This is the fourth body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mockTags[5]._id, mockTags[6]._id]}
-			]);
-			const replies = await Reply.create([
-				{body: "This is the first reply to the first question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
-				{body: "This is the first reply to the second question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[1]._id)},
-				{body: "This is the first reply to the third question", authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[2]._id)},
-				{body: "This is the second reply to the first question", authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
-				{body: "This is the third reply to the first question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
-				{body: "This is the second reply to the third question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[2]._id)}
-			]);
-			/* eslint-enable new-cap */
+		/* eslint-disable new-cap */
+		const mockTags = await Tag.create([
+			{name: "first"},
+			{name: "Beta"},
+			{name: "Chi"},
+			{name: "Delta"},
+			{name: "Eta"},
+			{name: "frank"},
+			{name: "fourth"},
+			{name: "Gamma"},
+			{name: "Happy"},
+			{name: "Joy"},
+			{name: "Iota"},
+			{name: "Kappa"},
+			{name: "Lambda"},
+			{name: "Mu"},
+			{name: "Nu"},
+			{name: "Omicron"},
+			{name: "Phi"},
+			{name: "Quentin"},
+			{name: "Rho"},
+			{name: "Signma"},
+			{name: "Tau"},
+			{name: "Upsilon"},
+			{name: "Veritas"},
+			{name: "Wombat"},
+			{name: "Xi"},
+			{name: "Yawn"},
+			{name: "Zorro"}
+		]);
+		const questions = await Question.create([
+			{title: "This is the first title", body: "This is the first body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mockTags[0]._id, mockTags[5]._id]},
+			{title: "This is the second title", body: "This is the second body", authorId: mongoose.Types.ObjectId(frank._id)},
+			{title: "This is the third title", body: "This is the third body", authorId: mongoose.Types.ObjectId(jhon._id)},
+			{title: "This is the fourth title", body: "This is the fourth body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mockTags[5]._id, mockTags[6]._id]}
+		]);
+		const replies = await Reply.create([
+			{body: "This is the first reply to the first question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
+			{body: "This is the first reply to the second question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[1]._id)},
+			{body: "This is the first reply to the third question", authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[2]._id)},
+			{body: "This is the second reply to the first question", authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
+			{body: "This is the third reply to the first question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
+			{body: "This is the second reply to the third question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[2]._id)}
+		]);
+		/* eslint-enable new-cap */
 
 			const threads = [];
 			questions.forEach(question => {
@@ -120,13 +114,10 @@ exports.prepopulate = async (req, res) => {
 				threads.push(thread);
 			});
 
-			await Thread.create(threads);
-			console.log("questions", questions);
+		await Thread.create(threads);
+		console.log("questions", questions);
 
-			return res.status(200).json({message: "Db Populated"});
-		}
-
-		return res.status(200).json({message: "Db was already filled with mock data"});
+		return res.status(200).json({message: "Db Populated"});
 	} catch (error) {
 		console.log(error);
 		res.status(500).json(error);

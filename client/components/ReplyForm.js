@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Form, Input, Button} from "antd";
 
-import "antd/dist/antd.css";
-
 import "../static/styles/ReplyForm.css";
 
 const {Item: FormItem} = Form;

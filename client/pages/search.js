@@ -12,21 +12,17 @@ class Search extends React.Component {
 	state = {
 		activeTags: [],
 		questions: [],
+		activeTags: [],
 		stemmedWords: [],
+		ranSearch: false,
 		showPost: false
 	};
 
 	querySearch = async query => {
-		const hasTags = this.state.activeTags.length > 0;
-		let tagParam = "";
-		if (hasTags) {
-			tagParam = this.state.activeTags.reduce((acc, curr, i) => i === this.state.activeTags.length - 1 ?
-				acc += `t=${curr}` :
-				acc += `t=${curr}&`, "");
-		}
+		const tagParam = this.state.activeTags.map(tag => `t=${tag}`).join("&");
 
 		try {
-			const queryString = hasTags ?
+			const queryString = tagParam ?
 				`q=${encodeURIComponent(query)}&${tagParam}` :
 				`q=${encodeURIComponent(query)}`;
 			const res = await fetch(`http://localhost:5000/search?${queryString}`);
@@ -40,13 +36,14 @@ class Search extends React.Component {
 		} catch (error) {
 			console.error(error);
 		}
+
+		this.setState({ranSearch: true});
 	};
 
 	updateActiveTags = tag => {
 		this.setState(prevState => ({
 			activeTags: [...prevState.activeTags, tag]
-		})
-		);
+		}));
 	}
 
 	updatePostQuestion = authState => {
@@ -56,12 +53,12 @@ class Search extends React.Component {
 	};
 
 	render() { // TODO: Only show the option to post a new question once a user searches something, and hide it when the query text field changes.
-		const {showPost, questions, stemmedWords} = this.state;
+		const {questions, stemmedWords, ranSearch, showPost} = this.state;
+
 		return (
 			<MainLayout authStateListener={this.updatePostQuestion}>
-				<SearchForm search={this.querySearch}/>
-				<SearchTag stemmedWords={stemmedWords} updateTags={this.updateActiveTags}/>
-				<QuestionList questions={questions}/>  {/* TODO: Set the list to `loading` when searching a query. */}
+				<SearchForm search={this.querySearch} ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={this.updateActiveTags}/>
+				<QuestionList questions={questions} ranSearch={ranSearch && questions.length === 0}/>  {/* TODO: Set the list to `loading` when searching a query. */}
 				{showPost ?
 					<div className="post__question">
 						<p>Couldn't find a result that answers your question?</p> {/* eslint-disable-line react/no-unescaped-entities */}
