@@ -27,15 +27,19 @@ class SearchTag extends React.Component {
 	}
 
 	componentDidUpdate(prevProps) { // TODO: Only update the tags if a new query has been searched for (i.e. the user has removed all contents from the search input and then typed a new query).
-		const {activeTags} = this.state;
-
-		if (this.props.stemmedWords && prevProps.stemmedWords !== this.props.stemmedWords) {
-			const uniqueWords = this.props.stemmedWords.filter(word => !activeTags.includes(word));
+		
+		const {tags, activeTags} = this.state;
+		const { isNew, stemmedWords } = this.props;
+		const tagNames = tags.map(tag => tag.name);
+		if (stemmedWords && isNew && prevProps.stemmedWords !== stemmedWords) {
+			const uniqueTags = stemmedWords.filter(word => 
+				!activeTags.includes(word) && tagNames.includes(word)
+				);
 
 			this.setState({ // eslint-disable-line react/no-did-update-set-state
 				activeTags: [
-					...activeTags,
-					...uniqueWords
+					//...activeTags, 	// Since it updates only on new queries the old tags will be discarded
+					...uniqueTags
 				]
 			});
 		}
@@ -43,15 +47,27 @@ class SearchTag extends React.Component {
 
 	handleChange = val => {
 		this.setState({
-			activeTags: val
+			activeTags: this.toggleElementIntoArray(val, this.state.activeTags)
+		}, () => {
+			this.props.updateTags(this.state.activeTags)
 		});
-
-		this.props.updateTags(val);
 	};
+
+	toggleElementIntoArray = (el, arr) => {
+		let elIndex = arr.indexOf(el);
+		let newArr = [...arr];
+
+		elIndex === -1 ? 
+		newArr.push(el) :
+		newArr.splice(elIndex, 1);
+
+		return newArr;
+	}
 
 	render() {
 		const {ranSearch = false} = this.props;
 		const tags = this.state.tags || [];
+		const { activeTags } = this.state;
 
 		if (!ranSearch) {
 			return <></>;
@@ -60,14 +76,20 @@ class SearchTag extends React.Component {
 		return (
 			<div className="search_input tag_select">
 				<Select // TODO: Only allow users to select tags they haven't selected yet.
-					mode="tags"
+					mode="multiple"
 					style={{width: "100%"}}
 					placeholder="Tags to search for..."
 					notFoundContent="No matching tags found"
-					value={this.state.activeTags}
-					onChange={this.handleChange}
+					value={activeTags}
+					onSelect={this.handleChange}
+					onDeselect={this.handleChange}
 				>
-					{tags.map(tag => <Option key={tag.name}>{tag.name}</Option>)}
+					{tags.map(tag => <Option key={tag.name}>{tag.name}</Option>)
+						 .filter(el => !activeTags.includes(el.key)) // exclude all the already selected ones. Can't limit to 5 the result here
+																	  // in case one of those 5 has already been included in activeTags 
+																	  // ( it won't be displayed -> unpredictable number of el displayed)
+						 .filter((_, i) => i < 5 )		// limits to max 5 result
+					}
 				</Select>
 			</div>
 		);
