@@ -70,5 +70,8 @@ export default class MainLayout extends React.Component {
 }
 
 MainLayout.propTypes = {
-	authStateListener: PropTypes.func.isRequired
+	authStateListener: PropTypes.func
+};
+MainLayout.defaultProps = {
+	authStateListener: () => {}
 };
