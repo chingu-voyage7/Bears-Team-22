@@ -55,10 +55,10 @@ exports.prepopulate = async (req, res) => {
 		const mockData = await User.findOne({name: "frank"});
 		if (mockData) {
 			return res.status(200).json({message: "Db was already filled with mock data"});
-}
+		}
+
 		const frank = await User.create({name: "frank", email: "frank@test.com", firebaseId: "nsN9j7ln7rQk7VBTr0WRSe7vo8L2"});
 		const jhon = await User.create({name: "jhon", email: "jhon@test.com", firebaseId: "nsN9j7ln72bd7VBTr0WRSe7vo8L2"});
-
 
 		/* eslint-disable new-cap */
 		const mockTags = await Tag.create([
@@ -106,13 +106,13 @@ exports.prepopulate = async (req, res) => {
 		]);
 		/* eslint-enable new-cap */
 
-			const threads = [];
-			questions.forEach(question => {
-				const thread = {
-					question: question._id,
-					replies: replies.filter(reply => reply.questionId === question._id).map(el => el._id)};
-				threads.push(thread);
-			});
+		const threads = [];
+		questions.forEach(question => {
+			const thread = {
+				question: question._id,
+				replies: replies.filter(reply => reply.questionId === question._id).map(el => el._id)};
+			threads.push(thread);
+		});
 
 		await Thread.create(threads);
 		console.log("questions", questions);

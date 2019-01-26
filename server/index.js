@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser");
 const userRoutes = require("./components/users/user-routes");
 const authRoutes = require("./components/auth/auth-routes");
 const threadRoutes = require("./components/thread/thread-routes");
-const tagRoutes = require("./components/tag/tag-routes");
 const searchRoutes = require("./components/search/search-routes");
 const contentRoutes = require("./components/content/content-routes");
 const tagRoutes = require("./components/tags/tag-routes");
@@ -51,7 +50,6 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/thread", threadRoutes);
 app.use("/content", contentRoutes);
-app.use("/tag", tagRoutes);
 app.use(searchRoutes);
 
 app.listen(port, () => {
