@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const arrify = require("arrify");
 
 const {Question, Reply} = require("../content/content-model");
@@ -79,7 +78,6 @@ exports.prepopulate = async (req, res) => {
 		const frank = await User.create({name: "frank", email: "frank@test.com", firebaseId: "nsN9j7ln7rQk7VBTr0WRSe7vo8L2"});
 		const jhon = await User.create({name: "jhon", email: "jhon@test.com", firebaseId: "nsN9j7ln72bd7VBTr0WRSe7vo8L2"});
 
-		/* eslint-disable new-cap */
 		const mockTags = await Tag.create([
 			{name: "first"},
 			{name: "Beta"},
@@ -110,20 +108,19 @@ exports.prepopulate = async (req, res) => {
 			{name: "Zorro"}
 		]);
 		const questions = await Question.create([
-			{title: "This is the first title", body: "This is the first body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mockTags[0]._id, mockTags[5]._id]},
-			{title: "This is the second title", body: "This is the second body", authorId: mongoose.Types.ObjectId(frank._id)},
-			{title: "This is the third title", body: "This is the third body", authorId: mongoose.Types.ObjectId(jhon._id)},
-			{title: "This is the fourth title", body: "This is the fourth body", authorId: mongoose.Types.ObjectId(frank._id), tags: [mockTags[5]._id, mockTags[6]._id]}
+			{title: "This is the first title", body: "This is the first body", authorId: frank._id, tags: [mockTags[0]._id, mockTags[5]._id]},
+			{title: "This is the second title", body: "This is the second body", authorId: frank._id},
+			{title: "This is the third title", body: "This is the third body", authorId: jhon._id},
+			{title: "This is the fourth title", body: "This is the fourth body", authorId: frank._id, tags: [mockTags[5]._id, mockTags[6]._id]}
 		]);
 		const replies = await Reply.create([
-			{body: "This is the first reply to the first question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
-			{body: "This is the first reply to the second question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[1]._id)},
-			{body: "This is the first reply to the third question", authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[2]._id)},
-			{body: "This is the second reply to the first question", authorId: mongoose.Types.ObjectId(frank._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
-			{body: "This is the third reply to the first question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[0]._id)},
-			{body: "This is the second reply to the third question", authorId: mongoose.Types.ObjectId(jhon._id), questionId: mongoose.Types.ObjectId(questions[2]._id)}
+			{body: "This is the first reply to the first question", authorId: jhon._id, questionId: questions[0]._id},
+			{body: "This is the first reply to the second question", authorId: jhon._id, questionId: questions[1]._id},
+			{body: "This is the first reply to the third question", authorId: frank._id, questionId: questions[2]._id},
+			{body: "This is the second reply to the first question", authorId: frank._id, questionId: questions[0]._id},
+			{body: "This is the third reply to the first question", authorId: jhon._id, questionId: questions[0]._id},
+			{body: "This is the second reply to the third question", authorId: jhon._id, questionId: questions[2]._id}
 		]);
-		/* eslint-enable new-cap */
 
 		console.log("questions created", questions);
 

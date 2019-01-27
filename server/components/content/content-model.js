@@ -10,7 +10,7 @@ const contentSchema = new mongoose.Schema({
 		ref: "User",
 		required: true
 	}
-}, {timestamps: true, discriminatorKey: "type", collection: "posts"});
+}, {timestamps: true, discriminatorKey: "type", collection: "content"});
 
 const populateAuthor = function (next) {
 	this.populate("authorId", "-__v -firebaseId");
