@@ -1,5 +1,6 @@
 const Thread = require("../thread/thread-model");
 const {Question, Reply} = require("./content-model");
+const {resolveTagNames} = require("../util/tag");
 
 exports.createContent = async (req, res) => {
 	// Used switch to easily implement other types in
@@ -7,13 +8,16 @@ exports.createContent = async (req, res) => {
 	switch (req.body.type) {
 		case "question":
 			try {
+				const resolvedTags = await resolveTagNames(req.body.tags);
+
 				const question = await new Question({
 					title: req.body.title,
 					body: req.body.body,
 					authorId: req.knowledgeUserInfo.mongoInstance._id,
-					tags: req.body.tags
+					tags: resolvedTags
 				}).save();
 				delete question.__v;
+				
 				await new Thread({
 					question: question._id,
 					replies: []
@@ -34,6 +38,7 @@ exports.createContent = async (req, res) => {
 					questionId: req.body.questionId
 				}).save();
 				delete reply.__v;
+				
 				await Thread.findOneAndUpdate({question: req.body.questionId}, {$push: {replies: reply._id}});
 
 				res.status(201).json(reply);

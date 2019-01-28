@@ -3,17 +3,28 @@ import PropTypes from "prop-types";
 import Router from "next/router";
 import {Form, Input, Button} from "antd";
 
+import SearchTag from "./SearchTag";
+
 import "../static/styles/QuestionForm.css";
 
 const {Item: FormItem} = Form;
 const {TextArea} = Input;
 
 class QuestionForm extends React.Component {
+	state = {
+		tags: []
+	};
+
 	handleSubmit = e => {
 		e.preventDefault();
+		const {tags} = this.state;
+
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
-				this.props.postQuestion(values);
+				this.props.postQuestion({
+					...values,
+					tags
+				});
 			}
 		});
 	};
@@ -21,6 +32,10 @@ class QuestionForm extends React.Component {
 	cancel() {
 		Router.push("/");
 	}
+
+	updateQuestionTags = tags => {
+		this.setState({tags});
+	};
 
 	render() {
 		const {getFieldDecorator} = this.props.form;
@@ -55,8 +70,12 @@ class QuestionForm extends React.Component {
 						}
 					</FormItem>
 
-					<Button type="danger" style={{marginRight: "1rem"}} onClick={this.cancel}>Cancel</Button>
-					<Button type="primary" htmlType="submit">Post</Button>
+					<SearchTag ranSearch={true} updateTags={this.updateQuestionTags}/>
+
+					<div className="post__question__form__actions">
+						<Button type="danger" style={{marginRight: "1rem"}} onClick={this.cancel}>Cancel</Button>
+						<Button type="primary" htmlType="submit">Post</Button>
+					</div>
 				</Form>
 			</div>
 		);
