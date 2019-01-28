@@ -6,32 +6,9 @@ import "../static/styles/Header.css";
 
 const {Header} = Layout;
 
-const MainDrawer = ({drawerIsVisible, onClose}) => {
-	return (
-		<div>
-			<Drawer visible={drawerIsVisible} onClose={onClose}>
-				<Menu mode="vertical" className="mobile__menu"/>
-			</Drawer>
-		</div>
-	);
-};
-
-MainDrawer.propTypes = {
-	drawerIsVisible: PropTypes.bool.isRequired,
-	onClose: PropTypes.func.isRequired
-};
-
 export default class MainHeader extends React.Component {
 	state = {
-		drawerIsVisible: false,
-		current: "0"
-	};
-
-	handleClick = e => {
-		console.log("click", e);
-		this.setState({
-			current: e.key
-		});
+		drawerIsVisible: false
 	};
 
 	openDrawer = () => {
@@ -58,14 +35,7 @@ export default class MainHeader extends React.Component {
 							<a>Knowledge</a>
 						</Link>
 					</div>
-					<Menu
-						selectedKeys={[this.state.current]}
-						authState={authState}
-						mode="horizontal"
-						className="header__menu"
-						theme="light"
-						onClick={this.handleClick}
-					>
+					<Menu mode="horizontal" className="header__menu" theme="light">
 						{authState !== "unchecked" ? // eslint-disable-line no-negated-condition
 							<Menu.Item key="1">
 								<Link href={`/${authState === "logged in" ? "logout" : "login"}`}>
@@ -84,26 +54,14 @@ export default class MainHeader extends React.Component {
 					<div className="header__drawer--toggle" onClick={this.openDrawer}>
 						<Icon type="bars" onClick={this.openDrawer}/>
 					</div>
-					<MainDrawer drawerIsVisible={drawerIsVisible} onClose={this.closeDrawer}/>
+					<Drawer visible={drawerIsVisible} onClose={this.closeDrawer}>
+						<Menu mode="vertical" className="mobile__menu"/>
+					</Drawer>
 				</nav>
 			</Header>
 		);
 	}
 }
-
-Menu.defaultProps = {
-	mode: "horizontal",
-	className: "header__menu",
-	theme: "light",
-	authState: "unchecked"
-};
-
-Menu.propTypes = {
-	mode: PropTypes.string,
-	className: PropTypes.string,
-	theme: PropTypes.string,
-	authState: PropTypes.string
-};
 
 MainHeader.propTypes = {
 	authState: PropTypes.string.isRequired
