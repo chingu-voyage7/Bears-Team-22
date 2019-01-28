@@ -11,9 +11,17 @@ export default class MainHeader extends React.Component {
 		drawerIsVisible: false
 	};
 
+	handleClick = (e) => {
+		console.log("click ", e);
+    this.setState({
+			current: e.key,
+		});
+  }
+
 	openDrawer = () => {
 		this.setState({
-			drawerIsVisible: true
+			drawerIsVisible: true,
+			current: "0",
 		});
 	};
 
@@ -35,7 +43,14 @@ export default class MainHeader extends React.Component {
 							<a>Knowledge</a>
 						</Link>
 					</div>
-					<Menu mode="horizontal" className="header__menu" theme="light">
+					<Menu
+						onClick={this.handleClick}
+						selectedKeys={[this.state.current]}
+						authState={authState} 
+						mode="horizontal" 
+						className="header__menu" 
+						theme="light"
+					>
 						{authState !== "unchecked" ? // eslint-disable-line no-negated-condition
 							<Menu.Item key="1">
 								<Link href={`/${authState === "logged in" ? "logout" : "login"}`}>
