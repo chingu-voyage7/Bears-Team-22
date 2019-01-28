@@ -22,20 +22,17 @@ MainDrawer.propTypes = {
 };
 
 export default class MainHeader extends React.Component {
-	
 	state = {
 		drawerIsVisible: false,
-		current: '0',
+		current: "0"
 	};
 
-  handleClick = (e) => {
-		console.log('click ', e);
-		console.log(this.state.current, 'Before setState');
-    this.setState({
-			current: e.key,
+	handleClick = e => {
+		console.log("click", e);
+		this.setState({
+			current: e.key
 		});
-		console.log(this.state.current, 'After setState');
-  }
+	};
 
 	openDrawer = () => {
 		this.setState({
@@ -62,12 +59,12 @@ export default class MainHeader extends React.Component {
 						</Link>
 					</div>
 					<Menu
-						onClick={this.handleClick}
 						selectedKeys={[this.state.current]}
-						authState={authState} 
-						mode="horizontal" 
-						className="header__menu" 
+						authState={authState}
+						mode="horizontal"
+						className="header__menu"
 						theme="light"
+						onClick={this.handleClick}
 					>
 						{authState !== "unchecked" ? // eslint-disable-line no-negated-condition
 							<Menu.Item key="1">
