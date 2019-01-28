@@ -1,15 +1,10 @@
 const Tag = require("../tags/tag-model");
 
-exports.resolveTagNames = tagArray => {
-	return Promise.all(tagArray.map(async tag => {
+exports.resolveTagNames = async tags => {
+	const resolvedTags = await Promise.all(tags.map(async tag => {
 		try {
 			const tagDoc = await Tag.findOne({name: tag}).exec();
-
-			if (tagDoc) {
-				return tagDoc._id;
-			}
-
-			return;
+			return tagDoc ? tagDoc._id : false;
 
 			/* (Commented out the creation of the tag since it has
 			   to be submitted to approval.)
@@ -17,8 +12,10 @@ exports.resolveTagNames = tagArray => {
 			   const newTag = await new Tag({name: tag}).save();
 			   return newTag._id;
 			*/
-		} catch (error) {
-			return error;
+		} catch (_) {
+			return false;
 		}
-	})).then(tagIds => tagIds.filter(id => Boolean(id)));
+	}));
+
+	return resolvedTags.filter(Boolean);
 };
