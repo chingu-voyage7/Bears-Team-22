@@ -17,9 +17,9 @@ class Search extends React.Component {
 	};
 
 	querySearch = async query => {
-		const tagParam = this.state.activeTags.map(tag => `tags=${tag}`).join("&");
+		const joinedTags = this.state.activeTags.join(",");
 		const encodedQuery = encodeURIComponent(query);
-		const queryString = tagParam ? `q=${encodedQuery}&${tagParam}` : `q=${encodedQuery}`;
+		const queryString = joinedTags ? `q=${encodedQuery}&tags=${joinedTags}` : `q=${encodedQuery}`;
 
 		try {
 			const response = await fetch(`http://localhost:5000/search?${queryString}`);

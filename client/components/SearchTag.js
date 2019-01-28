@@ -17,7 +17,7 @@ class SearchTag extends React.Component {
 	updateTags = async e => {
 		try {
 			const response = await fetch(`http://localhost:5000/tag/tags/${e ? encodeURIComponent(e.target.value) : ""}`);
-			const {tags} = await response.json();
+			const {tags = []} = await response.json();
 
 			this.setState({tags});
 		} catch (error) {
@@ -95,11 +95,7 @@ class SearchTag extends React.Component {
 			>
 				{tags
 					.map(tag => <Option key={tag.name}>{tag.name}</Option>)
-					// Exclude all the already selected ones. Can't limit to 5 the result here
-					// in case one of those 5 has already been included in activeTags
-					// ( it won't be displayed -> unpredictable number of el displayed)
-					.filter(el => !activeTags.includes(el.key))
-					.filter((_, i) => i < 5)		// Limits to max 5 result
+					.filter(option => !activeTags.includes(option.key))
 				}
 			</Select>
 		);

@@ -1,5 +1,3 @@
-const arrify = require("arrify");
-
 const {Question, Reply} = require("../content/content-model");
 const Tag = require("../tags/tag-model");
 const Thread = require("../thread/thread-model");
@@ -7,21 +5,19 @@ const User = require("../users/user-model");
 const {resolveTagNames} = require("../util/tag");
 
 exports.getQuestion = async (req, res) => {
-	const {q: query, tags = []} = req.query;
-	const parsedTags = tags.map(decodeURIComponent);
-
+	const {q: query = "", tags} = req.query;
+	
 	// Split query into words then each word is wrapped in
 	// double quotes to allow mongo to recognize those as
 	// multiple phrases hence make a AND research instead of
 	// OR research (passing the query 'foo bar' will now return
 	// the text with 'foo' AND 'bar' instead of 'foo' OR 'bar').
 	const queryString = query.split(" ").map(word => `"${decodeURIComponent(word)}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
-	let queryIds = [];
+	
+	let queryTags = [];
 	if (tags) {
-		const queryTag = arrify(parsedTags);
-
-		queryIds = await resolveTagNames(queryTag);
-		queryIds = queryIds.filter(el => Boolean(el));
+		const parsedTags = tags.split(",").map(decodeURIComponent);
+		queryTags = await resolveTagNames(parsedTags);
 	}
 
 	try {
@@ -32,7 +28,7 @@ exports.getQuestion = async (req, res) => {
 			.find({
 				$or: [
 					{$text: {$search: queryString}},
-					{tags: {$elemMatch: {$in: queryIds}}}
+					{tags: {$elemMatch: {$in: queryTags}}}
 				]
 			})
 			.sort({createdAt: "desc"})

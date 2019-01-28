@@ -1,15 +1,15 @@
-.post__question__form {
+.post_question__form {
     grid-gap: 10px;
     text-align: center;
     padding: 1rem;
     margin: 0;
 }
 
-.post__question__form button {
+.post_question__form button {
     margin-top: 0.75rem;
 }
 
-.post__question__form--title {
+.post_question__form--title {
     text-align: center;
 }
 
@@ -17,12 +17,12 @@
     margin-bottom: 10px;
 }
 
-.post__question__form__actions {
+.post_question__form__actions {
     margin-top: 20px;
 }
 
 @media(min-width: 100rem) {
-    .post__question__form {
+    .post_question__form {
         justify-content: center;
         align-content: center;
     }

@@ -7,8 +7,6 @@ import SearchTag from "./SearchTag";
 import "antd/dist/antd.css";
 import "../static/styles/SearchForm.css";
 
-const InputSearch = Input.Search;
-
 class SearchForm extends React.Component {
 	state = {
 		isNewQuery: true // TODO: Make sure this always recognizes new queries correctly, even if we remove all query text except for one character.
@@ -25,7 +23,10 @@ class SearchForm extends React.Component {
 	onSearch = async value => {
 		try {
 			await this.props.search(value);
-			this.setState({isNewQuery: false});
+
+			if (this.state.isNewQuery) {
+				this.setState({isNewQuery: false});
+			}
 		} catch (error) {
 			console.error("error", error);
 		}
@@ -37,7 +38,7 @@ class SearchForm extends React.Component {
 		return (
 			<div className="search_input">
 				<h1 className="search_input--title">Search</h1>
-				<InputSearch
+				<Input.Search
 					enterButton
 					placeholder="Type your query here..."
 					onSearch={this.onSearch}

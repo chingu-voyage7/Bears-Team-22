@@ -3,13 +3,16 @@ const Tag = require("./tag-model");
 
 exports.getTags = async (req, res) => {
 	const {query} = req.params;
-	const findParams = query ? [{ // Only pass an argument to `Tag.find()` if `query` is given and not empty.
-		name: new RegExp(decodeURIComponent(query), "gi")
+	const findOptions = query ? [{
+		name: {
+			$regex: query,
+			$options: "ig"
+		}
 	}] : [];
 
 	try {
 		const tags = await Tag
-			.find(...findParams)
+			.find(...findOptions)
 			.limit(5)
 			.select("-__v");
 
