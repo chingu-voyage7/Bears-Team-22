@@ -10,4 +10,5 @@ router.post("/create",
 	validator,
 	sessionVerificationMw,
 	createContent);
+
 module.exports = router;

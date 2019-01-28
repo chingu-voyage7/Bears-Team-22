@@ -9,27 +9,40 @@ import "../static/styles/Search.css";
 
 class Search extends React.Component {
 	state = {
+		activeTags: [],
 		questions: [],
+		stemmedWords: [],
 		ranSearch: false,
 		showPost: false
 	};
 
 	querySearch = async query => {
+		const tagParam = this.state.activeTags.map(tag => `tags=${tag}`).join("&");
+		const encodedQuery = encodeURIComponent(query);
+		const queryString = tagParam ? `q=${encodedQuery}&${tagParam}` : `q=${encodedQuery}`;
+
 		try {
-			const res = await fetch(`http://localhost:5000/search?q=${encodeURIComponent(query)}`);
-			const json = await res.json();
+			const response = await fetch(`http://localhost:5000/search?${queryString}`);
+			const json = await response.json();
 
 			console.log("search results:", json);
 
 			this.setState({
-				questions: json.result
+				questions: json.result,
+				stemmedWords: json.stemmedWords
 			});
 		} catch (error) {
 			console.error(error);
 		}
 
-		this.setState({ranSearch: true});
+		return this.setState({ranSearch: true});
 	};
+
+	updateActiveTags = tags => {
+		this.setState({
+			activeTags: [...tags]
+		});
+	}
 
 	updatePostQuestion = authState => {
 		this.setState(() => ({
@@ -38,11 +51,11 @@ class Search extends React.Component {
 	};
 
 	render() { // TODO: Only show the option to post a new question once a user searches something, and hide it when the query text field changes.
-		const {questions, ranSearch, showPost} = this.state;
+		const {questions, stemmedWords, ranSearch, showPost} = this.state;
 
 		return (
 			<MainLayout authStateListener={this.updatePostQuestion}>
-				<SearchForm search={this.querySearch}/>
+				<SearchForm search={this.querySearch} ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={this.updateActiveTags}/>
 				<QuestionList questions={questions} ranSearch={ranSearch && questions.length === 0}/>  {/* TODO: Set the list to `loading` when searching a query. */}
 				{showPost ?
 					<div className="post__question">
