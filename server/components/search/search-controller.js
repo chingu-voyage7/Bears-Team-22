@@ -1,36 +1,11 @@
-const arrify = require("arrify");
-
 const {Question, Reply} = require("../content/content-model");
 const Tag = require("../tags/tag-model");
 const Thread = require("../thread/thread-model");
 const User = require("../users/user-model");
-
-const resolveTagNames = tagArray => {
-	return Promise.all(tagArray.map(async tag => {
-		try {
-			const tagDoc = await Tag.findOne({name: tag}).exec();
-
-			if (tagDoc) {
-				return tagDoc._id;
-			}
-
-			return;
-
-			/* (Commented out the creation of the tag since it has
-			   to be submitted to approval.)
-
-			   const newTag = await new Tag({name: tag}).save();
-			   return newTag._id;
-			*/
-		} catch (error) {
-			return error;
-		}
-	}));
-};
+const {resolveTagNames} = require("../util/tag");
 
 exports.getQuestion = async (req, res) => {
-	const {q: query, tags} = req.query;
-	const parsedTags = tags.map(decodeURIComponent);
+	const {q: query = "", tags} = req.query;
 
 	// Split query into words then each word is wrapped in
 	// double quotes to allow mongo to recognize those as
@@ -38,12 +13,11 @@ exports.getQuestion = async (req, res) => {
 	// OR research (passing the query 'foo bar' will now return
 	// the text with 'foo' AND 'bar' instead of 'foo' OR 'bar').
 	const queryString = query.split(" ").map(word => `"${decodeURIComponent(word)}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
-	let queryIds = [];
-	if (tags) {
-		const queryTag = arrify(parsedTags);
 
-		queryIds = await resolveTagNames(queryTag);
-		queryIds = queryIds.filter(el => Boolean(el));
+	let queryTags = [];
+	if (tags) {
+		const parsedTags = tags.split(",").map(decodeURIComponent);
+		queryTags = await resolveTagNames(parsedTags);
 	}
 
 	try {
@@ -54,7 +28,7 @@ exports.getQuestion = async (req, res) => {
 			.find({
 				$or: [
 					{$text: {$search: queryString}},
-					{tags: {$elemMatch: {$in: queryIds}}}
+					{tags: {$elemMatch: {$in: queryTags}}}
 				]
 			})
 			.sort({createdAt: "desc"})
