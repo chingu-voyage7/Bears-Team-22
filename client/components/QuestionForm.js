@@ -70,7 +70,7 @@ class QuestionForm extends React.Component {
 						}
 					</FormItem>
 
-					<SearchTag ranSearch={true} updateTags={this.updateQuestionTags}/>
+					<SearchTag ranSearch updateTags={this.updateQuestionTags}/>
 
 					<div className="post__question__form__actions">
 						<Button type="danger" style={{marginRight: "1rem"}} onClick={this.cancel}>Cancel</Button>

@@ -1,6 +1,6 @@
 const Thread = require("../thread/thread-model");
-const {Question, Reply} = require("./content-model");
 const {resolveTagNames} = require("../util/tag");
+const {Question, Reply} = require("./content-model");
 
 exports.createContent = async (req, res) => {
 	// Used switch to easily implement other types in
@@ -17,7 +17,7 @@ exports.createContent = async (req, res) => {
 					tags: resolvedTags
 				}).save();
 				delete question.__v;
-				
+
 				await new Thread({
 					question: question._id,
 					replies: []
@@ -38,7 +38,7 @@ exports.createContent = async (req, res) => {
 					questionId: req.body.questionId
 				}).save();
 				delete reply.__v;
-				
+
 				await Thread.findOneAndUpdate({question: req.body.questionId}, {$push: {replies: reply._id}});
 
 				res.status(201).json(reply);
