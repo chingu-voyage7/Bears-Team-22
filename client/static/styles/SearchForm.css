@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.search_input__tag_select {
+    padding-top: 10px;
+}
+
 @media(min-width: 700px) {
     .search_input {
         width: 35%;
