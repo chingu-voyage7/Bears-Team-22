@@ -9,8 +9,7 @@
 	"scripts": {
 		"start": "node index.js",
 		"dev": "nodemon index.js",
-		"lint": "xo",
-		"test": "npm run lint"
+		"test": "xo"
 	},
 	"dependencies": {
 		"arrify": "^1.0.1",
