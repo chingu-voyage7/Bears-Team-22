@@ -20,5 +20,5 @@ exports.resolveTagNames = tagArray => {
 		} catch (error) {
 			return error;
 		}
-	}));
+	})).then(tagIds => tagIds.filter(id => Boolean(id)));
 };

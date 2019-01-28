@@ -42,8 +42,8 @@ class QuestionForm extends React.Component {
 
 		return (
 			<div>
-				<h1 className="post__question__form--title">Post a new question</h1>
-				<Form className="post__question__form" onSubmit={this.handleSubmit}>
+				<h1 className="post_question__form--title">Post a new question</h1>
+				<Form className="post_question__form" onSubmit={this.handleSubmit}>
 					<FormItem>
 						{
 							getFieldDecorator("title", {
@@ -72,7 +72,7 @@ class QuestionForm extends React.Component {
 
 					<SearchTag ranSearch updateTags={this.updateQuestionTags}/>
 
-					<div className="post__question__form__actions">
+					<div className="post_question__form__actions">
 						<Button type="danger" style={{marginRight: "1rem"}} onClick={this.cancel}>Cancel</Button>
 						<Button type="primary" htmlType="submit">Post</Button>
 					</div>
