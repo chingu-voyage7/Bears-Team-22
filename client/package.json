@@ -9,8 +9,7 @@
 		"dev": "next",
 		"start": "next start",
 		"build": "next build",
-		"lint": "xo",
-		"test": "npm run lint"
+		"test": "xo"
 	},
 	"dependencies": {
 		"@zeit/next-css": "^1.0.1",
