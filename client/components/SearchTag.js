@@ -84,8 +84,8 @@ class SearchTag extends React.Component {
 		}
 
 		return (
-			// TODO: Figure out how to stop the options popup from jumping around, and make it stay under the tag field. 
-			<Select 
+			// TODO: Figure out how to stop the options popup from jumping around, and make it stay under the tag field.
+			<Select
 				mode="multiple"
 				style={{width: "100%"}}
 				placeholder="Tags to search for..."
