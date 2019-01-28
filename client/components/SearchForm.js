@@ -35,11 +35,10 @@ class SearchForm extends React.Component {
 		const {ranSearch = false, stemmedWords = [], updateTags} = this.props;
 
 		return (
-			<div>
+			<div className="search_input">
 				<h1 className="search_input--title">Search</h1>
 				<InputSearch
 					enterButton
-					className="search_input"
 					placeholder="Type your query here..."
 					onSearch={this.onSearch}
 					onChange={this.handleChange}
