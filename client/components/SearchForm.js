@@ -44,7 +44,9 @@ class SearchForm extends React.Component {
 					onSearch={this.onSearch}
 					onChange={this.handleChange}
 				/>
-				<SearchTag ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={updateTags} isNewQuery={this.state.isNewQuery}/>
+				<div className="search_input__tag_select">
+					<SearchTag ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={updateTags} isNewQuery={this.state.isNewQuery}/>
+				</div>
 			</div>
 		);
 	}

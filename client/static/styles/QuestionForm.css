@@ -13,6 +13,14 @@
     text-align: center;
 }
 
+.ant-row.ant-form-item {
+    margin-bottom: 10px;
+}
+
+.post__question__form__actions {
+    margin-top: 20px;
+}
+
 @media(min-width: 100rem) {
     .post__question__form {
         justify-content: center;

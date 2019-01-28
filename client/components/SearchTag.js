@@ -5,7 +5,6 @@ import {Select} from "antd";
 import "isomorphic-unfetch";
 
 import "antd/dist/antd.css";
-import "../static/styles/SearchTag.css";
 
 const {Option} = Select;
 
@@ -38,7 +37,7 @@ class SearchTag extends React.Component {
 		}
 
 		const {tags} = this.state;
-		const {isNewQuery = true, stemmedWords} = this.props;
+		const {isNewQuery = true, stemmedWords = []} = this.props;
 
 		const tagNames = tags.map(tag => tag.name);
 
@@ -85,26 +84,24 @@ class SearchTag extends React.Component {
 		}
 
 		return (
-			<div className="search_input tag_select">
-				<Select // TODO: Only allow users to select tags they haven't selected yet.
-					mode="multiple"
-					style={{width: "100%"}}
-					placeholder="Tags to search for..."
-					notFoundContent="No matching tags found"
-					value={activeTags}
-					onSelect={this.handleChange}
-					onDeselect={this.handleChange}
-				>
-					{tags
-						.map(tag => <Option key={tag.name}>{tag.name}</Option>)
-						// Exclude all the already selected ones. Can't limit to 5 the result here
-						// in case one of those 5 has already been included in activeTags
-						// ( it won't be displayed -> unpredictable number of el displayed)
-						.filter(el => !activeTags.includes(el.key))
-						.filter((_, i) => i < 5)		// Limits to max 5 result
-					}
-				</Select>
-			</div>
+			<Select // TODO: Only allow users to select tags they haven't selected yet.
+				mode="multiple"
+				style={{width: "100%"}}
+				placeholder="Tags to search for..."
+				notFoundContent="No matching tags found"
+				value={activeTags}
+				onSelect={this.handleChange}
+				onDeselect={this.handleChange}
+			>
+				{tags
+					.map(tag => <Option key={tag.name}>{tag.name}</Option>)
+					// Exclude all the already selected ones. Can't limit to 5 the result here
+					// in case one of those 5 has already been included in activeTags
+					// ( it won't be displayed -> unpredictable number of el displayed)
+					.filter(el => !activeTags.includes(el.key))
+					.filter((_, i) => i < 5)		// Limits to max 5 result
+				}
+			</Select>
 		);
 	}
 }
