@@ -11,7 +11,6 @@ import LoginForm from "../components/LoginForm";
 import "isomorphic-unfetch";
 
 class Login extends React.Component {
-
 	login = async (email, password) => {
 		// Since we will use sessions the token auth will be saved and removed
 		try {

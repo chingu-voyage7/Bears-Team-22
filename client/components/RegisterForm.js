@@ -18,22 +18,22 @@ class RegisterForm extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			if (!err) { // The given inputs are valid.
 				this.props.signup(values)
-							.then(error => {	
-								this.setState({error});
-							})
-							.catch(error => {
-								this.setState({error});
-							});
+					.then(error => {
+						this.setState({error});
+					})
+					.catch(error => {
+						this.setState({error});
+					});
 			}
 		});
 	};
 
 	validateEmail = (rule, value, callback) => {
-		const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		if(value && !emailRegex.test(value.toLowerCase()) ) {
+		const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (value && !emailRegex.test(value.toLowerCase())) {
 			callback("Badly formatted email");
-		} 
-		
+		}
+
 		callback();
 	};
 
@@ -117,12 +117,12 @@ class RegisterForm extends React.Component {
 							})(<Input type="password" placeholder="Confirm Password"/>)
 						}
 					</FormItem>
-					{error &&    
+					{error &&
 						<Alert
 							description={error.message}
 							type="error"
 							showIcon
-						/> 
+						/>
 					}
 					<Button type="primary" htmlType="submit">
 					Register
