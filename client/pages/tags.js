@@ -4,6 +4,8 @@ import "../static/styles/Tags.css";
 import MainLayout from "../components/MainLayout";
 import Question from "../components/Question";
 
+// Assume data is passed as a prop from a nextJS router, 
+// with tagsData as the prop
 class Tags extends React.Component {
   state = {
     questions: tagsData.questions
@@ -23,7 +25,7 @@ class Tags extends React.Component {
             Questions tagged [javascript]
           </div>
           <div className="tags_items__body">
-            {taggedQuestions.map(item)}
+            
             <Question data={question1}/> 
             <Question data={question1}/>
             <Question data={question1}/>
