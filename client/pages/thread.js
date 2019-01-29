@@ -43,7 +43,6 @@ class Thread extends React.Component {
 			this.setState(() => ({thread}));
 		} catch (error) {
 			console.error(error);
-			return {error};
 		}
 	}
 
