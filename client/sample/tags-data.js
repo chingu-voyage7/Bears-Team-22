@@ -54,7 +54,7 @@ export const tagsData = {
                     "name": "first"
                 },
                 {
-                    "_id": "qwertyasdfxxxxxxx",
+                    "_id": "javascriptID",
                     "name": "javascript"
                 }
             ],
@@ -77,7 +77,7 @@ export const tagsData = {
                     "name": "second"
                 },
                 {
-                    "_id": "qwertyasdfxxxxxxx",
+                    "_id": "javascriptID",
                     "name": "javascript"
                 }
             ],

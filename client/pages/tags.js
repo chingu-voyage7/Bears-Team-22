@@ -6,6 +6,9 @@ import Question from "../components/Question";
 
 // Assume data is passed as a prop from a nextJS router, 
 // with tagsData as the prop
+// Assume the props from `search.js` is passing two things
+// 1. The tag ID to the tagname
+// 2. tagsData state
 class Tags extends React.Component {
   state = {
     questions: tagsData.questions
@@ -18,6 +21,7 @@ class Tags extends React.Component {
       createdAt:"2019-01-22T15:22:06.578Z",
       body:"Look at me I'm a question"
     }
+    const chosenTagName = 'javascript'; // localhost:3000/tags/javascript
     return (
       <MainLayout>
         <div className="tags_items">
@@ -25,11 +29,10 @@ class Tags extends React.Component {
             Questions tagged [javascript]
           </div>
           <div className="tags_items__body">
-            
-            <Question data={question1}/> 
-            <Question data={question1}/>
-            <Question data={question1}/>
-            <Question data={question1}/>
+            {this.state.questions.filter(item => {
+              let flag = item.tags.find(el => el['name'] == chosenTagName);
+              return item.tags.name == chosenTagName ? <Question data={question1}/>: ""
+            })}
           </div>
         </div>
 			</MainLayout>
