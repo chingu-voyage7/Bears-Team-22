@@ -1,0 +1,8 @@
+.tag_list {
+	padding-top: 20px;
+	display: flex;
+}
+
+.tag_list__text {
+	margin-right: 5px;
+}

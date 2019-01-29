@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import {List} from "antd";
 
+import TagList from "./TagList";
+
 import "antd/dist/antd.css";
 import "../static/styles/QuestionList.css";
 
@@ -18,8 +20,7 @@ class QuestionList extends React.Component {
 					dataSource={questions}
 					renderItem={item => {
 						const {_id, authorId, tags, title, body} = item;
-						const tagsList = tags.map(tag => tag.name).join(", ");
-						const tagsAction = tagsList.length > 0 ? [<span>Tags: {tagsList}</span>] : []; // eslint-disable-line react/jsx-key
+						const tagsAction = tags.length > 0 ? [<TagList tags={tags}/>] : []; // eslint-disable-line react/jsx-key
 
 						return (
 							<Link href={`/thread?id=${_id}`}>
