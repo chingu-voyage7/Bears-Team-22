@@ -29,10 +29,11 @@ class Tags extends React.Component {
             Questions tagged [javascript]
           </div>
           <div className="tags_items__body">
-            {this.state.questions.filter(item => {
-              let flag = item.tags.find(el => el['name'] == chosenTagName);
-              return item.tags.name == chosenTagName ? <Question data={question1}/>: ""
-            })}
+            {/*Not sure why this doesn't work. Should extract all questions matching "javascript"}*/}
+            {/*{this.state.questions.filter(item => {
+              let flag = item.tags.filter(el => el['name'] == chosenTagName).length > 0;
+              return flag ? <Question data={question1}/>: false
+            })}*/}
           </div>
         </div>
 			</MainLayout>
