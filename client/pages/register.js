@@ -2,9 +2,9 @@ import React from "react";
 import Router from "next/router";
 import "firebase/auth";
 
+import firebase from "../components/firebase/firebase-api";
 import MainLayout from "../components/MainLayout";
 import RegisterForm from "../components/RegisterForm";
-import firebase from "../components/Firebase/firebase-api";
 
 class Register extends React.Component {
 	async signup(registrationData) {
