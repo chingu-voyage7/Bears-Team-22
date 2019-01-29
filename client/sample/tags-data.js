@@ -1,5 +1,5 @@
 // mocked data from swagger
-export const taggedQuestions = {
+export const tagsData = {
     "questions": [
         {
             "tags": [

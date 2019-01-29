@@ -1,10 +1,13 @@
 import React from "react";
-import { taggedQuestions} from '../sample/tags-data';
+import { tagsData} from '../sample/tags-data';
 import "../static/styles/Tags.css";
 import MainLayout from "../components/MainLayout";
 import Question from "../components/Question";
 
 class Tags extends React.Component {
+  state = {
+    questions: tagsData.questions
+  }
   render() {
     const question1 = {
       title:"I'm a question!",
@@ -20,6 +23,7 @@ class Tags extends React.Component {
             Questions tagged [javascript]
           </div>
           <div className="tags_items__body">
+            {taggedQuestions.map(item)}
             <Question data={question1}/> 
             <Question data={question1}/>
             <Question data={question1}/>
