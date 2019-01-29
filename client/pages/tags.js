@@ -15,8 +15,17 @@ class Tags extends React.Component {
     }
     return (
       <MainLayout>
-        <Question data={question1}/>
-        <div>Hey World</div>
+        <div className="tags_items">
+          <div className="tags_items__header">
+            Questions tagged [javascript]
+          </div>
+          <div className="tags_items__body">
+            <Question data={question1}/> 
+            <Question data={question1}/>
+            <Question data={question1}/>
+            <Question data={question1}/>
+          </div>
+        </div>
 			</MainLayout>
     );
   }
