@@ -11,6 +11,7 @@ import LoginForm from "../components/LoginForm";
 import "isomorphic-unfetch";
 
 class Login extends React.Component {
+
 	login = async (email, password) => {
 		// Since we will use sessions the token auth will be saved and removed
 		try {
@@ -31,9 +32,10 @@ class Login extends React.Component {
 			await fetch("http://localhost:5000/auth/login", fetchOpts);
 			await firebase.auth().signOut(); // Cookies are set, no need to mantain the token in the storage
 
-			await Router.push("/");
+			Router.push("/");
+			return null;
 		} catch (error) {
-			console.log(error);
+			return error;
 		}
 	};
 

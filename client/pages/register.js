@@ -25,9 +25,10 @@ class Register extends React.Component {
 			await fetch("http://localhost:5000/auth/login", fetchOpts);
 			await firebase.auth().signOut();
 
-			await Router.push("/");
+			Router.push("/");
+			return null;
 		} catch (error) {
-			console.error(error);
+			return error;
 		}
 	}
 
