@@ -12,8 +12,8 @@ class TagList extends React.Component {
 		return (
 			<div className="tag_list">
 				<span className="tag_list__text">Tags:</span>
-				{tags.map((tag, index) => (
-					<div>
+				{tags.map(tag => (
+					<div key={tag.name}>
 						<Link href={`/tag?name=${tag.name}`}>
 							<a>
 								<Tag>
