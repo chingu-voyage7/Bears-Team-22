@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import {Form, Input, Button, Icon} from "antd";
 
+import "antd/dist/antd.css"; // TODO: Check if this `import` is even necessary.
 import "../static/styles/LoginForm.css";
 
 const {Item: FormItem} = Form;
@@ -11,6 +12,7 @@ class LoginForm extends React.Component {
 	handleSubmit = e => {
 		e.preventDefault();
 
+		// TODO: Change the below function (`this.props.form.validateFields`) to return a promise instead of receive a callback.
 		this.props.form.validateFields((err, values) => { // TODO: Visually inform the user if there are any issues with the given input.
 			if (!err) { // The given inputs are valid.
 				this.props.login(values.email, values.password);
