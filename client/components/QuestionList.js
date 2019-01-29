@@ -7,19 +7,15 @@ import "antd/dist/antd.css";
 import "../static/styles/QuestionList.css";
 
 class QuestionList extends React.Component {
-	onSearch = value => {
-		this.props.search(value);
-	}
-
 	render() {
-		const {ranSearch = false} = this.props;
+		const {ranSearch = false, questions = []} = this.props;
 
 		return (
 			<div className="search__questions_list">
 				<List
 					itemLayout="horizontal"
 					locale={{emptyText: ranSearch ? "No results matching the given query where found." : " "}}
-					dataSource={this.props.questions}
+					dataSource={questions}
 					renderItem={item => {
 						const {_id, authorId, tags, title, body} = item;
 						const tagsList = tags.map(tag => tag.name).join(", ");
@@ -45,12 +41,10 @@ class QuestionList extends React.Component {
 }
 
 QuestionList.propTypes = {
-	search: PropTypes.func,
 	ranSearch: PropTypes.bool,
 	questions: PropTypes.array.isRequired
 };
 QuestionList.defaultProps = {
-	search: () => {},
 	ranSearch: false
 };
 
