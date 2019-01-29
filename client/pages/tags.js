@@ -1,25 +1,15 @@
 import React from "react";
+import { taggedQuestions} from '../sample/tags-data';
+import "../static/styles/Tags.css";
 
-class Header extends React.Component {
+class Tags extends React.Component {
   render() {
     return (
-      <header className="top">
-        <h1>
-          Catch
-          <span className="ofThe">
-            <span className="of">Of</span>
-            <span className="the">The</span>
-          </span>
-        </h1>
-        <h3 className="tagline">
-          <span>
-            {this.props.tagline}
-            {this.props.age}
-          </span>
-        </h3>
-      </header>
+      <div>
+        Hello world
+      </div>
     );
   }
 }
 
-export default Header;
+export default Tags;
