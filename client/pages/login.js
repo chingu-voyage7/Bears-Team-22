@@ -3,8 +3,8 @@ import React from "react";
 import {auth} from "firebase/app";
 import "firebase/auth";
 import Router from "next/router";
-import firebase from "../components/Firebase/firebase-api";
 
+import firebase from "../components/firebase/firebase-api";
 import MainLayout from "../components/MainLayout";
 import LoginForm from "../components/LoginForm";
 

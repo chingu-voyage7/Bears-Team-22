@@ -8,12 +8,33 @@ const {Header} = Layout;
 
 export default class MainHeader extends React.Component {
 	state = {
-		drawerIsVisible: false
+		drawerIsVisible: false,
+		currentItem: "0"
 	};
+
+	componentDidMount() {
+		let currentItem = "0";
+
+		const page = window.location.pathname.replace(/\//g, "");
+		switch (page) {
+			case "logout":
+			case "login":
+				currentItem = "1";
+				break;
+			case "register":
+				currentItem = "2";
+				break;
+			default:
+				break;
+		}
+
+		this.setState({currentItem});
+	}
 
 	openDrawer = () => {
 		this.setState({
-			drawerIsVisible: true
+			drawerIsVisible: true,
+			currentItem: "0"
 		});
 	};
 
@@ -24,7 +45,7 @@ export default class MainHeader extends React.Component {
 	};
 
 	render() {
-		const {drawerIsVisible} = this.state;
+		const {drawerIsVisible, currentItem} = this.state;
 		const {authState} = this.props;
 
 		return (
@@ -35,7 +56,13 @@ export default class MainHeader extends React.Component {
 							<a>Knowledge</a>
 						</Link>
 					</div>
-					<Menu mode="horizontal" className="header__menu" theme="light">
+					<Menu
+						mode="horizontal"
+						className="header__menu"
+						theme="light"
+						selectedKeys={[currentItem]}
+						onClick={this.handleClick}
+					>
 						{authState !== "unchecked" ? // eslint-disable-line no-negated-condition
 							<Menu.Item key="1">
 								<Link href={`/${authState === "logged in" ? "logout" : "login"}`}>

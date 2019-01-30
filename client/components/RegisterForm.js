@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import {Form, Input, Button, Alert} from "antd";
 
+import "antd/dist/antd.css"; // TODO: Check if this `import` is even necessary.
 import "../static/styles/RegisterForm.css";
 
 const FormItem = Form.Item;
