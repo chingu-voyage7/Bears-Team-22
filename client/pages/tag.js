@@ -12,10 +12,16 @@ class Tag extends React.Component {
 	};
 
 	static getInitialProps({query}) {
-		return {tagName: query.name};
+		return {
+			tagName: encodeURIComponent(query.name.toLowerCase())
+		};
 	}
 
 	componentDidMount() {
+		this.fetchTagData();
+	}
+
+	componentDidUpdate() {
 		this.fetchTagData();
 	}
 
