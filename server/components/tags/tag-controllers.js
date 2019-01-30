@@ -6,7 +6,7 @@ exports.getTags = async (req, res) => {
 	const findOptions = query ? [{
 		name: {
 			$regex: query,
-			$options: "ig"
+			$options: "i"
 		}
 	}] : [];
 
@@ -24,7 +24,10 @@ exports.getTags = async (req, res) => {
 
 exports.getTagQuestions = async (req, res) => {
 	const {tagName} = req.params;
-	const tagId = await Tag.findOne({name: tagName}).select("_id");
+	const tagId = await Tag.findOne({name: {
+		$regex: tagName,
+		$options: "i"
+	}}).select("_id");
 
 	try {
 		const questions = await Question
