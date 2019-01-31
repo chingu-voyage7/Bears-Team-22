@@ -1,4 +1,4 @@
-.login__form {
+.login_form {
     display: grid;
     grid-gap: 10px;
     text-align: center;
@@ -7,24 +7,24 @@
     padding: 0;
 }
 
-.login__form--title {
+.login_form--title {
     text-align: center;
 }
 
-.login__form > * {
+.login_form > * {
     margin: 0;
 }
 
-.login__form button {
+.login_form button {
     margin-top: 0.75rem;
 }
 
-.login__form > a {
+.login_form > a {
     font-weight: bold;
 }
 
 @media(min-width: 30rem) {
-    .login__form {
+    .login_form {
         justify-content: center;
         align-content: center;
     }

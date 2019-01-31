@@ -12,7 +12,7 @@ class Register extends React.Component {
 			const userData = await firebase.auth().createUserWithEmailAndPassword(registrationData.email, registrationData.password);
 			const idToken = await userData.user.getIdToken();
 
-			// Const _csrf = Cookies.get('XSRF-TOKEN');   <-- TODO
+			// TODO: Setup CSRF protection - `const _csrf = cookies.get('XSRF-TOKEN');`
 			const fetchOpts = {
 				method: "POST",
 				headers: new Headers({"Content-Type": "application/json"}),
@@ -26,7 +26,7 @@ class Register extends React.Component {
 			await firebase.auth().signOut();
 
 			Router.push("/");
-			return null;
+			return;
 		} catch (error) {
 			return error;
 		}
