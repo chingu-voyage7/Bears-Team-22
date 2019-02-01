@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import {Card} from "antd";
 import moment from "moment";
 
+import TagList from "./TagList";
+
 import "antd/dist/antd.css";
 import "../static/styles/Question.css";
 
 export default class Question extends React.Component {
 	render() {
 		const {title, authorId, tags, createdAt, body} = this.props.data;
-		const tagsList = tags.map(tag => tag.name).join(", ");
 
 		return (
 			<Card className="question_card">
@@ -20,9 +21,9 @@ export default class Question extends React.Component {
 				<div className="question_card__body">
 					<span>{body}</span>
 				</div>
-				{tagsList ?
+				{tags && tags.length > 0 ?
 					<div className="question_card__tags">
-						<span>Tags: {tagsList}</span>
+						<TagList tags={tags}/>
 					</div> :
 					null}
 			</Card>

@@ -3,8 +3,8 @@ import React from "react";
 import {auth} from "firebase/app";
 import "firebase/auth";
 import Router from "next/router";
-import firebase from "../components/Firebase/firebase-api";
 
+import firebase from "../components/firebase/firebase-api";
 import MainLayout from "../components/MainLayout";
 import LoginForm from "../components/LoginForm";
 
@@ -40,7 +40,7 @@ class Login extends React.Component {
 			await fetch("http://localhost:5000/auth/login", fetchOpts);
 			await firebase.auth().signOut(); // Cookies are set, no need to mantain the token in the storage
 			Router.push("/");
-			return null;
+			return;
 		} catch (error) {
 			await fetch("http://localhost:5000/auth/logout");   // User already logged in with FB
 			return { message: "Internal server error"};

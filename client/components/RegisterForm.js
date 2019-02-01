@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import {Form, Input, Button, Alert} from "antd";
 
-import "../static/styles/RegisterForm.css";
+import {validateEmail} from "./validation/validators";
 
-const FormItem = Form.Item;
+import "antd/dist/antd.css"; // TODO: Check if this `import` is even necessary.
+import "../static/styles/RegisterForm.css";
 
 class RegisterForm extends React.Component {
 	state = {
@@ -15,26 +16,18 @@ class RegisterForm extends React.Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		this.props.form.validateFields((err, values) => {
+		this.props.form.validateFields(async (err, values) => {
 			if (!err) { // The given inputs are valid.
-				this.props.signup(values)
-					.then(error => {
-						this.setState({error});
-					})
-					.catch(error => {
-						this.setState({error});
-					});
+				let validationError;
+				try {
+					validationError = await this.props.signup(values);
+				} catch (error) {
+					validationError = error;
+				}
+
+				this.setState({error: validationError});
 			}
 		});
-	};
-
-	validateEmail = (rule, value, callback) => {
-		const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		if (value && !emailRegex.test(value.toLowerCase())) {
-			callback("Badly formatted email");
-		}
-
-		callback();
 	};
 
 	compareToFirstPassword = (rule, value, callback) => {
@@ -61,9 +54,9 @@ class RegisterForm extends React.Component {
 
 		return (
 			<div>
-				<h1 className="register__form--title">Register</h1>
-				<Form className="register__form" onSubmit={this.handleSubmit}>
-					<FormItem>
+				<h1 className="register_form--title">Register</h1>
+				<Form className="register_form" onSubmit={this.handleSubmit}>
+					<Form.Item>
 						{
 							getFieldDecorator("name", {
 								rules: [
@@ -74,22 +67,22 @@ class RegisterForm extends React.Component {
 								]
 							})(<Input placeholder="Name"/>)
 						}
-					</FormItem>
-					<FormItem>
+					</Form.Item>
+					<Form.Item>
 						{
 							getFieldDecorator("email", {
 								rules: [
 									{
 										required: true,
-										message: "Please enter your E-mail"
+										message: "Please enter your email"
 									}, {
-										validator: this.validateEmail
+										validator: validateEmail
 									}
 								]
-							})(<Input placeholder="E-mail"/>)
+							})(<Input placeholder="Email"/>)
 						}
-					</FormItem>
-					<FormItem>
+					</Form.Item>
+					<Form.Item>
 						{
 							getFieldDecorator("password", {
 								rules: [
@@ -102,8 +95,8 @@ class RegisterForm extends React.Component {
 								]
 							})(<Input type="password" placeholder="Password"/>)
 						}
-					</FormItem>
-					<FormItem>
+					</Form.Item>
+					<Form.Item>
 						{
 							getFieldDecorator("confirmPassword", {
 								rules: [
@@ -116,12 +109,12 @@ class RegisterForm extends React.Component {
 								]
 							})(<Input type="password" placeholder="Confirm Password"/>)
 						}
-					</FormItem>
+					</Form.Item>
 					{error &&
 						<Alert
+							showIcon
 							description={error.message}
 							type="error"
-							showIcon
 						/>
 					}
 					<Button type="primary" htmlType="submit">

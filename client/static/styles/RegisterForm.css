@@ -1,4 +1,4 @@
-.register__form {
+.register_form {
     display: grid;
     grid-gap: 10px;
     text-align: center;
@@ -7,28 +7,28 @@
     padding: 0;
 }
 
-.register__form > * {
+.register_form > * {
     margin: 0;
 }
 
-.register__form button {
+.register_form button {
     margin-top: 0.75rem;
 }
 
-.register__form--title {
+.register_form--title {
     text-align: center;
 }
 
-.register__form > p {
+.register_form > p {
     font-style: italic;
 }
 
-.register__form > a {
+.register_form > a {
     font-weight: bold;
 }
 
 @media(min-width: 30rem) {
-    .register__form {
+    .register_form {
         justify-content: center;
         align-content: center;
     }
