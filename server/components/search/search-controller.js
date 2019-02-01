@@ -13,7 +13,6 @@ exports.getQuestion = async (req, res) => {
 	// OR research (passing the query 'foo bar' will now return
 	// the text with 'foo' AND 'bar' instead of 'foo' OR 'bar').
 	const queryString = query.split(" ").map(word => `"${decodeURIComponent(word)}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
-
 	let queryTags = [];
 	if (tags) {
 		const parsedTags = tags.split(",").map(decodeURIComponent);
