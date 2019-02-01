@@ -1,8 +1,9 @@
 .register_form {
     display: grid;
     grid-gap: 10px;
+    justify-content: center;
+    align-content: center;
     text-align: center;
-    padding: 1rem;
     margin: 0;
     padding: 0;
 }
@@ -28,8 +29,9 @@
 }
 
 @media(min-width: 30rem) {
-    .register_form {
-        justify-content: center;
-        align-content: center;
+    .register_form {        
+        width: 20rem;
+        margin: auto;
+        justify-content: stretch;
     }
 }

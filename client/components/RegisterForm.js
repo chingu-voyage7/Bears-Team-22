@@ -1,31 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import {Form, Input, Button, Alert} from "antd";
+import {Form, Input, Button} from "antd";
 
-import {validateEmail} from "./validation/validators";
+import {validateEmail} from "../validation/validators";
 
 import "antd/dist/antd.css"; // TODO: Check if this `import` is even necessary.
 import "../static/styles/RegisterForm.css";
 
 class RegisterForm extends React.Component {
 	state = {
-		confirmDirty: false,
-		error: null
-	}
+		confirmDirty: false // TODO: Figure out what this is used for and if we even need it.
+	};
 
 	handleSubmit = e => {
 		e.preventDefault();
-		this.props.form.validateFields(async (err, values) => {
+		this.props.form.validateFields((err, values) => {
 			if (!err) { // The given inputs are valid.
-				let validationError;
-				try {
-					validationError = await this.props.signup(values);
-				} catch (error) {
-					validationError = error;
-				}
-
-				this.setState({error: validationError});
+				this.props.signup(values);
 			}
 		});
 	};
@@ -50,7 +42,6 @@ class RegisterForm extends React.Component {
 
 	render() {
 		const {getFieldDecorator} = this.props.form;
-		const {error} = this.state;
 
 		return (
 			<div>
@@ -110,13 +101,6 @@ class RegisterForm extends React.Component {
 							})(<Input type="password" placeholder="Confirm Password"/>)
 						}
 					</Form.Item>
-					{error &&
-						<Alert
-							showIcon
-							description={error.message}
-							type="error"
-						/>
-					}
 					<Button type="primary" htmlType="submit">
 					Register
 					</Button>

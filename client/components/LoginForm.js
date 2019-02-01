@@ -3,50 +3,53 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import {Form, Input, Button, Icon, Alert} from "antd";
 
-import {validateEmail} from "./validation/validators";
+import {validateEmail} from "../validation/validators";
 
 import "antd/dist/antd.css"; // TODO: Check if this `import` is even necessary.
 import "../static/styles/LoginForm.css";
 
 class LoginForm extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			error: null
-		};
-	}
+	state = {
+		error: null
+	};
 
 	handleSubmit = e => {
 		e.preventDefault();
 
 		this.props.form.validateFields(async (err, values) => { // TODO: Modify `this.props.form.validateFields` to return a promise instead of receive a callback.
-			if (!err) { // The given inputs are valid.
-				let validationError;
+			let validationError;
+
+			if (err) {
+				validationError = err;
+			} else {
 				try {
 					validationError = await this.props.login(values.email, values.password);
 				} catch (error) {
 					validationError = error;
 				}
-
-				this.setState({error: validationError});
 			}
+
+			this.setState({
+				error: validationError && validationError.message ? validationError : null
+			});
 		});
 	};
 
 	render() {
 		const {error} = this.state;
 		const {getFieldDecorator} = this.props.form;
+
 		return (
-			<div>
+			<div className="login_form">
 				<h1 className="login_form--title">Login</h1>
-				<Form className="login_form" onSubmit={this.handleSubmit}>
+				<Form className="login_form--form" onSubmit={this.handleSubmit}>
 					<Form.Item>
 						{
 							getFieldDecorator("email", {
 								rules: [
 									{
 										required: true,
-										message: "Please enter your E-mail"
+										message: "Please enter your email"
 									}, {
 										validator: validateEmail
 									}
@@ -67,16 +70,18 @@ class LoginForm extends React.Component {
 						}
 					</Form.Item>
 					{error &&
-						<Alert
-							showIcon
-							description={error.message}
-							type="error"
-						/>
+						<div className="login_form--form__alert">
+							<Alert
+								showIcon
+								message={error.message}
+								type="error"
+							/>
+						</div>
 					}
 					<Button type="primary" htmlType="submit">
 					Log in
 					</Button>
-					or
+					<p>or</p>
 					<Link href="/register">
 						<a>Register now</a>
 					</Link>

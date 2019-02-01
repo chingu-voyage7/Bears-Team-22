@@ -2,7 +2,7 @@ import React from "react";
 import Router from "next/router";
 import "firebase/auth";
 
-import firebase from "../components/firebase/firebase-api";
+import firebase from "../firebase/firebase-api";
 import MainLayout from "../components/MainLayout";
 import RegisterForm from "../components/RegisterForm";
 
