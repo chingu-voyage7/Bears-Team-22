@@ -24,8 +24,10 @@
 }
 
 @media(min-width: 30rem) {
-    .login__form {
-        justify-content: center;
+    .login__form {        
+        width: 20rem;
+        margin: auto;
+        justify-content: stretch;
         align-content: center;
     }
 }
