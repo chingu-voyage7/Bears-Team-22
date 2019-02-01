@@ -6,6 +6,7 @@ const {resolveTagNames} = require("../util/tag");
 
 exports.getQuestion = async (req, res) => {
 	const {q: query = "", tags} = req.query;
+
 	// Split query into words then each word is wrapped in
 	// double quotes to allow mongo to recognize those as
 	// multiple phrases hence make a AND research instead of
