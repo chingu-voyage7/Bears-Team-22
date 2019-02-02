@@ -3,19 +3,19 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import {Form, Input, Button} from "antd";
 
+import {validateEmail} from "../validation/validators";
+
 import "antd/dist/antd.css"; // TODO: Check if this `import` is even necessary.
 import "../static/styles/RegisterForm.css";
 
-const FormItem = Form.Item;
-
 class RegisterForm extends React.Component {
 	state = {
-		confirmDirty: false
-	}
+		confirmDirty: false // TODO: Figure out what this is used for and if we even need it.
+	};
 
 	handleSubmit = e => {
 		e.preventDefault();
-		this.props.form.validateFields((err, values) => { // TODO: Visually inform the user if there are any issues with the given input.
+		this.props.form.validateFields((err, values) => {
 			if (!err) { // The given inputs are valid.
 				this.props.signup(values);
 			}
@@ -45,9 +45,9 @@ class RegisterForm extends React.Component {
 
 		return (
 			<div>
-				<h1 className="register__form--title">Register</h1>
-				<Form className="register__form" onSubmit={this.handleSubmit}>
-					<FormItem>
+				<h1 className="register_form--title">Register</h1>
+				<Form className="register_form" onSubmit={this.handleSubmit}>
+					<Form.Item>
 						{
 							getFieldDecorator("name", {
 								rules: [
@@ -58,20 +58,22 @@ class RegisterForm extends React.Component {
 								]
 							})(<Input placeholder="Name"/>)
 						}
-					</FormItem>
-					<FormItem>
+					</Form.Item>
+					<Form.Item>
 						{
 							getFieldDecorator("email", {
 								rules: [
 									{
 										required: true,
-										message: "Please enter your E-mail"
+										message: "Please enter your email"
+									}, {
+										validator: validateEmail
 									}
 								]
-							})(<Input placeholder="E-mail"/>)
+							})(<Input placeholder="Email"/>)
 						}
-					</FormItem>
-					<FormItem>
+					</Form.Item>
+					<Form.Item>
 						{
 							getFieldDecorator("password", {
 								rules: [
@@ -84,8 +86,8 @@ class RegisterForm extends React.Component {
 								]
 							})(<Input type="password" placeholder="Password"/>)
 						}
-					</FormItem>
-					<FormItem>
+					</Form.Item>
+					<Form.Item>
 						{
 							getFieldDecorator("confirmPassword", {
 								rules: [
@@ -98,7 +100,7 @@ class RegisterForm extends React.Component {
 								]
 							})(<Input type="password" placeholder="Confirm Password"/>)
 						}
-					</FormItem>
+					</Form.Item>
 					<Button type="primary" htmlType="submit">
 					Register
 					</Button>

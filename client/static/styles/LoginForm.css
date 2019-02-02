@@ -1,31 +1,42 @@
-.login__form {
+.login_form {
     display: grid;
     grid-gap: 10px;
+    justify-content: center;
+    align-content: center;
     text-align: center;
-    padding: 1rem;
     margin: 0;
     padding: 0;
 }
 
-.login__form--title {
+.login_form--title {
     text-align: center;
 }
 
-.login__form > * {
+.login_form > * {
     margin: 0;
 }
 
-.login__form button {
-    margin-top: 0.75rem;
+.login_form--form > button { /* TODO: Improve the styling of the login and register forms. */
+    margin-top: 0.3rem;
 }
 
-.login__form > a {
+.login_form--form > p {
+    margin: 8px 0px;
+}
+
+.login_form--form > a {
     font-weight: bold;
+    margin-top: 22px;
+}
+
+.login_form--form__alert {
+    text-align: left;
 }
 
 @media(min-width: 30rem) {
-    .login__form {
-        justify-content: center;
-        align-content: center;
+    .login_form {        
+        width: 20rem;
+        margin: auto;
+        justify-content: stretch;
     }
 }
