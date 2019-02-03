@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
 
-import clientCredentials from "../client-cred";
+import {credentials} from "../config";
 
-export default firebase.apps.length > 0 ? firebase.app() : firebase.initializeApp(clientCredentials);
+export default firebase.apps.length > 0 ? firebase.app() : firebase.initializeApp(credentials);

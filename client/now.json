@@ -1,9 +1,10 @@
 {
     "version": 2,
     "name": "knowledge",
+    "alias": "knowledge",
     "builds": [
         {
-			"src": "next.config.js",
+			"src": "package.json",
 			"use": "@now/next"
 		}
     ]

@@ -9,6 +9,7 @@
 		"dev": "next",
 		"start": "next start",
 		"build": "next build",
+		"deploy": "now",
 		"test": "xo"
 	},
 	"dependencies": {
@@ -19,11 +20,9 @@
 		"firebase": "~5.7.1",
 		"is": "^3.3.0",
 		"is-email-like": "^1.0.0",
-		"isomorphic-unfetch": "^3.0.0",
 		"moment": "^2.23.0",
 		"next": "^7.0.2",
 		"prop-types": "^15.6.2",
-		"random-words": "^1.1.0",
 		"react": "^16.7.0",
 		"react-dom": "^16.7.0"
 	},
@@ -32,6 +31,7 @@
 		"eslint": "5.12.1",
 		"eslint-config-xo-react": "^0.18.0",
 		"eslint-plugin-react": "^7.12.4",
+		"now": "^13.1.2",
 		"xo": "^0.24.0"
 	},
 	"xo": {

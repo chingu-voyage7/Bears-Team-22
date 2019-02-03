@@ -8,6 +8,8 @@ import Reply from "../components/Reply";
 import Loading from "../components/Loading";
 import ReplyForm from "../components/ReplyForm";
 
+import {get, post} from "../http";
+
 class Thread extends React.Component {
 	state = {
 		thread: {},
@@ -33,7 +35,7 @@ class Thread extends React.Component {
 		const {id} = this.props;
 
 		try {
-			const response = await fetch(`http://localhost:5000/thread/${id}`, {credentials: "include"});
+			const response = await get(`/thread/${id}`, {credentials: "include"});
 			if (response.status !== 200) {
 				throw new Error("Thread not found!");
 			}
@@ -56,14 +58,13 @@ class Thread extends React.Component {
 		if (replyData) { // TODO: Keep the reply active and display some sort of error message in case the given reply is empty / invalid (i.e. too short / has empty fields).
 			const questionId = this.state.thread.question._id;
 			const fetchOpts = {
-				method: "POST",
 				headers: new Headers({"Content-Type": "application/json"}),
 				credentials: "include",
 				body: JSON.stringify({type: "reply", questionId, ...replyData})
 			};
 
 			try {
-				const res = await fetch("http://localhost:5000/content/create", fetchOpts);
+				const res = await post("/content/create", fetchOpts);
 
 				if (res.status === 201) {
 					this.fetchThread();

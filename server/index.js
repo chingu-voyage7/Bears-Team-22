@@ -10,13 +10,13 @@ const threadRoutes = require("./components/thread/thread-routes");
 const searchRoutes = require("./components/search/search-routes");
 const contentRoutes = require("./components/content/content-routes");
 const tagRoutes = require("./components/tags/tag-routes");
-const serviceAccount = require("./server-cred");
+const {credentials, databaseUrl} = require("./config");
 
 const port = 5000;
 const app = express();
 
 const firebase = admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount),
+	credential: admin.credential.cert(credentials),
 	databaseURL: "https://react-firebase-85039.firebaseio.com"
 }, "server");
 
@@ -25,7 +25,7 @@ mongoose.set("useNewUrlParser", true);
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
 
-mongoose.connect("mongodb://mongo:27017/test_db")
+mongoose.connect(databaseUrl || "mongodb://mongo:27017/test_db")
 	.then(() => {
 		console.log("Successfully connected to Mongo!");
 	})
@@ -33,7 +33,7 @@ mongoose.connect("mongodb://mongo:27017/test_db")
 		console.log(`Error connecting to Mongo: ${error}`);
 	});
 
-const corsMiddleware = cors({origin: "http://localhost:3000", optionsSuccessStatus: 200, credentials: true});
+const corsMiddleware = cors({origin: "*", optionsSuccessStatus: 200, credentials: true});
 
 app.use(corsMiddleware);
 app.options("*", corsMiddleware);

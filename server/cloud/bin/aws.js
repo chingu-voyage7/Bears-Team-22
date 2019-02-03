@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const cdk = require("@aws-cdk/cdk");
+const stack_1 = require("../lib/stack");
+const app = new cdk.App();
+new stack_1.KnowledgeStack(app, "Knowledge");
+app.run();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXdzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiYXdzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUNBLG9DQUFxQztBQUNyQyx3Q0FBNEM7QUFFNUMsTUFBTSxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsR0FBRyxFQUFFLENBQUM7QUFDMUIsSUFBSSxzQkFBYyxDQUFDLEdBQUcsRUFBRSxXQUFXLENBQUMsQ0FBQztBQUNyQyxHQUFHLENBQUMsR0FBRyxFQUFFLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIjIS91c3IvYmluL2VudiBub2RlXG5pbXBvcnQgY2RrID0gcmVxdWlyZShcIkBhd3MtY2RrL2Nka1wiKTtcbmltcG9ydCB7S25vd2xlZGdlU3RhY2t9IGZyb20gXCIuLi9saWIvc3RhY2tcIjtcblxuY29uc3QgYXBwID0gbmV3IGNkay5BcHAoKTtcbm5ldyBLbm93bGVkZ2VTdGFjayhhcHAsIFwiS25vd2xlZGdlXCIpO1xuYXBwLnJ1bigpO1xuIl19

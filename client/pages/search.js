@@ -5,6 +5,8 @@ import MainLayout from "../components/MainLayout";
 import SearchForm from "../components/SearchForm";
 import QuestionList from "../components/QuestionList";
 
+import {get} from "../http";
+
 import "../static/styles/Search.css";
 
 class Search extends React.Component {
@@ -22,7 +24,7 @@ class Search extends React.Component {
 		const queryString = joinedTags ? `q=${encodedQuery}&tags=${joinedTags}` : `q=${encodedQuery}`;
 
 		try {
-			const response = await fetch(`http://localhost:5000/search?${queryString}`);
+			const response = await get(`/search?${queryString}`);
 			const json = await response.json();
 
 			console.log("search results:", json);

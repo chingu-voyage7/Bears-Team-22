@@ -5,6 +5,8 @@ import "firebase/auth";
 
 import Loading from "../components/Loading";
 
+import {get} from "../http";
+
 export default class Logout extends React.Component {
 	state = {
 		status: "Logging out...",
@@ -13,7 +15,7 @@ export default class Logout extends React.Component {
 
 	async componentDidMount() {
 		try {
-			await fetch("http://localhost:5000/auth/logout", {credentials: "include"});
+			await get("/auth/logout", {credentials: "include"});
 			this.setState(() => ({
 				status: "Logged out successfully! Returning to the previous page...",
 				loading: false

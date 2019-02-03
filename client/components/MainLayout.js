@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Layout} from "antd";
 
+import {get} from "../http";
 import Head from "./Head";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import Loading from "./Loading";
@@ -17,7 +19,7 @@ export default class MainLayout extends React.Component {
 
 	async currentAuthState() {
 		try {
-			const response = await fetch("http://localhost:5000/user/current-user", {credentials: "include"}); // TOOD: Find out how to stop this from logging errors to the console in case the server returned a 401 response.
+			const response = await get("/user/current-user", {credentials: "include"}); // TOOD: Find out how to stop this from logging errors to the console in case the server returned a 401 response.
 			if (!response.ok) {
 				return "logged out";
 			}

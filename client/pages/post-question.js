@@ -6,7 +6,7 @@ import MainLayout from "../components/MainLayout";
 import QuestionForm from "../components/QuestionForm";
 import Loading from "../components/Loading";
 
-import "isomorphic-unfetch";
+import {post} from "../http";
 
 class QuestionPage extends React.Component {
 	state = {
@@ -19,14 +19,13 @@ class QuestionPage extends React.Component {
 		}));
 
 		const fetchOpts = {
-			method: "POST",
 			headers: new Headers({"Content-Type": "application/json"}),
 			credentials: "include",
 			body: JSON.stringify({type: "question", ...questionData})
 		};
 
 		try {
-			const res = await fetch("http://localhost:5000/content/create", fetchOpts);
+			const res = await post("/content/create", fetchOpts);
 
 			const json = await res.json();
 			const {_id: questionId} = json;

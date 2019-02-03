@@ -1,0 +1,28 @@
+{
+	"name": "knowledge-aws",
+	"version": "0.0.0",
+	"private": true,
+	"bin": {
+		"aws": "bin/aws.js"
+	},
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"build": "tsc",
+		"watch": "tsc -w",
+		"synth": "cdk synth",
+		"predeploy": "npm run build",
+		"deploy": "cdk deploy"
+	},
+	"devDependencies": {
+		"@types/node": "^8.9.4",
+		"typescript": "^3.1.2",
+		"aws-cdk": "^0.22.0"
+	},
+	"dependencies": {
+		"@aws-cdk/aws-ec2": "^0.22.0",
+		"@aws-cdk/aws-ecs": "^0.22.0",
+		"@aws-cdk/cdk": "^0.22.0"
+	}
+}

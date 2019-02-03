@@ -6,6 +6,8 @@ import firebase from "../firebase/firebase-api";
 import MainLayout from "../components/MainLayout";
 import RegisterForm from "../components/RegisterForm";
 
+import {post} from "../http";
+
 class Register extends React.Component {
 	async signup(registrationData) {
 		try {
@@ -14,7 +16,6 @@ class Register extends React.Component {
 
 			// TODO: Setup CSRF protection - `const _csrf = cookies.get('XSRF-TOKEN');`
 			const fetchOpts = {
-				method: "POST",
 				headers: new Headers({"Content-Type": "application/json"}),
 				credentials: "include",
 				body: JSON.stringify({idToken, registrationData}) // TODO: Make sure we don't send the plaintext password to the server.
@@ -22,11 +23,10 @@ class Register extends React.Component {
 
 			// When a user login it makes a call to the server
 			// to set the cookie and sync mongo with firebase
-			await fetch("http://localhost:5000/auth/login", fetchOpts);
+			await post("/auth/login", fetchOpts);
 			await firebase.auth().signOut();
 
 			Router.push("/");
-			return;
 		} catch (error) {
 			return error;
 		}

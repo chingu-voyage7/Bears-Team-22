@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Select} from "antd";
 
-import "isomorphic-unfetch";
+import {get} from "../http";
 
 import "antd/dist/antd.css";
 
@@ -16,7 +16,7 @@ class SearchTag extends React.Component {
 
 	updateTags = async e => {
 		try {
-			const response = await fetch(`http://localhost:5000/tag/tags/${e ? encodeURIComponent(e.target.value) : ""}`);
+			const response = await get(`/tag/tags/${e ? encodeURIComponent(e.target.value) : ""}`);
 			const {tags = []} = await response.json();
 
 			this.setState({tags});
