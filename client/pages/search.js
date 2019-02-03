@@ -7,7 +7,7 @@ import QuestionList from "../components/QuestionList";
 
 import {get} from "../http";
 
-import "../static/styles/Search.css";
+import "../static/Search.css";
 
 class Search extends React.Component {
 	state = {

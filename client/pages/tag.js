@@ -6,7 +6,7 @@ import QuestionList from "../components/QuestionList";
 
 import {get} from "../http";
 
-import "../static/styles/Tag.css";
+import "../static/Tag.css";
 
 class Tag extends React.Component {
 	state = {

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import {Layout, Menu, Icon, Drawer} from "antd";
-import "../static/styles/Header.css";
+import "../static/Header.css";
 
 const {Header} = Layout;
 

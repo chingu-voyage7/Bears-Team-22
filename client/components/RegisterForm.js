@@ -6,7 +6,7 @@ import {Form, Input, Button} from "antd";
 import {validateEmail} from "../validation/validators";
 
 import "antd/dist/antd.css"; // TODO: Check if this `import` is even necessary.
-import "../static/styles/RegisterForm.css";
+import "../static/RegisterForm.css";
 
 class RegisterForm extends React.Component {
 	state = {

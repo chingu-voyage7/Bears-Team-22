@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Form, Input, Button} from "antd";
 
-import "../static/styles/ReplyForm.css";
+import "../static/ReplyForm.css";
 
 const {Item: FormItem} = Form;
 const {TextArea} = Input;

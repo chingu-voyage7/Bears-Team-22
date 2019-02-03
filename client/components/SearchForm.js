@@ -5,7 +5,7 @@ import {Form, Input} from "antd";
 import SearchTag from "./SearchTag";
 
 import "antd/dist/antd.css";
-import "../static/styles/SearchForm.css";
+import "../static/SearchForm.css";
 
 class SearchForm extends React.Component {
 	state = {

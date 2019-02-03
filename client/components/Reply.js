@@ -4,7 +4,7 @@ import {Card} from "antd";
 import moment from "moment";
 
 import "antd/dist/antd.css";
-import "../static/styles/Reply.css";
+import "../static/Reply.css";
 
 export default class Reply extends React.Component {
 	render() {
