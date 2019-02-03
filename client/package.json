@@ -23,7 +23,8 @@
 		"next": "^7.0.2",
 		"prop-types": "^15.6.2",
 		"react": "^16.7.0",
-		"react-dom": "^16.7.0"
+		"react-dom": "^16.7.0",
+		"terser": "^3.14.1"
 	},
 	"devDependencies": {
 		"babel-eslint": "^10.0.1",
