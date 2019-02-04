@@ -9,6 +9,8 @@
 		"dev": "next",
 		"start": "next start",
 		"build": "next build",
+		"container:build": "docker build -t knowledge-client .",
+		"container:run": "docker run -d --name knowledge-client -p 3000:3000 knowledge-client",
 		"test": "xo"
 	},
 	"dependencies": {
@@ -24,9 +26,6 @@
 		"prop-types": "^15.6.2",
 		"react": "^16.7.0",
 		"react-dom": "^16.7.0"
-	},
-	"resolutions": {
-		"terser": "3.14.1"
 	},
 	"devDependencies": {
 		"babel-eslint": "^10.0.1",
