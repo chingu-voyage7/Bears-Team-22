@@ -18,5 +18,5 @@ module.exports = {
 		client_x509_cert_url: clientCertUrl
 	},
 	databaseUrl,
-	clientUrl: "https://knowledge2019.herokuapp.com"
+	clientUrl: "http://knowledge2019.herokuapp.com"
 };
