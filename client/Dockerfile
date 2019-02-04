@@ -1,10 +1,11 @@
 # Use the base image of the latest Node.js LTS version - v10.
-FROM node:dubnium-slim
+FROM node:dubnium-alpine
 
 RUN mkdir /app
 COPY . /app
 
 WORKDIR /app
+RUN npm config set unsafe-perm true
 RUN npm install --production
 RUN apk --no-cache add --virtual native-deps \
 	g++ gcc libgcc libstdc++ linux-headers make python && \
