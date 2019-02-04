@@ -11,6 +11,7 @@
 		"compose:start": "docker-compose up",
 		"container:build": "docker build -t knowledge .",
 		"container:run": "docker run -d --name knowledge -p 5000:5000 knowledge",
+		"postinstall": "cd cloud && npm install",
 		"deploy": "cd cloud && npm run deploy",
 		"test": "xo"
 	},

@@ -33,7 +33,6 @@
 		"eslint": "5.12.1",
 		"eslint-config-xo-react": "^0.18.0",
 		"eslint-plugin-react": "^7.12.4",
-		"terser": "3.14.1",
 		"xo": "^0.24.0"
 	},
 	"xo": {
