@@ -1,5 +1,5 @@
 # Use the base image of the latest Node.js LTS version - v10.
-FROM node:dubnium-alpine
+FROM node:dubnium-slim
 
 RUN mkdir /app
 COPY . /app
