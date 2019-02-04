@@ -17,4 +17,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD [ "npm", "run heroku:start" ]
+CMD npm run heroku:start
