@@ -1,22 +1,22 @@
 {
-    "name": "knowledge",
-    "version": "0.0.0",
-    "private": true,
-    "scripts": {
-        "dev:client": "cd client && npm run dev",
-        "start:client": "cd client && npm run build && npm start",
-        "dev:server": "npm run start:server",
-        "start:server": "cd server && docker-compose up",
-        "start": "concurrently npm:start:*",
-        "dev": "concurrently npm:dev:*",
-        "install:client": "cd client && npm install",
-        "install:server": "cd server && npm install",
-        "postinstall": "npm run install:client && npm run install:server",
-        "test:client": "cd client && npm test",
-        "test:server": "cd server && npm test",
-        "test": "npm run test:client && npm run test:server"
-    },
-    "devDependencies": {
-        "concurrently": "^4.1.0"
-    }
+	"name": "knowledge",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"dev:client": "cd client && npm run dev",
+		"start:client": "cd client && npm run build && npm start",
+		"dev:server": "npm run start:server",
+		"start:server": "cd server && npm run compose:start",
+		"start": "concurrently npm:start:*",
+		"dev": "concurrently npm:dev:*",
+		"install:client": "cd client && npm install",
+		"install:server": "cd server && npm install",
+		"postinstall": "npm run install:client && npm run install:server",
+		"test:client": "cd client && npm test",
+		"test:server": "cd server && npm test",
+		"test": "npm run test:client && npm run test:server"
+	},
+	"devDependencies": {
+		"concurrently": "^4.1.0"
+	}
 }

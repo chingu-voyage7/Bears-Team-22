@@ -1,0 +1,10 @@
+{
+  "app": "node bin/aws.js",
+  "context": {
+    "availability-zones:account=543185002403:region=eu-central-1": [
+      "eu-central-1a",
+      "eu-central-1b",
+      "eu-central-1c"
+    ]
+  }
+}

@@ -2,7 +2,7 @@ import React from "react";
 
 import Search from "./search";
 
-import "../static/styles/index.css";
+import "../static/index.css";
 
 export default () => <Search/>;
 

@@ -6,7 +6,7 @@ import {List} from "antd";
 import TagList from "./TagList";
 
 import "antd/dist/antd.css";
-import "../static/styles/QuestionList.css";
+import "../static/QuestionList.css";
 
 class QuestionList extends React.Component {
 	render() {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import {Tag} from "antd";
 
 import "antd/dist/antd.css";
-import "../static/styles/TagList.css";
+import "../static/TagList.css";
 
 class TagList extends React.Component {
 	render() {

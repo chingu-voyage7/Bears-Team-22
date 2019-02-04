@@ -1,7 +1,7 @@
 import React from "react";
 import {Layout} from "antd";
 
-import "../static/styles/Footer.css";
+import "../static/Footer.css";
 
 const {Footer} = Layout;
 

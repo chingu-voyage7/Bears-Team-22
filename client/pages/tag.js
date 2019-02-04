@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 import MainLayout from "../components/MainLayout";
 import QuestionList from "../components/QuestionList";
 
-import "../static/styles/Tag.css";
+import {get} from "../http";
+
+import "../static/Tag.css";
 
 class Tag extends React.Component {
 	state = {
@@ -29,7 +31,7 @@ class Tag extends React.Component {
 		const {tagName} = this.props;
 
 		try {
-			const response = await fetch(`http://localhost:5000/tag/browse/${tagName}`, {credentials: "include"});
+			const response = await get(`/tag/browse/${tagName}`, {credentials: "include"});
 			if (response.status !== 200) {
 				console.error(`Tag ${tagName} not found.`);
 			}

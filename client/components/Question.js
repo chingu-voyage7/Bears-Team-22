@@ -6,7 +6,7 @@ import moment from "moment";
 import TagList from "./TagList";
 
 import "antd/dist/antd.css";
-import "../static/styles/Question.css";
+import "../static/Question.css";
 
 export default class Question extends React.Component {
 	render() {

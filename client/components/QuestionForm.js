@@ -6,7 +6,7 @@ import {Form, Input, Button} from "antd";
 import SearchTag from "./SearchTag";
 
 import "antd/dist/antd.css";
-import "../static/styles/QuestionForm.css";
+import "../static/QuestionForm.css";
 
 const {Item: FormItem} = Form;
 const {TextArea} = Input;

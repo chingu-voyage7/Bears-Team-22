@@ -8,13 +8,12 @@ import firebase from "../firebase/firebase-api";
 import MainLayout from "../components/MainLayout";
 import LoginForm from "../components/LoginForm";
 
-import "isomorphic-unfetch";
+import {get, post} from "../http";
 
 class Login extends React.Component {
 	login = async (email, password) => {
 		// Since we will use sessions the token auth will be saved and removed
 		const fetchOpts = {
-			method: "POST",
 			headers: new Headers({"Content-Type": "application/json"}),
 			credentials: "include"
 		};
@@ -39,12 +38,12 @@ class Login extends React.Component {
 		try {
 			// When a user login it makes a call to the server
 			// to set the cookie and sync mongo with firebase
-			await fetch("http://localhost:5000/auth/login", fetchOpts);
+			await post("/auth/login", fetchOpts);
 			await firebase.auth().signOut(); // Cookies are set, no need to mantain the token in the storage
 
 			Router.push("/");
 		} catch (error) {
-			await fetch("http://localhost:5000/auth/logout"); // User already logged in with Firebase
+			await get("/auth/logout"); // User already logged in with Firebase
 			return {message: "Login failed (internal server error)"};
 		}
 	};

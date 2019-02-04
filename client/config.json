@@ -1,0 +1,11 @@
+{
+	"credentials": {
+		"apiKey": "AIzaSyCpU4SIDfsgqZ2bBaoDaQza4I-0fsocfR8",
+		"authDomain": "react-firebase-85039.firebaseapp.com",
+		"databaseURL": "https://react-firebase-85039.firebaseio.com",
+		"projectId": "react-firebase-85039",
+		"storageBucket": "react-firebase-85039.appspot.com",
+		"messagingSenderId": "55358337129"
+	},
+	"apiUrl": "http://knowl-knowl-zhm7vfm9sfyq-49466227.eu-central-1.elb.amazonaws.com"
+}
