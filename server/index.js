@@ -10,7 +10,7 @@ const threadRoutes = require("./components/thread/thread-routes");
 const searchRoutes = require("./components/search/search-routes");
 const contentRoutes = require("./components/content/content-routes");
 const tagRoutes = require("./components/tags/tag-routes");
-const {credentials, databaseUrl} = require("./config");
+const {credentials, databaseUrl, clientUrl} = require("./config");
 
 const port = 5000;
 const app = express();
@@ -33,7 +33,7 @@ mongoose.connect(databaseUrl || "mongodb://mongo:27017/test_db")
 		console.log(`Error connecting to Mongo: ${error}`);
 	});
 
-const corsMiddleware = cors({origin: "*", optionsSuccessStatus: 200, credentials: true});
+const corsMiddleware = cors({origin: clientUrl, optionsSuccessStatus: 200, credentials: true});
 
 app.use(corsMiddleware);
 app.options("*", corsMiddleware);
