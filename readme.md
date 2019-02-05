@@ -5,9 +5,11 @@
 _Developed during the Chingu Voyage-7 cohort by bears team 22. Read more about Chingu [here](https://chingu.io)._
 
 <br>
-<a href="http://knowledge2019.herokuapp.com">
-	<img src="screenshot.png" width="661">
-</a>
+<div align="center">
+	<a href="http://knowledge2019.herokuapp.com">
+		<img src="screenshot.png" width="661">
+	</a>
+</div>
 
 
 ## MVP
