@@ -11,7 +11,7 @@ import "../static/Tag.css";
 class Tag extends React.Component {
 	state = {
 		questions: []
-	};
+	}
 
 	static getInitialProps({query}) {
 		return {

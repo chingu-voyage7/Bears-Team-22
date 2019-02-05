@@ -11,7 +11,7 @@ import "../static/LoginForm.css";
 class LoginForm extends React.Component {
 	state = {
 		error: null
-	};
+	}
 
 	handleSubmit = e => {
 		e.preventDefault();
@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
 				error: validationError && validationError.message ? validationError : null
 			});
 		});
-	};
+	}
 
 	render() {
 		const {error} = this.state;

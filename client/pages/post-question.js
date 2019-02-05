@@ -11,7 +11,7 @@ import {post} from "../http";
 class QuestionPage extends React.Component {
 	state = {
 		status: "drafting"
-	};
+	}
 
 	postQuestion = async questionData => {
 		this.setState(() => ({
@@ -50,7 +50,7 @@ class QuestionPage extends React.Component {
 				status: "drafting"
 			}));
 		}
-	};
+	}
 
 	render() {
 		const {status} = this.state;

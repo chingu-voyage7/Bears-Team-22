@@ -11,7 +11,7 @@ import "../static/RegisterForm.css";
 class RegisterForm extends React.Component {
 	state = {
 		confirmDirty: false // TODO: Figure out what this is used for and if we even need it.
-	};
+	}
 
 	handleSubmit = e => {
 		e.preventDefault();
@@ -20,7 +20,7 @@ class RegisterForm extends React.Component {
 				this.props.signup(values);
 			}
 		});
-	};
+	}
 
 	compareToFirstPassword = (rule, value, callback) => {
 		const {form} = this.props;
@@ -29,7 +29,7 @@ class RegisterForm extends React.Component {
 		} else {
 			callback();
 		}
-	};
+	}
 
 	validateToNextPassword = (rule, value, callback) => {
 		const {form} = this.props;
@@ -38,7 +38,7 @@ class RegisterForm extends React.Component {
 		}
 
 		callback();
-	};
+	}
 
 	render() {
 		const {getFieldDecorator} = this.props.form;

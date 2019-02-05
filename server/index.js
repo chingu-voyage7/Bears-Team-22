@@ -17,7 +17,7 @@ const app = express();
 
 const firebase = admin.initializeApp({
 	credential: admin.credential.cert(credentials),
-	databaseURL: "https://react-firebase-85039.firebaseio.com"
+	databaseURL: "https://react-firebase-85039.firebaseio.com" // TODO: Move this setting to `config.js`.
 }, "server");
 
 // Setting a few options to remove warnings on feature deprecations.
@@ -33,7 +33,7 @@ mongoose.connect(databaseUrl || "mongodb://mongo:27017/test_db")
 		console.log(`Error connecting to Mongo: ${error}`);
 	});
 
-const corsMiddleware = cors({origin: clientUrl, optionsSuccessStatus: 200, credentials: true});
+const corsMiddleware = cors({origin: clientUrl, optionsSuccessStatus: 200, credentials: true}); // TODO: Make the cors `origin` url configurable through an environment variable.
 
 app.use(corsMiddleware);
 app.options("*", corsMiddleware);

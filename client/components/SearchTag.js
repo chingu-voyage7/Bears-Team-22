@@ -12,7 +12,7 @@ class SearchTag extends React.Component {
 	state = {
 		tags: [],
 		activeTags: []
-	};
+	}
 
 	updateTags = async e => {
 		try {
@@ -24,16 +24,18 @@ class SearchTag extends React.Component {
 			console.log(error);
 			return [];
 		}
-	};
+	}
 
 	componentDidMount() {
 		this.updateTags();
 	}
 
 	componentDidUpdate(prevProps) { // TODO: Only update the tags if a new query has been searched for (i.e. the user has removed all contents from the search input and then typed a new query).
-		const tagSearchField = document.querySelector(".ant-select-search__field");
-		if (tagSearchField) {
-			tagSearchField.addEventListener("input", this.updateTags); // TODO: Make sure that we always have at least 5 tags in the autocomplete list.
+		if (this.tagSelect instanceof HTMLElement) {
+			const tagInputField = this.tagSelect.querySelector(".ant-select-search__field");
+			if (tagInputField) {
+				tagInputField.addEventListener("input", this.updateTags); // TODO: Make sure that we always have at least 5 tags in the autocomplete list.
+			}
 		}
 
 		const {tags} = this.state;
@@ -64,7 +66,7 @@ class SearchTag extends React.Component {
 		}
 
 		return clonedArr;
-	};
+	}
 
 	handleChange = tag => {
 		this.setState(prevState => ({
@@ -72,7 +74,7 @@ class SearchTag extends React.Component {
 		}), () => {
 			this.props.updateTags(this.state.activeTags);
 		});
-	};
+	}
 
 	render() {
 		const {ranSearch = false} = this.props;
@@ -85,20 +87,26 @@ class SearchTag extends React.Component {
 
 		return (
 			// TODO: Figure out how to stop the options popup from jumping around, and make it stay under the tag field.
-			<Select
-				mode="multiple"
-				style={{width: "100%"}}
-				placeholder="Tags to search for..."
-				notFoundContent="No matching tags found"
-				value={activeTags}
-				onSelect={this.handleChange}
-				onDeselect={this.handleChange}
+			<div
+				ref={element => {
+					this.tagSelect = element;
+				}}
 			>
-				{tags
-					.map(tag => <Option key={tag.name}>{tag.name}</Option>)
-					.filter(option => !activeTags.includes(option.key))
-				}
-			</Select>
+				<Select
+					mode="multiple"
+					style={{width: "100%"}}
+					placeholder="Tags to search for..."
+					notFoundContent="No matching tags found"
+					value={activeTags}
+					onSelect={this.handleChange}
+					onDeselect={this.handleChange}
+				>
+					{tags
+						.map(tag => <Option key={tag.name}>{tag.name}</Option>)
+						.filter(option => !activeTags.includes(option.key))
+					}
+				</Select>
+			</div>
 		);
 	}
 }

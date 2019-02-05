@@ -14,7 +14,7 @@ const {TextArea} = Input;
 class QuestionForm extends React.Component {
 	state = {
 		tags: []
-	};
+	}
 
 	handleSubmit = e => {
 		e.preventDefault();
@@ -28,7 +28,7 @@ class QuestionForm extends React.Component {
 				});
 			}
 		});
-	};
+	}
 
 	cancel() {
 		Router.push("/");
@@ -36,7 +36,7 @@ class QuestionForm extends React.Component {
 
 	updateQuestionTags = tags => {
 		this.setState({tags});
-	};
+	}
 
 	render() {
 		const {getFieldDecorator} = this.props.form;

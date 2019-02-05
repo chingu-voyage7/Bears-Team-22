@@ -16,7 +16,7 @@ class Search extends React.Component {
 		stemmedWords: [],
 		ranSearch: false,
 		showPost: false
-	};
+	}
 
 	querySearch = async query => {
 		const joinedTags = this.state.activeTags.join(",");
@@ -38,7 +38,7 @@ class Search extends React.Component {
 		}
 
 		return this.setState({ranSearch: true});
-	};
+	}
 
 	updateActiveTags = tags => {
 		this.setState({
@@ -50,7 +50,7 @@ class Search extends React.Component {
 		this.setState(() => ({
 			showPost: authState === "logged in"
 		}));
-	};
+	}
 
 	render() { // TODO: Only show the option to post a new question once a user searches something, and hide it when the query text field changes.
 		const {questions, stemmedWords, ranSearch, showPost} = this.state;

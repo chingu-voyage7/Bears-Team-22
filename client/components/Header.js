@@ -13,7 +13,7 @@ export default class MainHeader extends React.Component {
 	state = {
 		drawerIsVisible: false,
 		currentItem: "0"
-	};
+	}
 
 	componentDidMount() {
 		let currentItem = "0";
@@ -40,20 +40,20 @@ export default class MainHeader extends React.Component {
 		} else {
 			Router.push("/");
 		}
-	};
+	}
 
 	openDrawer = () => {
 		this.setState({
 			drawerIsVisible: true,
 			currentItem: "0"
 		});
-	};
+	}
 
 	closeDrawer = () => {
 		this.setState({
 			drawerIsVisible: false
 		});
-	};
+	}
 
 	render() {
 		const {drawerIsVisible, currentItem} = this.state;
