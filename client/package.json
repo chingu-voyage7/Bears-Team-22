@@ -6,7 +6,7 @@
 		"node": ">=8"
 	},
 	"scripts": {
-		"dev": "next",
+		"dev": "next dev",
 		"start": "next start",
 		"build": "next build",
 		"heroku:start": "next start --port $PORT",
