@@ -12,8 +12,8 @@ class SearchForm extends React.Component {
 		isNewQuery: true // TODO: Make sure this always recognizes new queries correctly, even if we remove all query text except for one character.
 	}
 
-	handleChange = e => {
-		if (e.target.value.length === 1) {
+	handleChange = event => {
+		if (event.target.value.length === 1) {
 			this.setState({
 				isNewQuery: true
 			});

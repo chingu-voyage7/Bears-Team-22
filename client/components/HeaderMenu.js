@@ -34,13 +34,14 @@ HeaderMenu.propTypes = {
 	mode: PropTypes.string,
 	className: PropTypes.string,
 	authState: PropTypes.string,
-	handleClick: PropTypes.func.isRequired,
+	handleClick: PropTypes.func,
 	currentItem: PropTypes.string
 };
 HeaderMenu.defaultProps = {
 	mode: "horizontal",
 	className: "header__menu",
 	authState: "unchecked",
+	handleClick: () => {},
 	currentItem: "0"
 };
 
