@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Router from "next/router";
 import Link from "next/link";
 import {Layout, Menu, Icon, Drawer} from "antd";
 import "../static/Header.css";
@@ -31,6 +32,14 @@ export default class MainHeader extends React.Component {
 		this.setState({currentItem});
 	}
 
+	navigateHome = () => {
+		if (window.location.pathname === "/") {
+			window.location.reload();
+		} else {
+			Router.push("/");
+		}
+	};
+
 	openDrawer = () => {
 		this.setState({
 			drawerIsVisible: true,
@@ -52,9 +61,7 @@ export default class MainHeader extends React.Component {
 			<Header className="header">
 				<nav className="header__nav">
 					<div className="header__nav--brand">
-						<Link href="/">
-							<a>Knowledge</a>
-						</Link>
+						<a onClick={this.navigateHome}>Knowledge</a>
 					</div>
 					<Menu
 						mode="horizontal"
