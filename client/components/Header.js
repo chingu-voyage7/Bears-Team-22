@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-import Link from "next/link";
-import {Layout, Menu, Icon, Drawer} from "antd";
+import {Layout, Icon, Drawer} from "antd";
+
+import HeaderMenu from "./HeaderMenu";
+
 import "../static/Header.css";
 
 const {Header} = Layout;
@@ -63,33 +65,12 @@ export default class MainHeader extends React.Component {
 					<div className="header__nav--brand">
 						<a onClick={this.navigateHome}>Knowledge</a>
 					</div>
-					<Menu
-						mode="horizontal"
-						className="header__menu"
-						theme="light"
-						selectedKeys={[currentItem]}
-						onClick={this.handleClick}
-					>
-						{authState !== "unchecked" ? // eslint-disable-line no-negated-condition
-							<Menu.Item key="1">
-								<Link href={`/${authState === "logged in" ? "logout" : "login"}`}>
-									<a>{authState === "logged in" ? "Logout" : "Login"}</a>
-								</Link>
-							</Menu.Item> :
-							null}
-						{authState === "logged out" ?
-							<Menu.Item key="2">
-								<Link href="/register">
-									<a>Register</a>
-								</Link>
-							</Menu.Item> :
-							null}
-					</Menu>
+					<HeaderMenu authState={authState} currentItem={currentItem}/>
 					<div className="header__drawer--toggle" onClick={this.openDrawer}>
 						<Icon type="bars" onClick={this.openDrawer}/>
 					</div>
 					<Drawer visible={drawerIsVisible} onClose={this.closeDrawer}>
-						<Menu mode="vertical" className="mobile__menu"/>
+						<HeaderMenu mode="vertical" className="mobile__menu" currentItem={currentItem}/>
 					</Drawer>
 				</nav>
 			</Header>
