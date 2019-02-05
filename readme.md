@@ -1,11 +1,12 @@
-# [Knowledge](http://knowledge2019.herokuapp.com) [![Build Status](https://travis-ci.com/chingu-voyage7/Bears-Team-22.svg?branch=master)](https://travis-ci.com/chingu-voyage7/Bears-Team-22)
+# Knowledge
 
 > A better way to get answers to your questions
 
 _Developed during the Chingu Voyage-7 cohort by bears team 22. Read more about Chingu [here](https://chingu.io)._
 
+<br>
 <a href="http://knowledge2019.herokuapp.com">
-	<img src="screenshot.png" width="992">
+	<img src="screenshot.png" width="661">
 </a>
 
 
