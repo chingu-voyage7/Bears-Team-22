@@ -43,7 +43,7 @@ Both our frontend and backend are written in Node.js. The tech stack consists of
 - [MongoDB](https://www.mongodb.com) - for data storage.
 - [Firebase Auth](https://firebase.google.com/docs/auth) - for password-based user authentication
 
-### DevOps and deployment
+#### DevOps and deployment
 
 - [Docker](https://www.docker.com) - for deploying our backend and frontend as containers.
 - [Docker Compose](https://docs.docker.com/compose) - for locally running the backend app and Mongo.
