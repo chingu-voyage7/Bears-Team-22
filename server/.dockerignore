@@ -2,3 +2,4 @@ cloud
 node_modules
 .git
 readme.md
+sample.env
