@@ -9,75 +9,140 @@ info:
     url: https://github.com/chingu-voyage7/Bears-Team-22/blob/master/license
 
 tags:
+  - name: auth
+    description: Authorization-related end-points
   - name: user
-    description: Create, modify, read, remove and authenticate users
+    description: Collect user info
   - name: content
     description: Create and get various types of content
   - name: tag
     description: Create, verify and query tags
 
 paths:
+  # Auth routes
+  /auth/login:
+      get:
+        security:
+          - ApiKeyAuth: # Actually a token we use as an api key
+              in: body  
+              name: idToken
+        tags:
+          - auth
+        summary: Log a user in
+        parameters:
+          - in: body
+            name: idToken
+            description: The firebase token that identify a user
+            schema:
+              type: object
+              required:
+                - idToken
+              properties:
+                idToken:
+                  type: string
+                  format: ObjectId
+              example:
+                  idToken: "asdfa9OJPXZda6f#23@$£fsdASDD"
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        responses:
+          200:
+            description: Token decoded and validated successfully
+            schema:
+                $ref: "#/definitions/User"
+            examples:
+              application/json:
+                loggedUser:
+                  _id: 5c4b592fe871040017a2f656
+                  firebaseId: FQzIcPQHtghRO7OwAaI4yddjweH2
+                  name: test-eer
+                  email: test@test.testa
 
-  # User routes
-  /user/register:
-    post:
+                
+          400:
+            description: Missing body
+            examples:
+              application/json:
+                {}
+          500:
+            description: Generic server error
+            examples:
+              application/json:
+                code: auth/argument-error
+                message: First argument to verifyIdToken() must be a Firebase ID token string.
+
+  /auth/logout:
+    get:
       tags:
-        - user
-      summary: Register a new user
+        - auth
+      summary: Log a user out removing the cookie
       consumes:
         - application/json
-      parameters:
-        - in: body
-          name: body
-          description: The properties of the user to create.
-          schema:
-            type: object
-            required:
-              - name
-              - email
-              - passwordHash
-            properties:
-              name:
-                type: string
-              email:
-                type: string
-                format: email
-              password:
-                type: string
-                format: sha512
-            example:
-              name: Testy Tess
-              email: tester@test.com
-              password: cbf0936369e8776d3647988d65f638d9c05169adbfe358b7b5f65b1915b1c7ff8581026928da92f1e7c02931c551e54a5715d876eb51af7f412b2669f9860e2c
       produces:
         - application/json
       responses:
-        201:
-          description: The user has beeen created successfully
+        204:
+          description: Cookie removed successfully
+  # User routes
+  /user/current-user:
+    get:
+      tags:
+        - user
+      summary: Collect profile informations of the authenticated user
+      consumes:
+        - application/json
+      security:
+        - cookieAuth:
+            name: session 
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Information received successfully
           schema:
               $ref: "#/definitions/User"
           examples:
             application/json:
-              id: 622b3c5312fbbfa612e8a448
-              createdAt: "2018-12-16T17:11:44.595Z"
-              updatedAt: "2018-12-16T17:11:44.595Z"
-              name: Testy Tess
-              email: tester@test.com
-              passwordHash: cbf0936369e8776d3647988d65f638d9c05169adbfe358b7b5f65b1915b1c7ff8581026928da92f1e7c02931c551e54a5715d876eb51af7f412b2669f9860e2c
-        500:
-          description: Invalid input / internal server error
+              user:
+                iss: https://session.firebase.google.com/react-firebase-85039
+                aud: react-firebase-85039
+                auth_time: 1549444696
+                user_id: FQzIcPQHtghRO7OwAaI4yddjweH2
+                sub: FQzIcPQHtghRO7OwAaI4yddjweH2
+                iat: 1549444697
+                exp: 1549462697
+                email: test@test.testa
+                email_verified: false
+                firebase:
+                  identities:
+                    email:
+                    - test@test.testa
+                  sign_in_provider: password
+                uid: FQzIcPQHtghRO7OwAaI4yddjweH2
+                mongoInstance:
+                  _id: 5c4b592fe871040017a2f656
+                  firebaseId: FQzIcPQHtghRO7OwAaI4yddjweH2
+                  name: test-eer
+                  email: test@test.testa
+                  __v: 0
+        401:
+          description: Invalid / missing credentials
           examples:
             application/json:
-              error: "User validation failed: email: Path `email` is required."
-
+              message: Unauthorized
   # Content routes
-  /content/createQuestion:
+  /content/create:
     post:
       tags:
         - content
-      summary: Create a new question
+      summary: Creates  new content ( question / reply)
       consumes:
         - application/json
+      security:
+        - cookieAuth:
+            name: session 
       parameters:
         - in: body
           name: body
@@ -87,7 +152,7 @@ paths:
             required:
               - title
               - body
-              - authorId
+              - type
             properties:
               title:
                 type: string
@@ -95,17 +160,15 @@ paths:
                 type: string
               authorId:
                 type: string
-                format: ObjectId
               tags:
                 type: array
                 items:
                   type: string
-                  format: ObjectId
             example:
-              title: Question Title
-              body: This is the body of the question
-              authorId: 5c07a5a54a9d0c0012cd8b35
-              tags: ["tag1", "tag2"]
+                title: "Question Title"
+                body: "This is the body of the question"
+                tags:	["Eta"]
+                type:	question
       produces:
         - application/json
       responses:
@@ -115,88 +178,50 @@ paths:
             $ref: "#/definitions/Question"
           examples:
             application/json:
-              id: 5c168750e1d5bf0014e5a926
-              createdAt: "2018-12-16T17:11:44.595Z"
-              updatedAt: "2018-12-16T17:11:44.595Z"
+              _id: 5c168750e1d5bf0014e5a926
+              createdAt: "2019-02-06T09:47:27.482Z"
+              updatedAt: "2019-02-06T09:47:27.482Z"
               body: This is the body of the question
               authorId: 5c07a5a54a9d0c0012cd8b35
               replyId: null
+              tags: ["5c544d295aa8ea001036bb0d"]
               title: Question Title
-              tags:
-                - children: []
-                  id: 5c1672b171616a001af4f800
-                  name: tag1
-                - children: []
-                  id: 5c1672b171616a001af4f801
-                  name: tag2
+              type: Question
         400:
           description: Invalid input
           examples:
             application/json:
-              error: "Question validation failed: body: Path `body` is required."
+              message: "Invalid content type"
+        401:
+          description: Invalid / missing credentials
+          examples:
+            application/json:
+              message: Unauthorized
+        422:
+          description: Unprocessable entity
+          examples:
+            application/json:
+              validationErrors:
+                isJoi: true
+                name: ValidationError
+                details:
+                - message: '"body" is required'
+                  path:
+                  - body
+                  type: any.required
+                  context:
+                    key: body
+                    label: body
+                _object:
+                  title: Question Title
+                  tags:
+                  - Eta
+                  type: question
         500:
           description: Internal server error
           examples:
             application/json:
-              error: "Internal server error: couldn't fulfill the request at the current time."
-
-  /content/createReply:
-    post:
-      tags:
-        - content
-      summary: Create a reply to an existing question
-      consumes:
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: The properties of the reply to create.
-          schema:
-            type: object
-            required:
-              - questionId
-              - body
-              - authorId
-            properties:
-              questionId:
-                type: string
-                format: ObjectId
-              body:
-                type: string
-              authorId:
-                type: string
-                format: ObjectId
-            example:
-              questionId: 5c168750e1d5bf0014e5a926
-              body: This is the body of the reply
-              authorId: f0a31ff9bf120a8859dddf7c
-      produces:
-        - application/json
-      responses:
-        201:
-          description: The reply created in the database
-          schema:
-            $ref: "#/definitions/Reply"
-          examples:
-            application/json:
-              id: b9ab2d38c3a55ad4a89267b7
-              createdAt: "2018-12-18T17:45:39.245Z"
-              updatedAt: "2018-12-18T17:45:39.245Z"
-              body: This is the body of the reply
-              authorId: f0a31ff9bf120a8859dddf7c
-              replyId: null
-              questionId: 5c168750e1d5bf0014e5a926
-
-        400:
-          description: Invalid input
-          examples:
-            application/json:
-              error: "Reply validation failed: body: Path `body` is required."
-        500:
-          description: Internal server error
-          examples:
-            application/json:
-              error: "Internal server error: couldn't fulfill the request at the current time."
+              message: "Internal server error: couldn't fulfill the request at the current time"
 
   # Search routes
   /search:
@@ -206,16 +231,14 @@ paths:
       summary: Search the content of the website and find items matching a given query
       parameters:
         - in: query
-          name: page
-          type: integer
-          default: 1
-          minimum: 1
-          description: The page number of the questions (the first page consists of the latest questions).
+          name: tags
+          type: array
+          description: The returned question tags
         - in: query
           name: q
           type: string
           default: "sort:latest"
-          description: The query to use for matching questions. The query can contain custom query-tags to enhance the search capabilities (more on this will be added in the future once the tags are decided on).
+          description: The query to use for matching questions.
       produces:
         - application/json
       responses:
@@ -225,41 +248,26 @@ paths:
             $ref: "#/definitions/Question"
           examples:
             application/json:
-              - id: 5c168750e1d5bf0014e5a926
-                createdAt: "2018-12-16T17:11:44.595Z"
-                updatedAt: "2018-12-16T17:11:44.595Z"
-                body: This is the body of the post
-                authorId: 5c07a5a54a9d0c0012cd8b35
-                replyId: null
-                title: 1st Post Title
-                tags:
-                  - children: []
-                    id: 5c1672b171616a001af4f800
-                    name: tag1
-                  - children: []
-                    id: 5c1672b171616a001af4f801
-                    name: tag2
-              - id: 7b6df98a97a8d6c7506118e3
-                createdAt: "2018-12-16T17:10:44.595Z"
-                updatedAt: "2018-12-16T17:10:44.595Z"
-                body: This is the body of the post
-                authorId: 146ef04af628bd6703f1d744
-                replyId: null
-                title: 2nd Post Title
-                tags:
-                  - children: []
-                    id: 5c1672b171616a001af4f801
-                    name: tag2
-        404:
-          description: No matching questions were found
-          examples:
-            application/json:
-              error: "Couldn't find any questions matching the given query."
+              result:
+              - tags:
+                - _id: 5c544d295aa8ea001036bb0d
+                  name: Eta
+                type: Question
+                _id: 5c5aad2f8e385b0010b193fa
+                title: "Question Title"
+                body: "This is the body of the question"
+                authorId:
+                  _id: "5c4b592fe871040017a2f656"
+                  name: "test-eer"
+                  email: "test@test.testa"
+                createdAt: '2019-02-06T09:47:27.482Z'
+                updatedAt: '2019-02-06T09:47:27.482Z'
+              stemmedWords: []
         500:
           description: Internal server error
           examples:
             application/json:
-              error: "Internal server error: couldn't fulfill the request at the current time."
+              message: "Network error"
 
   # Thread routes
   /thread/{questionId}:
@@ -283,47 +291,47 @@ paths:
             $ref: "#/definitions/Thread"
           examples:
             application/json:
-              question:
-                id: 5c168750e1d5bf0014e5a926
-                createdAt: "2018-12-16T17:11:44.595Z"
-                updatedAt: "2018-12-16T17:11:44.595Z"
-                body: This is the body of the question
-                authorId: 5c07a5a54a9d0c0012cd8b35
-                replyId: c932174c0a2c2374f1939625
-                title: Title!
-                tags:
-                  - children: []
-                    id: 5c1672b171616a001af4f800
-                    name: tag1
-                  - children: []
-                    id: 5c1672b171616a001af4f801
-                    name: tag2
-              replies:
-                - id: c932174c0a2c2374f1939625
-                  createdAt: "2018-12-17T17:13:44.595Z"
-                  updatedAt: "2018-12-17T17:13:44.595Z"
-                  body: This is the body of the reply
-                  authorId: fbd6815d47bc704863e1dc70
-                  replyId: 99b83996c8b32b803ef1101d
-                - id: 99b83996c8b32b803ef1101d
-                  createdAt: "2018-12-17T17:14:44.595Z"
-                  updatedAt: "2018-12-17T17:14:44.595Z"
-                  body: And another one!
-                  authorId: ef1ccbe9c911de177a1d1571
-                  replyId: null
-        404:
-          description: Thread not found
-          examples:
-            application/json:
-              error: "Couldn't find a thread beginning with a question with the given ID."
+              thread:
+                replies:
+                - type: Reply
+                  _id: 5c5ab76b358a810010b5b185
+                  body: This is a reply longer than 20 char
+                  authorId:
+                    _id: 5c4b592fe871040017a2f656
+                    name: test-eer
+                    email: test@test.testa
+                  questionId: 5c5aad2f8e385b0010b193fa
+                  createdAt: '2019-02-06T10:31:07.274Z'
+                  updatedAt: '2019-02-06T10:31:07.274Z'
+                _id: 5c5aad2f8e385b0010b193fb
+                question:
+                  tags:
+                  - _id: 5c544d295aa8ea001036bb0d
+                    name: Eta
+                  type: Question
+                  _id: 5c5aad2f8e385b0010b193fa
+                  title: Am i here?
+                  body: Yes you are! tuentyyyyyyyyyyyyyyyyyyy
+                  authorId:
+                    _id: 5c4b592fe871040017a2f656
+                    name: test-eer
+                    email: test@test.testa
+                  createdAt: '2019-02-06T09:47:27.482Z'
+                  updatedAt: '2019-02-06T09:47:27.482Z'
         500:
           description: Internal server error
           examples:
             application/json:
-              error: "Internal server error: couldn't fulfill the request at the current time."
+              message: Cast to ObjectId failed for value "5c5aad2f8e85b0010b193fa" at path "question"
+                for model "Thread"
+              name: CastError
+              stringValue: '"5c5aad2f8e85b0010b193fa"'
+              kind: ObjectId
+              value: 5c5aad2f8e85b0010b193fa
+              path: question
 
   # Tag routes
-  /tag/{tagName}:
+  /tag/browse/{tagname}:
     get:
       tags:
         - "tag"
@@ -335,7 +343,7 @@ paths:
           required: true
           name: tagName
           type: string
-          description: The name of the tag to query questions for.
+          description: The string used to collect the matching tag (the first one) to query questions for.
       produces:
         - application/json
       responses:
@@ -347,41 +355,77 @@ paths:
               $ref: "#/definitions/Question"
           examples:
             application/json:
-              - id: 5c168750e1d5bf0014e5a926
-                createdAt: "2018-12-16T17:11:44.595Z"
-                updatedAt: "2018-12-16T17:11:44.595Z"
-                body: This is the body of the post
-                authorId: 5c07a5a54a9d0c0012cd8b35
-                replyId: null
-                title: 1st Post Title
-                tags:
-                  - children: []
-                    id: 5c1672b171616a001af4f800
-                    name: tag1
-                  - children: []
-                    id: 5c1672b171616a001af4f801
-                    name: tag2
-              - id: 7b6df98a97a8d6c7506118e3
-                createdAt: "2018-12-16T17:10:44.595Z"
-                updatedAt: "2018-12-16T17:10:44.595Z"
-                body: This is the body of the post
-                authorId: 146ef04af628bd6703f1d744
-                replyId: null
-                title: 2nd Post Title
-                tags:
-                  - children: []
-                    id: 5c1672b171616a001af4f801
-                    name: tag2
-        404:
-          description: No matching questions were found
-          examples:
-            application/json:
-              error: "Couldn't find any questions tagged with the given tag."
+              questions:
+                - tags:
+                  - _id: 5c544d295aa8ea001036bb0e
+                    name: frank
+                  - _id: 5c544d295aa8ea001036bb0f
+                    name: fourth
+                  type: Question
+                  _id: 5c544d295aa8ea001036bb27
+                  title: This is the fourth title
+                  body: This is the fourth body
+                  authorId:
+                    _id: 5c544d295aa8ea001036bb07
+                    name: frank
+                    email: frank@test.com
+                  createdAt: '2019-02-01T13:44:09.549Z'
+                  updatedAt: '2019-02-01T13:44:09.549Z'
+                - tags:
+                  - _id: 5c544d295aa8ea001036bb09
+                    name: first
+                  - _id: 5c544d295aa8ea001036bb0e
+                    name: frank
+                  type: Question
+                  _id: 5c544d295aa8ea001036bb24
+                  title: This is the first title
+                  body: This is the first body
+                  authorId:
+                    _id: 5c544d295aa8ea001036bb07
+                    name: frank
+                    email: frank@test.com
+                  createdAt: '2019-02-01T13:44:09.548Z'
+                  updatedAt: '2019-02-01T13:44:09.548Z'
         500:
           description: Internal server error
           examples:
             application/json:
               error: "Internal server error: couldn't fulfill the request at the current time."
+  
+  /tag/tags/{query}:
+    get:
+      tags:
+        - "tag"
+      summary: Get first 5 tags matching the query string
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          required: true
+          name: query
+          type: string
+          description: The string used to collect 5 matchings tags
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Array of matching tags
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Tag"
+          examples:
+            application/json:
+              tags:
+              - _id: 5c544d295aa8ea001036bb0a
+                name: Beta
+              - _id: 5c544d295aa8ea001036bb0d
+                name: Eta
+        500:
+          description: Internal server error
+          examples:
+            application/json:
+              message: "Internal server error: couldn't fulfill the request at the current time."
 
 # Models
 definitions:
@@ -415,10 +459,6 @@ definitions:
           authorId:
             type: string
             format: ObjectId
-          replyId:
-            type: string
-            format: ObjectId
-            default: null
 
   Question:
     allOf:
@@ -462,36 +502,22 @@ definitions:
     allOf:
       - $ref: "#/definitions/Model" # Inherit everything from the Model definition
       - required:
-        - name
         - email
-        - passwordHash
       - properties:
           name:
             type: string
           email:
             type: string
             format: email
-          passwordHash:
+          firebaseId:
             type: string
-            format: sha512
+            format: ObjectId
 
   Tag:
     allOf:
       - $ref: "#/definitions/Model" # Inherit everything from the Model definition
       - required:
         - name
-        - status
-        - children
       - properties:
           name:
             type: string
-          status:
-            type: string
-            enum:
-              - pending
-              - approved
-          children:
-            type: array
-            items:
-              type: string
-              format: ObjectId
