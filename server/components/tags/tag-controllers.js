@@ -29,9 +29,10 @@ exports.getTagQuestions = async (req, res) => {
 		$options: "i"
 	}}).select("_id");
 
+	console.log('tagId', tagId)
 	try {
 		const questions = await Question
-			.find({tags: tagId})
+			.find({tags: tagId._id})
 			.sort({createdAt: "desc"})
 			.limit(20)
 			.select("-__v");
