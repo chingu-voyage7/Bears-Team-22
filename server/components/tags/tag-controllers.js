@@ -24,15 +24,14 @@ exports.getTags = async (req, res) => {
 
 exports.getTagQuestions = async (req, res) => {
 	const {tagName} = req.params;
-	const tagId = await Tag.findOne({name: {
+	const {_id: tagId} = await Tag.findOne({name: {
 		$regex: tagName,
 		$options: "i"
 	}}).select("_id");
 
-	console.log('tagId', tagId)
 	try {
 		const questions = await Question
-			.find({tags: tagId._id})
+			.find({tags: tagId})
 			.sort({createdAt: "desc"})
 			.limit(20)
 			.select("-__v");
