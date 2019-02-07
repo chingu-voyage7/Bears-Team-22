@@ -10,29 +10,29 @@ info:
 
 tags:
   - name: auth
-    description: Authorization-related end-points
+    description: Authorization-related endpoints
   - name: user
-    description: Collect user info
+    description: Access user info
   - name: content
     description: Create and get various types of content
   - name: tag
-    description: Create, verify and query tags
+    description: Query tags
 
 paths:
   # Auth routes
   /auth/login:
       get:
         security:
-          - ApiKeyAuth: # Actually a token we use as an api key
+          - ApiKeyAuth: # Actually a token we use as an API key
               in: body  
               name: idToken
         tags:
           - auth
-        summary: Log a user in
+        summary: Log in a user (and create a session cookie which keeps them logged in)
         parameters:
           - in: body
             name: idToken
-            description: The firebase token that identify a user
+            description: The Firebase Auth token that identifies the user.
             schema:
               type: object
               required:
@@ -42,32 +42,29 @@ paths:
                   type: string
                   format: ObjectId
               example:
-                  idToken: "asdfa9OJPXZda6f#23@$£fsdASDD"
+                  idToken: "nsN9j7ln7rQk7VBTr0WRSe7vo8L2"
         consumes:
           - application/json
         produces:
           - application/json
         responses:
           200:
-            description: Token decoded and validated successfully
+            description: The given auth token has been decoded and validated successfully.
             schema:
                 $ref: "#/definitions/User"
             examples:
               application/json:
                 loggedUser:
                   _id: 5c4b592fe871040017a2f656
-                  firebaseId: FQzIcPQHtghRO7OwAaI4yddjweH2
-                  name: test-eer
+                  name: tester
                   email: test@test.testa
-
-                
           400:
-            description: Missing body
+            description: Missing token parameter in body
             examples:
               application/json:
                 {}
           500:
-            description: Generic server error
+            description: Internal (generic) server error
             examples:
               application/json:
                 code: auth/argument-error
@@ -77,14 +74,15 @@ paths:
     get:
       tags:
         - auth
-      summary: Log a user out removing the cookie
+      summary: Log out a user and remove their auth-session cookie
       consumes:
         - application/json
       produces:
         - application/json
       responses:
         204:
-          description: Cookie removed successfully
+          description: The user has been logged out and the cookie has been removed successfully.
+
   # User routes
   /user/current-user:
     get:
@@ -105,7 +103,7 @@ paths:
               $ref: "#/definitions/User"
           examples:
             application/json:
-              user:
+              user: # TODO: Validate this against the actual data returned by the API.
                 iss: https://session.firebase.google.com/react-firebase-85039
                 aud: react-firebase-85039
                 auth_time: 1549444696
@@ -124,25 +122,26 @@ paths:
                 mongoInstance:
                   _id: 5c4b592fe871040017a2f656
                   firebaseId: FQzIcPQHtghRO7OwAaI4yddjweH2
-                  name: test-eer
+                  name: tester
                   email: test@test.testa
                   __v: 0
         401:
-          description: Invalid / missing credentials
+          description: Invalid/missing credentials
           examples:
             application/json:
               message: Unauthorized
+
   # Content routes
   /content/create:
     post:
       tags:
         - content
-      summary: Creates  new content ( question / reply)
+      summary: Creates new content (either a question or a reply)
       consumes:
         - application/json
       security:
         - cookieAuth:
-            name: session 
+            name: session
       parameters:
         - in: body
           name: body
@@ -160,6 +159,7 @@ paths:
                 type: string
               authorId:
                 type: string
+                format: ObjectId
               tags:
                 type: array
                 items:
@@ -167,13 +167,13 @@ paths:
             example:
                 title: "Question Title"
                 body: "This is the body of the question"
-                tags:	["Eta"]
                 type:	question
+                tags:	["Eta"]
       produces:
         - application/json
       responses:
         201:
-          description: The question created in the database
+          description: The question has been successfully created in the database.
           schema:
             $ref: "#/definitions/Question"
           examples:
@@ -193,7 +193,7 @@ paths:
             application/json:
               message: "Invalid content type"
         401:
-          description: Invalid / missing credentials
+          description: Invalid/missing credentials
           examples:
             application/json:
               message: Unauthorized
@@ -228,40 +228,39 @@ paths:
     get:
       tags:
         - content
-      summary: Search the content of the website and find items matching a given query
+      summary: Search the content of the website and find questions matching a given query
       parameters:
         - in: query
           name: tags
           type: array
-          description: The returned question tags
+          description: The tags the search results should have.
         - in: query
           name: q
           type: string
-          default: "sort:latest"
-          description: The query to use for matching questions.
+          description: The query to match questions against.
       produces:
         - application/json
       responses:
         200:
-          description: Found questions matching the given query
+          description: Found questions matching the given query.
           schema:
             $ref: "#/definitions/Question"
           examples:
             application/json:
               result:
-              - tags:
-                - _id: 5c544d295aa8ea001036bb0d
-                  name: Eta
-                type: Question
-                _id: 5c5aad2f8e385b0010b193fa
-                title: "Question Title"
-                body: "This is the body of the question"
-                authorId:
-                  _id: "5c4b592fe871040017a2f656"
-                  name: "test-eer"
-                  email: "test@test.testa"
-                createdAt: '2019-02-06T09:47:27.482Z'
-                updatedAt: '2019-02-06T09:47:27.482Z'
+                - tags:
+                  - _id: 5c544d295aa8ea001036bb0d
+                    name: Eta
+                  type: Question
+                  _id: 5c5aad2f8e385b0010b193fa
+                  title: "Question Title"
+                  body: "This is the body of the question"
+                  authorId:
+                    _id: "5c4b592fe871040017a2f656"
+                    name: "tester"
+                    email: "test@test.testa"
+                  createdAt: '2019-02-06T09:47:27.482Z'
+                  updatedAt: '2019-02-06T09:47:27.482Z'
               stemmedWords: []
         500:
           description: Internal server error
@@ -281,28 +280,28 @@ paths:
           name: questionId
           type: string
           format: ObjectId
-          description: The ObjectId of the question that is the root content of the thread.
+          description: The ID of the question that is the root content of the thread.
       produces:
         - application/json
       responses:
         200:
-          description: The question and its replies
+          description: The question and its replies.
           schema:
             $ref: "#/definitions/Thread"
           examples:
             application/json:
               thread:
                 replies:
-                - type: Reply
-                  _id: 5c5ab76b358a810010b5b185
-                  body: This is a reply longer than 20 char
-                  authorId:
-                    _id: 5c4b592fe871040017a2f656
-                    name: test-eer
-                    email: test@test.testa
-                  questionId: 5c5aad2f8e385b0010b193fa
-                  createdAt: '2019-02-06T10:31:07.274Z'
-                  updatedAt: '2019-02-06T10:31:07.274Z'
+                  - type: Reply
+                    _id: 5c5ab76b358a810010b5b185
+                    body: This is a reply longer than 20 chars
+                    authorId:
+                      _id: 5c4b592fe871040017a2f656
+                      name: tester
+                      email: test@test.testa
+                    questionId: 5c5aad2f8e385b0010b193fa
+                    createdAt: '2019-02-06T10:31:07.274Z'
+                    updatedAt: '2019-02-06T10:31:07.274Z'
                 _id: 5c5aad2f8e385b0010b193fb
                 question:
                   tags:
@@ -310,11 +309,11 @@ paths:
                     name: Eta
                   type: Question
                   _id: 5c5aad2f8e385b0010b193fa
-                  title: Am i here?
-                  body: Yes you are! tuentyyyyyyyyyyyyyyyyyyy
+                  title: Am I here?
+                  body: Yes you are! Very well, now this is over 20 characters long.
                   authorId:
                     _id: 5c4b592fe871040017a2f656
-                    name: test-eer
+                    name: tester
                     email: test@test.testa
                   createdAt: '2019-02-06T09:47:27.482Z'
                   updatedAt: '2019-02-06T09:47:27.482Z'
@@ -335,7 +334,7 @@ paths:
     get:
       tags:
         - "tag"
-      summary: Get questions tagged with the given tag
+      summary: Get questions tagged with a given tag
       consumes:
         - application/json
       parameters:
@@ -343,12 +342,12 @@ paths:
           required: true
           name: tagName
           type: string
-          description: The string used to collect the matching tag (the first one) to query questions for.
+          description: The name of the tag which will be used to query questions (case-insensitive, and can be ).
       produces:
         - application/json
       responses:
         200:
-          description: Array of matching questions
+          description: An array of matching questions found.
           schema:
             type: array
             items:
@@ -396,7 +395,7 @@ paths:
     get:
       tags:
         - "tag"
-      summary: Get first 5 tags matching the query string
+      summary: Get 5 tags matching the given query string
       consumes:
         - application/json
       parameters:
@@ -404,7 +403,7 @@ paths:
           required: true
           name: query
           type: string
-          description: The string used to collect 5 matchings tags
+          description: The string used to query tags and match 5 of those (case-insensitive).
       produces:
         - application/json
       responses:
@@ -417,10 +416,10 @@ paths:
           examples:
             application/json:
               tags:
-              - _id: 5c544d295aa8ea001036bb0a
-                name: Beta
-              - _id: 5c544d295aa8ea001036bb0d
-                name: Eta
+                - _id: 5c544d295aa8ea001036bb0a
+                  name: Beta
+                - _id: 5c544d295aa8ea001036bb0d
+                  name: Eta
         500:
           description: Internal server error
           examples:
