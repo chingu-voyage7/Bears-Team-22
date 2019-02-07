@@ -1,6 +1,6 @@
 .header {
     background: #fff !important;
-    padding: 0;
+    padding: 0 50px;
 }
 
 .header__nav {
@@ -17,11 +17,13 @@
 
 .ant-menu > .ant-menu-item {
     border: 0 !important;
+    top: 0px;
+    margin-top: -2px;
 }
 
 .header__menu > *, .header__join > * {
     line-height: 64px !important;
-    border: 0px;
+    border: 0px !important;
 }
 
 .header__menu {
@@ -31,6 +33,14 @@
 .header > nav > .ant-menu > .ant-menu-item > a, .header a {
     color: inherit !important;
     border: 0;
+}
+
+.header > nav > .ant-menu > .ant-menu-item > a:before {
+    bottom: 0px !important;
+}
+
+.header > nav > .ant-menu > .ant-menu-item.ant-menu-item-selected {
+    border-bottom: 2px solid #1890ff !important;
 }
 
 .header a:active,
@@ -45,7 +55,7 @@
     font-size: 1.2rem;
 }
 
-@media(min-width: 40rem) {
+@media(min-width: 30rem) {
     .header__menu {
         display: block;
     }
