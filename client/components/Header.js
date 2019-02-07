@@ -1,17 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-import {Layout, Icon, Drawer} from "antd";
+import Link from "next/link";
+import {Layout, Menu} from "antd";
 
 import HeaderMenu from "./HeaderMenu";
 
+import "antd/dist/antd.css";
 import "../static/Header.css";
 
 const {Header} = Layout;
 
 export default class MainHeader extends React.Component {
 	state = {
-		drawerIsVisible: false,
 		currentItem: "0"
 	}
 
@@ -42,21 +43,8 @@ export default class MainHeader extends React.Component {
 		}
 	}
 
-	openDrawer = () => {
-		this.setState({
-			drawerIsVisible: true,
-			currentItem: "0"
-		});
-	}
-
-	closeDrawer = () => {
-		this.setState({
-			drawerIsVisible: false
-		});
-	}
-
 	render() {
-		const {drawerIsVisible, currentItem} = this.state;
+		const {currentItem} = this.state;
 		const {authState} = this.props;
 
 		return (
@@ -66,12 +54,18 @@ export default class MainHeader extends React.Component {
 						<a onClick={this.navigateHome}>Knowledge</a>
 					</div>
 					<HeaderMenu authState={authState} currentItem={currentItem}/>
-					<div className="header__drawer--toggle" onClick={this.openDrawer}>
-						<Icon type="bars" onClick={this.openDrawer}/>
-					</div>
-					<Drawer visible={drawerIsVisible} onClose={this.closeDrawer}>
-						<HeaderMenu mode="vertical" className="mobile__menu" currentItem={currentItem}/>
-					</Drawer>
+					<Menu
+						theme="light"
+						mode="horizontal"
+						selectedKeys={[currentItem === "1" || currentItem === "2" ? "1" : "0"]}
+						className="header__join"
+					>
+						<Menu.Item key="1">
+							<Link href="/register">
+								<a>Join</a>
+							</Link>
+						</Menu.Item>
+					</Menu>
 				</nav>
 			</Header>
 		);
