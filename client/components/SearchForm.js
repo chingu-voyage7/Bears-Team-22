@@ -12,8 +12,19 @@ class SearchForm extends React.Component {
 		isNewQuery: true // TODO: Make sure this always recognizes new queries correctly, even if we remove all query text except for one character.
 	}
 
-	handleChange = e => {
-		if (e.target.value.length === 1) {
+	componentDidUpdate() {
+		const {isNewQuery} = this.state;
+
+		if (this.searchInput instanceof HTMLElement) {
+			const inputField = this.searchInput.querySelector(".ant-input");
+			if (inputField === document.activeElement && !isNewQuery) {
+				inputField.blur();
+			}
+		}
+	}
+
+	handleChange = event => {
+		if (event.target.value.length === 1) {
 			this.setState({
 				isNewQuery: true
 			});
@@ -21,12 +32,12 @@ class SearchForm extends React.Component {
 	}
 
 	onSearch = async value => {
+		if (this.state.isNewQuery) {
+			this.setState({isNewQuery: false});
+		}
+
 		try {
 			await this.props.search(value);
-
-			if (this.state.isNewQuery) {
-				this.setState({isNewQuery: false});
-			}
 		} catch (error) {
 			console.error("error", error);
 		}
@@ -36,7 +47,12 @@ class SearchForm extends React.Component {
 		const {ranSearch = false, stemmedWords = [], updateTags} = this.props;
 
 		return (
-			<div className="search_input">
+			<div
+				ref={input => {
+					this.searchInput = input;
+				}}
+				className="search_input"
+			>
 				<h1 className="search_input--title">Search</h1>
 				<Input.Search
 					enterButton

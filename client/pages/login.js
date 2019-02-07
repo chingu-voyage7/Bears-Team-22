@@ -46,7 +46,7 @@ class Login extends React.Component {
 			await get("/auth/logout"); // User already logged in with Firebase
 			return {message: "Login failed (internal server error)"};
 		}
-	};
+	}
 
 	render() {
 		return (

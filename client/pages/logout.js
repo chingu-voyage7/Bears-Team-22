@@ -11,7 +11,7 @@ export default class Logout extends React.Component {
 	state = {
 		status: "Logging out...",
 		loading: true
-	};
+	}
 
 	async componentDidMount() {
 		try {

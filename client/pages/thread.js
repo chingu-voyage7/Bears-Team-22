@@ -15,7 +15,7 @@ class Thread extends React.Component {
 		thread: {},
 		replyIsActive: false,
 		auth: false
-	};
+	}
 
 	static getInitialProps({query}) {
 		return {id: query.id};
@@ -29,7 +29,7 @@ class Thread extends React.Component {
 		this.setState(() => ({
 			auth: authState === "logged in"
 		}));
-	};
+	}
 
 	async fetchThread() {
 		const {id} = this.props;
@@ -52,7 +52,7 @@ class Thread extends React.Component {
 		this.setState({
 			replyIsActive: true
 		});
-	};
+	}
 
 	onSubmitReply = async replyData => {
 		if (replyData) { // TODO: Keep the reply active and display some sort of error message in case the given reply is empty / invalid (i.e. too short / has empty fields).
@@ -79,7 +79,7 @@ class Thread extends React.Component {
 		this.setState({
 			replyIsActive: false
 		});
-	};
+	}
 
 	render() {
 		const {id} = this.props;

@@ -7,5 +7,5 @@
 		"storageBucket": "react-firebase-85039.appspot.com",
 		"messagingSenderId": "55358337129"
 	},
-	"apiUrl": "http://knowl-knowl-ciw3basidwqs-321112760.eu-central-1.elb.amazonaws.com/"
+	"apiUrl": "http://knowl-knowl-ciw3basidwqs-321112760.eu-central-1.elb.amazonaws.com"
 }
