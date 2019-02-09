@@ -269,7 +269,7 @@ paths:
               message: "Network error"
 
   # Thread routes
-  /thread/{questionId}:
+  /thread/:questionId:
     get:
       tags:
         - "content"
@@ -330,7 +330,7 @@ paths:
               path: question
 
   # Tag routes
-  /tag/browse/{tagname}:
+  /tag/browse/:tagname:
     get:
       tags:
         - "tag"
@@ -391,11 +391,11 @@ paths:
             application/json:
               error: "Internal server error: couldn't fulfill the request at the current time."
   
-  /tag/tags/{query}:
+  /tag/tags/:query:
     get:
       tags:
         - "tag"
-      summary: Get 5 tags matching the given query string
+      summary: Get 5 tags matching the given query
       consumes:
         - application/json
       parameters:

@@ -7,7 +7,7 @@ _Developed during the Chingu Voyage-7 cohort by bears team 22. Read more about C
 <br>
 <div align="center">
 	<a href="http://knowledge2019.herokuapp.com">
-		<img src="screenshot.png" width="661">
+		<img src="screenshot.png" height="450">
 	</a>
 </div>
 
@@ -25,7 +25,7 @@ First of all, obtain your Firebase SDK service account credentials (more info on
 
 Then, run `npm run dev` to start the app in development mode or `npm start` to run it in production mode. It should then be running on http://localhost:3000, with the backend API running on http://localhost:5000.
 
-See our backend API documentation [here](https://rawcdn.githack.com/chingu-voyage7/Bears-Team-22/a666ca417134b6b29758eb851f257af446b78d61/docs/index.html).
+See our backend API documentation [here](https://raw.githack.com/chingu-voyage7/Bears-Team-22/master/docs/index.html).
 
 ### Technical Stack
 
@@ -52,6 +52,7 @@ Both our frontend and backend are written in Node.js. The tech stack consists of
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) - for deploying Mongo to the cloud.
 
 We're also using [various libraries and modules](https://github.com/chingu-voyage7/Bears-Team-22/network/dependencies).
+
 
 ## Creators
 
