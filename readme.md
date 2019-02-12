@@ -41,7 +41,7 @@ Both our frontend and backend are written in Node.js. The tech stack consists of
 
 - [Express.js](https://expressjs.com) - for the main API which servers the frontend app.
 - [MongoDB](https://www.mongodb.com) - for data storage.
-- [Firebase Auth](https://firebase.google.com/docs/auth) - for password-based user authentication
+- [Firebase Auth](https://firebase.google.com/docs/auth) - for password-based user authentication.
 
 #### DevOps and deployment
 

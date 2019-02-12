@@ -19,7 +19,8 @@ export class KnowledgeStack extends cdk.Stack {
 			image: ecs.ContainerImage.fromAsset(this, "KnowledgeImage", {
 				directory: ".."
 			}),
-			containerPort: 5000
+			containerPort: 5000,
+			desiredCount: 2 // Meant to make sure at least 1 task is always running.
 		});
 
 		// Output the DNS where you can access your service

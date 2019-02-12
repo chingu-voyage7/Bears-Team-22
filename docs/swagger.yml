@@ -2,7 +2,7 @@ swagger: "2.0"
 
 info:
   description: Swagger documentation for [Knowledge](https://github.com/chingu-voyage7/Bears-Team-22).
-  version: 1.0.0
+  version: 0.1.0
   title: Knowledge API
   license:
     name: MIT
@@ -269,7 +269,7 @@ paths:
               message: "Network error"
 
   # Thread routes
-  /thread/:questionId:
+  /thread/{questionId}:
     get:
       tags:
         - "content"
@@ -330,7 +330,7 @@ paths:
               path: question
 
   # Tag routes
-  /tag/browse/:tagname:
+  /tag/browse/{tagname}:
     get:
       tags:
         - "tag"
@@ -391,7 +391,7 @@ paths:
             application/json:
               error: "Internal server error: couldn't fulfill the request at the current time."
   
-  /tag/tags/:query:
+  /tag/tags/{query}:
     get:
       tags:
         - "tag"
