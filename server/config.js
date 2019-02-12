@@ -1,8 +1,15 @@
+const path = require("path");
+
 const dotenv = require("dotenv");
 
-dotenv.config();
+console.log("env", process.env.NODE_ENV);
 
-const {projectId, privateKeyId, privateKey, clientEmail, clientId, clientCertUrl, databaseUrl} = process.env;
+const stage = process.env.NODE_ENV || "production";
+dotenv.config({
+	path: path.resolve(process.cwd(), `${stage === "production" ? "prod" : "dev"}.env`)
+});
+
+const {projectId, privateKeyId, privateKey, clientEmail, clientId, clientCertUrl, databaseUrl, clientUrl} = process.env;
 
 module.exports = {
 	credentials: {
@@ -18,5 +25,5 @@ module.exports = {
 		client_x509_cert_url: clientCertUrl
 	},
 	databaseUrl,
-	clientUrl: "http://knowledge2019.herokuapp.com"
+	clientUrl
 };

@@ -21,7 +21,7 @@ See [the MVP spec](docs/mvp.md).
 
 ### Getting started
 
-First of all, obtain your Firebase SDK service account credentials (more info on this can be found in [this guide](https://firebase.google.com/docs/admin/setup#add_firebase_to_your_app)). Rename `server/sample.env` to `.env` (keep it in the `server` directory), and replace the placeholders with your credentials.
+First of all, obtain your Firebase SDK service account credentials (more info on this can be found in [this guide](https://firebase.google.com/docs/admin/setup#add_firebase_to_your_app)). Rename `server/sample.env` to `prod.env` (keep it in the `server` directory), and replace the placeholders with your credentials.
 
 Then, run `npm run dev` to start the app in development mode or `npm start` to run it in production mode. It should then be running on http://localhost:3000, with the backend API running on http://localhost:5000.
 

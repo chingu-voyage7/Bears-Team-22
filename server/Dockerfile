@@ -9,4 +9,7 @@ RUN npm install --production
 
 EXPOSE 5000
 
+ARG STAGE="production"
+ENV NODE_ENV=$STAGE
+
 CMD [ "npm", "start" ]

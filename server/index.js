@@ -17,7 +17,7 @@ const app = express();
 
 const firebase = admin.initializeApp({
 	credential: admin.credential.cert(credentials),
-	databaseURL: "https://react-firebase-85039.firebaseio.com" // TODO: Move this setting to `config.js`.
+	databaseURL: `https://${credentials.project_id}.firebaseio.com` // TODO: Move this setting to `config.js`.
 }, "server");
 
 // Setting a few options to remove warnings on feature deprecations.

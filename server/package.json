@@ -8,6 +8,7 @@
 	},
 	"scripts": {
 		"start": "node index.js",
+		"compose:build": "docker-compose build --build-arg STAGE=\"development\" server",
 		"compose:start": "docker-compose up",
 		"docker:build": "docker build -t knowledge-server .",
 		"docker:run": "docker run -d --name knowledge-server -p 5000:5000 knowledge-server",

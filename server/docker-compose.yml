@@ -1,7 +1,8 @@
 version: "2"
 services:
   server:
-    build: .
+    build:
+      context: .
     volumes:
       - ./:/server
     ports:

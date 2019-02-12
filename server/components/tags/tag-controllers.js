@@ -24,14 +24,19 @@ exports.getTags = async (req, res) => {
 
 exports.getTagQuestions = async (req, res) => {
 	const {tagName} = req.params;
-	const {_id: tagId} = await Tag.findOne({name: {
+	const tag = await Tag.findOne({name: {
 		$regex: tagName,
 		$options: "i"
 	}}).select("_id");
 
+	if (!tag || !tag._id) {
+		res.status(404).json({error: "Couldn't find a tag matching the given query."});
+		return;
+	}
+
 	try {
 		const questions = await Question
-			.find({tags: tagId})
+			.find({tags: tag._id})
 			.sort({createdAt: "desc"})
 			.limit(20)
 			.select("-__v");

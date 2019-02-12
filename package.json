@@ -6,7 +6,7 @@
 		"dev:client": "cd client && npm run dev",
 		"start:client": "cd client && npm run build && npm start",
 		"dev:server": "npm run start:server",
-		"start:server": "cd server && npm run compose:start",
+		"start:server": "cd server && npm run compose:build && npm run compose:start",
 		"start": "concurrently npm:start:*",
 		"dev": "concurrently npm:dev:*",
 		"install:client": "cd client && npm install",

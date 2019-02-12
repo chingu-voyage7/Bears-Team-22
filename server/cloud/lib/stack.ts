@@ -6,20 +6,20 @@ export class KnowledgeStack extends cdk.Stack {
 	constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
 		super(scope, id, props);
 
-		// Create VPC and Fargate Cluster
-		// NOTE: Limit AZs to avoid reaching resource quotas
+		// Create VPC and Fargate Cluster.
+		// NOTE: Limit AZs to avoid reaching resource quotas.
 		const vpc = new ec2.VpcNetwork(this, "KnowledgeVpc", {
 			maxAZs: 2
 		});
 		const cluster = new ecs.Cluster(this, "KnowledgeCluster", {vpc});
 
-		// Instantiate Fargate Service with just cluster and image
+		// Instantiate Fargate Service with cluster and Docker image.
 		const fargateService = new ecs.LoadBalancedFargateService(this, "KnowledgeService", {
 			cluster,
 			image: ecs.ContainerImage.fromAsset(this, "KnowledgeImage", {
 				directory: ".."
 			}),
-			containerPort: 5000,
+			containerPort: 5000, // Expose port 5000, on which the server listens.
 			desiredCount: 2 // Meant to make sure at least 1 task is always running.
 		});
 

@@ -1,4 +1,7 @@
-import {apiUrl} from "./config";
+import getConfig from "next/config";
+
+const {publicRuntimeConfig} = getConfig();
+const {apiUrl} = publicRuntimeConfig;
 
 const requestUrl = path => new URL(path, apiUrl);
 
