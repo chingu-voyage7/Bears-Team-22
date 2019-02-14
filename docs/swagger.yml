@@ -2,7 +2,7 @@ swagger: "2.0"
 
 info:
   description: Swagger documentation for [Knowledge](https://github.com/chingu-voyage7/Bears-Team-22).
-  version: 0.1.0
+  version: 0.1.1
   title: Knowledge API
   license:
     name: MIT
