@@ -32,19 +32,19 @@ class SearchForm extends React.Component {
 	}
 
 	onSearch = async value => {
-		if (this.state.isNewQuery) {
-			this.setState({isNewQuery: false});
-		}
-
 		try {
 			await this.props.search(value);
 		} catch (error) {
 			console.error("error", error);
 		}
+
+		if (this.state.isNewQuery) { // TODO: Check if conditionally updating the state even matters (compared to just overriding the current state).
+			this.setState({isNewQuery: false});
+		}
 	}
 
 	render() {
-		const {ranSearch = false, stemmedWords = [], updateTags} = this.props;
+		const {ranSearch = false, extractedTags = [], updateTags} = this.props;
 
 		return (
 			<div
@@ -61,7 +61,7 @@ class SearchForm extends React.Component {
 					onChange={this.handleChange}
 				/>
 				<div className="search_input__tag_select">
-					<SearchTag ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={updateTags} isNewQuery={this.state.isNewQuery}/>
+					<SearchTag ranSearch={ranSearch} extractedTags={extractedTags} updateTags={updateTags} isNewQuery={this.state.isNewQuery}/>
 				</div>
 			</div>
 		);
@@ -71,12 +71,12 @@ class SearchForm extends React.Component {
 SearchForm.propTypes = {
 	search: PropTypes.func.isRequired,
 	ranSearch: PropTypes.bool,
-	stemmedWords: PropTypes.arrayOf(PropTypes.string),
+	extractedTags: PropTypes.arrayOf(PropTypes.string),
 	updateTags: PropTypes.func
 };
 SearchForm.defaultProps = {
 	ranSearch: false,
-	stemmedWords: [],
+	extractedTags: [],
 	updateTags: () => {}
 };
 

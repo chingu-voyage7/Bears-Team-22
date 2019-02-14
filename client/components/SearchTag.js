@@ -38,19 +38,12 @@ class SearchTag extends React.Component {
 			}
 		}
 
-		const {tags} = this.state;
-		const {isNewQuery = true, stemmedWords = []} = this.props;
+		const {isNewQuery = true, extractedTags = []} = this.props;
 
-		const tagNames = tags.map(tag => tag.name);
-
-		if (stemmedWords && isNewQuery && prevProps.stemmedWords !== stemmedWords) {
-			const uniqueTags = stemmedWords.filter(word => tagNames.includes(word));
-
+		if (extractedTags && isNewQuery && prevProps.extractedTags !== extractedTags) { // TODO: Check if the last comparison even works, and if it doens't fix it.
 			// TODO: Find a solution better than updating the state of the component in `componentDidUpdate`.
 			this.setState({ // eslint-disable-line react/no-did-update-set-state
-				activeTags: [
-					...uniqueTags
-				]
+				activeTags: [...extractedTags]
 			});
 		}
 	}
@@ -114,13 +107,13 @@ class SearchTag extends React.Component {
 SearchTag.propTypes = {
 	ranSearch: PropTypes.bool,
 	isNewQuery: PropTypes.bool,
-	stemmedWords: PropTypes.arrayOf(PropTypes.string),
+	extractedTags: PropTypes.arrayOf(PropTypes.string),
 	updateTags: PropTypes.func.isRequired
 };
 SearchTag.defaultProps = {
 	ranSearch: false,
 	isNewQuery: true,
-	stemmedWords: []
+	extractedTags: []
 };
 
 export default SearchTag;

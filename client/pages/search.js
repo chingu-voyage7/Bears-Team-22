@@ -13,7 +13,7 @@ class Search extends React.Component {
 	state = {
 		activeTags: [],
 		questions: [],
-		stemmedWords: [],
+		extractedTags: [],
 		ranSearch: false,
 		showPost: false
 	}
@@ -31,7 +31,7 @@ class Search extends React.Component {
 
 			this.setState({
 				questions: json.result,
-				stemmedWords: json.stemmedWords
+				extractedTags: json.extractedTags
 			});
 		} catch (error) {
 			console.error(error);
@@ -53,11 +53,11 @@ class Search extends React.Component {
 	}
 
 	render() { // TODO: Only show the option to post a new question once a user searches something, and hide it when the query text field changes.
-		const {questions, stemmedWords, ranSearch, showPost} = this.state;
+		const {questions, extractedTags, ranSearch, showPost} = this.state;
 
 		return (
 			<MainLayout authStateListener={this.updatePostQuestion}>
-				<SearchForm search={this.querySearch} ranSearch={ranSearch} stemmedWords={stemmedWords} updateTags={this.updateActiveTags}/>
+				<SearchForm search={this.querySearch} ranSearch={ranSearch} extractedTags={extractedTags} updateTags={this.updateActiveTags}/>
 				<QuestionList questions={questions} ranSearch={ranSearch && questions.length === 0}/>  {/* TODO: Set the list to `loading` when searching a query. */}
 				{showPost ?
 					<div className="post__question">

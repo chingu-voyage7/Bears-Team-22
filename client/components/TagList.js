@@ -30,7 +30,7 @@ class TagList extends React.Component {
 }
 
 TagList.propTypes = {
-	tags: PropTypes.arrayOf(PropTypes.string).isRequired
+	tags: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default TagList;

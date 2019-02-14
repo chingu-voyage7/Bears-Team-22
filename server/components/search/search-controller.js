@@ -2,7 +2,7 @@ const {Question, Reply} = require("../content/content-model");
 const Tag = require("../tags/tag-model");
 const Thread = require("../thread/thread-model");
 const User = require("../users/user-model");
-const {resolveTagNames} = require("../util/tag");
+const {resolveTagNames, filterTags} = require("../util/tag");
 
 exports.getQuestion = async (req, res) => {
 	const {q: query = "", tags} = req.query;
@@ -14,6 +14,7 @@ exports.getQuestion = async (req, res) => {
 	// the text with 'foo' AND 'bar' instead of 'foo' OR 'bar').
 	const queryString = query.split(" ").map(word => `"${decodeURIComponent(word)}"`).join(" ");// TODO: Escape the given input so that the user isn't able to run malicious queries on the database (such as `" (insert bad query here)`).
 	let queryTags = [];
+
 	if (tags) {
 		const parsedTags = tags.split(",").map(decodeURIComponent);
 		queryTags = await resolveTagNames(parsedTags);
@@ -21,20 +22,21 @@ exports.getQuestion = async (req, res) => {
 
 	try {
 		const queryData = await Question.find({$text: {$search: queryString}}).explain(true);
-		const stemmedWords = queryData[0].queryPlanner.winningPlan.inputStage.parsedTextQuery.terms;
+		const {terms} = queryData[0].queryPlanner.winningPlan.inputStage.parsedTextQuery;
+		const extractedTags = await filterTags(terms);
 
 		const result = await Question
 			.find({
 				$or: [
 					{$text: {$search: queryString}},
-					{tags: {$elemMatch: {$in: queryTags}}}
+					{tags: {$elemMatch: {$in: queryTags}}} // TODO: Check if we should search for both the given tags as well as the extracted ones.
 				]
 			})
 			.sort({createdAt: "desc"})
 			.limit(20)
 			.select("-__v");
 
-		res.status(200).json({result, stemmedWords});
+		res.status(200).json({result, extractedTags});
 	} catch (error) {
 		res.status(500).json(error);
 	}

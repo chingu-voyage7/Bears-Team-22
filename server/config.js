@@ -2,8 +2,6 @@ const path = require("path");
 
 const dotenv = require("dotenv");
 
-console.log("env", process.env.NODE_ENV);
-
 const stage = process.env.NODE_ENV || "production";
 dotenv.config({
 	path: path.resolve(process.cwd(), `${stage === "production" ? "prod" : "dev"}.env`)
