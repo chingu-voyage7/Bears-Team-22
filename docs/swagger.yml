@@ -432,11 +432,11 @@ definitions:
   Model:
     type: object
     required:
-      - id
+      - _id
       - createdAt
       - updatedAt
     properties:
-      id:
+      _id:
         type: string
         format: ObjectId
       createdAt:
@@ -484,18 +484,17 @@ definitions:
             format: ObjectId
 
   Thread:
-    type: object
-    required:
-      - id
-      - createdAt
-      - updatedAt
-    properties:
-      question:
-        $ref: "#/definitions/Question"
-      replies:
-        type: array
-        items:
-          $ref: "#/definitions/Reply"
+    allOf:
+      - $ref: "#/definitions/Model" # Inherit everything from the Content definition
+      - required:
+        - question
+      - properties:
+          question:
+            $ref: "#/definitions/Question"
+          replies:
+            type: array
+            items:
+              $ref: "#/definitions/Reply"
 
   User:
     allOf:
