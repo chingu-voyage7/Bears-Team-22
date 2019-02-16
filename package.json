@@ -2,6 +2,8 @@
 	"name": "knowledge",
 	"version": "0.1.1",
 	"private": true,
+	"license": "MIT",
+	"repository": "chingu-voyage7/Bears-Team-22",
 	"scripts": {
 		"dev:client": "cd client && npm run dev",
 		"start:client": "cd client && npm run build && npm start",
