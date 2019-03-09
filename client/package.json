@@ -9,9 +9,7 @@
 		"dev": "NODE_ENV=\"development\" next dev",
 		"start": "next start",
 		"build": "next build",
-		"heroku:start": "next start --port $PORT",
-		"docker:build": "docker build -t knowledge-client .",
-		"docker:run": "docker run -d --name knowledge-client -p 3000:3000 knowledge-client",
+		"build:netlify": "npm run build && next export",
 		"test": "xo"
 	},
 	"dependencies": {
@@ -40,6 +38,10 @@
 		"envs": [
 			"node",
 			"browser"
+		],
+		"ignores": [
+			".next",
+			"out"
 		],
 		"overrides": [
 			{

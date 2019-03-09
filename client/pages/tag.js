@@ -15,7 +15,7 @@ class Tag extends React.Component {
 
 	static getInitialProps({query}) {
 		return {
-			tagName: encodeURIComponent(query.name.toLowerCase())
+			tagName: encodeURIComponent((query.name || "").toLowerCase())
 		};
 	}
 
