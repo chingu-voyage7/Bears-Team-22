@@ -24,8 +24,8 @@ class QuestionList extends React.Component {
 
 						return (
 							<Link href={`/thread?id=${_id}`}>
-								<a style={{textDecoration: "none"}}>
-									<List.Item actions={[<span>Author: {authorId.name}</span>, ...tagsAction]}> {/* eslint-disable-line react/jsx-key */}
+								<a className="question--link">
+									<List.Item actions={[<span>Author: {authorId.name}</span>, ...tagsAction]} className="question"> {/* eslint-disable-line react/jsx-key */}
 										<List.Item.Meta
 											title={<b>{title}</b>}
 											description={body}

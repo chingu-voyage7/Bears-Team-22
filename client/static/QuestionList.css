@@ -1,3 +1,11 @@
 .search__questions_list {
 	margin-top: 40px;
 }
+
+.question--link {
+	text-decoration: none;
+}
+
+.question {
+	display: flex;
+}
